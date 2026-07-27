@@ -485,7 +485,7 @@ p {
       rgba(15, 107, 69, 0.35) 100%
     ),
     radial-gradient(ellipse 50% 55% at 85% 35%, rgba(247, 242, 237, 0.12), transparent 55%),
-    url("/images/hero-botanical.svg") center / cover no-repeat,
+    var(--hero-image, none) center / cover no-repeat,
     var(--brand-heart-deep);
   animation: heroDrift 24s ease-in-out infinite alternate;
 }

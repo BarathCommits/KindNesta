@@ -5,7 +5,7 @@
 
 backend:
   name: github
-  repo: YOUR_GITHUB_USER/kindnesta
+  repo: BarathCommits/KindNesta
   branch: main
 
 media_folder: public/images/products

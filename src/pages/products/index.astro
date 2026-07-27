@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { categoryLabel } from '../../lib/products';
+import { withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
 const products = await getCollection('products');
@@ -14,12 +15,12 @@ const payload = products.map((p) => ({
   currency: p.data.currency,
   category: p.data.category,
   categoryLabel: categoryLabel(p.data.category),
-  image: p.data.image,
+  image: withBase(p.data.image),
   kindnessScore: p.data.kindnessScore,
   sku: p.data.sku,
   packSize: p.data.packSize,
   moq: p.data.moq,
-  href: `/products/${p.id}/`,
+  href: withBase(`products/${p.id}/`),
 }));
 ---
 
@@ -45,7 +46,7 @@ const payload = products.map((p) => ({
           <strong>Pricing on request.</strong> Figures shown are suggested retail reference — not
           your partner cost.
         </p>
-        <a class="btn btn--secondary btn--sm" href="/contact/">Contact sales</a>
+        <a class="btn btn--secondary btn--sm" href={withBase("contact/")}>Contact sales</a>
       </div>
 
       <div class="filters">

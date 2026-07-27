@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import KindnessPanel from '../../components/KindnessPanel.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { categoryLabel, formatPrice } from '../../lib/products';
+import { withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
 export async function getStaticPaths() {
@@ -36,25 +37,25 @@ const related = products
   .filter((p) => p.id !== product.id && p.data.category === category)
   .slice(0, 3);
 
-const inquireHref = `/contact/?sku=${encodeURIComponent(sku)}&interest=sales`;
+const inquireHref = withBase(`contact/?sku=${encodeURIComponent(sku)}&interest=sales`);
 ---
 
 <BaseLayout title={`${title} — KindNesta`} description={shortDescription}>
   <section class="section" style="padding-top: 2.5rem;">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a>
+        <a href={withBase()}>Home</a>
         <span aria-hidden="true">/</span>
-        <a href="/products/">Products</a>
+        <a href={withBase("products/")}>Products</a>
         <span aria-hidden="true">/</span>
-        <a href={`/products/?category=${category}`}>{categoryLabel(category)}</a>
+        <a href={withBase(`products/?category=${category}`)}>{categoryLabel(category)}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{title}</span>
       </nav>
 
       <div class="product-detail">
         <div class="product-detail__media reveal">
-          <img src={image} alt={title} width="900" height="900" />
+          <img src={withBase(image)} alt={title} width="900" height="900" />
         </div>
         <div class="product-detail__info reveal">
           <p class="product-card__category">{categoryLabel(category)}</p>
@@ -101,7 +102,7 @@ const inquireHref = `/contact/?sku=${encodeURIComponent(sku)}&interest=sales`;
 
           <div class="product-detail__actions">
             <a class="btn btn--primary" href={inquireHref}>Request pricing</a>
-            <a class="btn btn--secondary" href="/contact/?interest=sample">Request a sample</a>
+            <a class="btn btn--secondary" href={withBase("contact/?interest=sample")}>Request a sample</a>
           </div>
 
           <div class="prose" style="margin-top: 1.75rem;">
@@ -109,7 +110,7 @@ const inquireHref = `/contact/?sku=${encodeURIComponent(sku)}&interest=sales`;
           </div>
 
           <p style="margin-top: 2rem;">
-            <a class="btn btn--ghost" href="/products/">← Back to products</a>
+            <a class="btn btn--ghost" href={withBase("products/")}>← Back to products</a>
           </p>
         </div>
       </div>

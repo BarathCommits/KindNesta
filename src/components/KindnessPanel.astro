@@ -1,5 +1,6 @@
 ---
 import { kindnessBand, kindnessBandLabel } from '../lib/products';
+import { withBase } from '../lib/urls';
 
 interface Props {
   score: number;
@@ -25,7 +26,7 @@ const label = kindnessBandLabel(score);
         Rated 0–100 on materials, packaging, and sourcing — for clearer buying decisions.
       </p>
       <p class="kindness-panel__link">
-        <a href="/about/#kindness-score">How we score</a>
+        <a href={withBase("about/#kindness-score")}>How we score</a>
       </p>
     </div>
   </div>

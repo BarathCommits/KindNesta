@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/urls';
+
 interface Props {
   title: string;
   description?: string;
@@ -12,27 +14,35 @@ const {
 } = Astro.props;
 const pathname = Astro.url.pathname;
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
 const nav = [
-  { href: '/', label: 'Home' },
-  { href: '/products/', label: 'Products' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
+  { href: withBase(), label: 'Home' },
+  { href: withBase('products/'), label: 'Products' },
+  { href: withBase('about/'), label: 'About' },
+  { href: withBase('contact/'), label: 'Contact' },
 ];
 
+function normalize(path: string) {
+  return path.replace(/\/+$/, '') || '';
+}
+
 function isCurrent(href: string) {
-  if (href === '/') return pathname === '/' || pathname === '';
-  return pathname.startsWith(href.replace(/\/$/, '')) || pathname.startsWith(href);
+  const current = normalize(pathname);
+  const target = normalize(href);
+  const home = normalize(base);
+  if (target === home) return current === home || current === '';
+  return current === target || current.startsWith(`${target}/`);
 }
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={`--asset-base: ${base}`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#d32f2f" />
-    <link rel="icon" type="image/png" href="/images/kindnesta-logo.png" />
+    <link rel="icon" type="image/png" href={withBase('images/kindnesta-logo.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,8 +55,8 @@ function isCurrent(href: string) {
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class:list={['site-header', transparentHeader && 'site-header--transparent']} id="site-header">
       <div class="container site-header__inner">
-        <a class="brand" href="/">
-          <img class="brand__logo" src="/images/kindnesta-logo.png" alt="" width="36" height="36" />
+        <a class="brand" href={withBase()}>
+          <img class="brand__logo" src={withBase('images/kindnesta-logo.png')} alt="" width="36" height="36" />
           <span class="brand__wordmark">Kind<span>Nesta</span></span>
         </a>
         <button
@@ -69,7 +79,7 @@ function isCurrent(href: string) {
               </a>
             ))
           }
-          <a class="btn btn--primary btn--sm nav__cta" href="/contact/">Contact sales</a>
+          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>Contact sales</a>
         </nav>
       </div>
     </header>
@@ -80,8 +90,8 @@ function isCurrent(href: string) {
       <div class="container">
         <div class="site-footer__grid">
           <div class="site-footer__brand">
-            <a class="brand" href="/">
-              <img class="brand__logo" src="/images/kindnesta-logo.png" alt="" width="36" height="36" />
+            <a class="brand" href={withBase()}>
+              <img class="brand__logo" src={withBase('images/kindnesta-logo.png')} alt="" width="36" height="36" />
               <span class="brand__wordmark">Kind<span>Nesta</span></span>
             </a>
             <p>
@@ -92,22 +102,22 @@ function isCurrent(href: string) {
           <div class="site-footer__col">
             <h3>Products</h3>
             <ul>
-              <li><a href="/products/">All products</a></li>
-              <li><a href="/products/?category=kitchen">Kitchen</a></li>
-              <li><a href="/products/?category=home">Home</a></li>
-              <li><a href="/products/?category=personal-care">Personal care</a></li>
-              <li><a href="/products/?category=garden">Garden</a></li>
-              <li><a href="/products/?category=dress">Dress</a></li>
+              <li><a href={withBase('products/')}>All products</a></li>
+              <li><a href={withBase('products/?category=kitchen')}>Kitchen</a></li>
+              <li><a href={withBase('products/?category=home')}>Home</a></li>
+              <li><a href={withBase('products/?category=personal-care')}>Personal care</a></li>
+              <li><a href={withBase('products/?category=garden')}>Garden</a></li>
+              <li><a href={withBase('products/?category=dress')}>Dress</a></li>
             </ul>
           </div>
           <div class="site-footer__col">
             <h3>Company</h3>
             <ul>
-              <li><a href="/about/">About</a></li>
-              <li><a href="/about/#retail">Retail outlets</a></li>
-              <li><a href="/about/#enterprise">Enterprise</a></li>
-              <li><a href="/about/#kindness-score">Kindness Score</a></li>
-              <li><a href="/contact/">Contact</a></li>
+              <li><a href={withBase('about/')}>About</a></li>
+              <li><a href={withBase('about/#retail')}>Retail outlets</a></li>
+              <li><a href={withBase('about/#enterprise')}>Enterprise</a></li>
+              <li><a href={withBase('about/#kindness-score')}>Kindness Score</a></li>
+              <li><a href={withBase('contact/')}>Contact</a></li>
             </ul>
           </div>
         </div>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/urls';
 import '../styles/global.css';
 ---
 
@@ -68,8 +69,8 @@ import '../styles/global.css';
       </div>
 
       <p style="margin-top: 2.25rem;">
-        <a class="btn btn--primary" href="/contact/">Contact sales</a>
-        <a class="btn btn--ghost" href="/products/" style="margin-left: 0.5rem;">Browse products</a>
+        <a class="btn btn--primary" href={withBase("contact/")}>Contact sales</a>
+        <a class="btn btn--ghost" href={withBase("products/")} style="margin-left: 0.5rem;">Browse products</a>
       </p>
     </div>
   </section>

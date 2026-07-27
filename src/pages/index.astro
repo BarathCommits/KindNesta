@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { categoryLabel } from '../lib/products';
+import { withBase } from '../lib/urls';
 import '../styles/global.css';
 
 const products = await getCollection('products');
@@ -40,11 +41,11 @@ const categories = [
   description="KindNesta is a startup that sources and sells eco-friendly products for retail outlets and enterprise buyers, with Kindness Scores on every product."
   transparentHeader
 >
-  <section class="hero">
+  <section class="hero" style={`--hero-image: url('${withBase("images/hero-botanical.svg")}')`}>
     <div class="hero__media" aria-hidden="true"></div>
     <img
       class="hero__logo-blend"
-      src="/images/kindnesta-logo.png"
+      src={withBase("images/kindnesta-logo.png")}
       alt=""
       width="320"
       height="320"
@@ -62,8 +63,8 @@ const categories = [
           a Kindness Score on every item so you can choose with clarity.
         </p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="/products/">Browse products</a>
-          <a class="btn btn--secondary" href="/contact/">Talk to sales</a>
+          <a class="btn btn--primary" href={withBase("products/")}>Browse products</a>
+          <a class="btn btn--secondary" href={withBase("contact/")}>Talk to sales</a>
         </div>
       </div>
     </div>
@@ -97,7 +98,7 @@ const categories = [
             <li>Suggested retail reference pricing</li>
             <li>Shelf-ready impact messaging</li>
           </ul>
-          <a class="btn btn--ghost" href="/about/#retail">Retail partner details</a>
+          <a class="btn btn--ghost" href={withBase("about/#retail")}>Retail partner details</a>
         </article>
         <article class="audience-card audience-card--enterprise">
           <span class="audience-card__label audience-card__label--green">Enterprise</span>
@@ -111,7 +112,7 @@ const categories = [
             <li>Score notes for vendor questionnaires</li>
             <li>Volume ordering support</li>
           </ul>
-          <a class="btn btn--ghost" href="/about/#enterprise">Enterprise details</a>
+          <a class="btn btn--ghost" href={withBase("about/#enterprise")}>Enterprise details</a>
         </article>
       </div>
     </div>
@@ -128,7 +129,7 @@ const categories = [
         {
           categories.map((cat, i) => (
             <li>
-              <a class="category-link" href={`/products/?category=${cat.id}`}>
+              <a class="category-link" href={withBase(`products/?category=${cat.id}`)}>
                 <span class="category-link__index">{String(i + 1).padStart(2, '0')}</span>
                 <span class="category-link__name">{categoryLabel(cat.id)}</span>
                 <span class="category-link__blurb">{cat.blurb}</span>
@@ -156,7 +157,7 @@ const categories = [
         }
       </div>
       <p class="section__cta">
-        <a class="btn btn--ghost" href="/products/">View all products</a>
+        <a class="btn btn--ghost" href={withBase("products/")}>View all products</a>
       </p>
     </div>
   </section>
@@ -179,7 +180,7 @@ const categories = [
           <span data-band="low">0–49 Fair</span>
         </div>
         <p style="margin-top: 1.75rem;">
-          <a class="btn btn--ghost" href="/about/#kindness-score">How we score</a>
+          <a class="btn btn--ghost" href={withBase("about/#kindness-score")}>How we score</a>
         </p>
       </div>
     </div>
@@ -214,7 +215,7 @@ const categories = [
       <div class="cta-block">
         <img
           class="cta-block__logo-blend"
-          src="/images/kindnesta-logo.png"
+          src={withBase("images/kindnesta-logo.png")}
           alt=""
           width="220"
           height="220"
@@ -224,8 +225,8 @@ const categories = [
         <h2>Ready to stock kinder products?</h2>
         <p>Retail and enterprise buyers — let’s talk about what you need to source.</p>
         <div class="hero__actions" style="margin-top: 1.5rem;">
-          <a class="btn btn--primary" href="/contact/">Contact sales</a>
-          <a class="btn btn--secondary" href="/products/">Browse products</a>
+          <a class="btn btn--primary" href={withBase("contact/")}>Contact sales</a>
+          <a class="btn btn--secondary" href={withBase("products/")}>Browse products</a>
         </div>
       </div>
     </div>
