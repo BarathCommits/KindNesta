@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
+
+const contactEmail = 'hello@kindnesta.example';
+const params = Astro.url.searchParams;
+const sku = params.get('sku') ?? '';
+const interest = params.get('interest') ?? 'sales';
+---
+
+<BaseLayout
+  title="Contact — KindNesta"
+  description="Contact KindNesta about products, samples, retail partnerships, or enterprise orders."
+>
+  <section class="page-hero reveal">
+    <div class="container">
+      <span class="section__eyebrow">Contact</span>
+      <h1>Talk to the KindNesta team</h1>
+      <p>
+        Questions about a product, samples, retail restocks, or enterprise volume? We source and sell
+        — tell us what you need.
+      </p>
+    </div>
+  </section>
+
+  <section class="section reveal" style="padding-top: 1rem;">
+    <div class="container contact-layout">
+      <div class="contact-primary">
+        <h2 class="contact-primary__title">Prefer email?</h2>
+        <p class="contact-primary__lead">Reach us directly:</p>
+        <a
+          class="btn btn--primary"
+          href={`mailto:${contactEmail}?subject=${encodeURIComponent(
+            sku ? `Product inquiry · ${sku}` : 'KindNesta sales inquiry'
+          )}`}
+        >
+          {contactEmail}
+        </a>
+        <ul class="contact-primary__list">
+          <li>Retail assortment &amp; restocks</li>
+          <li>Enterprise / multi-site programs</li>
+          <li>Samples &amp; line reviews</li>
+        </ul>
+        <p class="contact-primary__hint">
+          Typical response within 1–2 business days with availability and next steps.
+        </p>
+      </div>
+
+      <form
+        class="contact-form"
+        action={`mailto:${contactEmail}`}
+        method="post"
+        enctype="text/plain"
+      >
+        <h2 class="contact-primary__title">Send an inquiry</h2>
+        <p class="contact-primary__lead">
+          Opens an email draft with your details (optional helper).
+        </p>
+
+        <div class="field">
+          <label for="buyer-type">Buyer type</label>
+          <select id="buyer-type" name="buyer_type" required>
+            <option value="retail" selected={interest !== 'enterprise'}>Retail outlet</option>
+            <option value="enterprise" selected={interest === 'enterprise'}>Enterprise / procurement</option>
+            <option value="other">Other / distributor</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="company">Company / outlet name</label>
+          <input id="company" name="company" type="text" required autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="name">Contact name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="sku">Product / SKU of interest (optional)</label>
+          <input id="sku" name="sku" type="text" value={sku} placeholder="e.g. KN-KIT-BU-001" />
+        </div>
+        <div class="field">
+          <label for="volume">Estimated volume / locations</label>
+          <input
+            id="volume"
+            name="volume"
+            type="text"
+            placeholder="e.g. 3 stores · ~200 units / month"
+          />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            placeholder="Timeline, assortment needs, sample request…"
+          >{interest === 'sample' ? 'I would like to request a sample.' : ''}</textarea>
+        </div>
+        <button class="btn btn--secondary" type="submit">Open email draft</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

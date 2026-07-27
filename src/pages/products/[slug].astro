@@ -1,0 +1,136 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import KindnessPanel from '../../components/KindnessPanel.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { categoryLabel, formatPrice } from '../../lib/products';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product, products },
+  }));
+}
+
+const { product, products } = Astro.props;
+const { Content } = await render(product);
+const {
+  title,
+  shortDescription,
+  price,
+  currency,
+  category,
+  image,
+  kindnessScore,
+  kindnessScoreNotes,
+  ecoTags,
+  inStock,
+  sku,
+  packSize,
+  moq,
+} = product.data;
+
+const related = products
+  .filter((p) => p.id !== product.id && p.data.category === category)
+  .slice(0, 3);
+
+const inquireHref = `/contact/?sku=${encodeURIComponent(sku)}&interest=sales`;
+---
+
+<BaseLayout title={`${title} — KindNesta`} description={shortDescription}>
+  <section class="section" style="padding-top: 2.5rem;">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/products/">Products</a>
+        <span aria-hidden="true">/</span>
+        <a href={`/products/?category=${category}`}>{categoryLabel(category)}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{title}</span>
+      </nav>
+
+      <div class="product-detail">
+        <div class="product-detail__media reveal">
+          <img src={image} alt={title} width="900" height="900" />
+        </div>
+        <div class="product-detail__info reveal">
+          <p class="product-card__category">{categoryLabel(category)}</p>
+          <p class="product-card__sku">{sku}</p>
+          <h1 class="product-detail__title">{title}</h1>
+          <p class="product-detail__lead">{shortDescription}</p>
+
+          <div class="product-detail__pricing">
+            <p class="product-detail__price">
+              <span class="price__label">Suggested retail</span>
+              {formatPrice(price, currency)}
+            </p>
+            <p class="stock" data-out={!inStock}>
+              {inStock ? 'Available to order' : 'Temporarily unavailable'}
+            </p>
+          </div>
+
+          <dl class="trade-specs">
+            <div>
+              <dt>Pack size</dt>
+              <dd>{packSize}</dd>
+            </div>
+            <div>
+              <dt>Minimum order (MOQ)</dt>
+              <dd>{moq} units</dd>
+            </div>
+            <div>
+              <dt>Partner pricing</dt>
+              <dd>On inquiry</dd>
+            </div>
+          </dl>
+
+          <KindnessPanel score={kindnessScore} notes={kindnessScoreNotes} />
+
+          {
+            ecoTags.length > 0 && (
+              <div class="tag-row">
+                {ecoTags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )
+          }
+
+          <div class="product-detail__actions">
+            <a class="btn btn--primary" href={inquireHref}>Request pricing</a>
+            <a class="btn btn--secondary" href="/contact/?interest=sample">Request a sample</a>
+          </div>
+
+          <div class="prose" style="margin-top: 1.75rem;">
+            <Content />
+          </div>
+
+          <p style="margin-top: 2rem;">
+            <a class="btn btn--ghost" href="/products/">← Back to products</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    related.length > 0 && (
+      <section class="section section--tint reveal">
+        <div class="container">
+          <div class="section__head">
+            <span class="section__eyebrow">Related</span>
+            <h2>More from {categoryLabel(category)}</h2>
+          </div>
+          <div class="product-grid">
+            {related.map((item, i) => (
+              <ProductCard product={item} style={`animation-delay: ${i * 80}ms`} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

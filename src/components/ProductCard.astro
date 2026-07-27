@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import KindnessBadge from './KindnessBadge.astro';
+import { categoryLabel, formatPrice } from '../lib/products';
+
+interface Props {
+  product: CollectionEntry<'products'>;
+  style?: string;
+}
+
+const { product, style } = Astro.props;
+const {
+  title,
+  shortDescription,
+  price,
+  currency,
+  category,
+  image,
+  kindnessScore,
+  sku,
+  packSize,
+  moq,
+} = product.data;
+const href = `/products/${product.id}/`;
+---
+
+<article class="product-card" style={style}>
+  <a class="product-card__link" href={href}>
+    <div class="product-card__media">
+      <img src={image} alt={title} loading="lazy" width="640" height="800" />
+    </div>
+    <div class="product-card__body">
+      <div class="product-card__meta">
+        <span class="product-card__category">{categoryLabel(category)}</span>
+        <KindnessBadge score={kindnessScore} compact />
+      </div>
+      <p class="product-card__sku">{sku}</p>
+      <h3>{title}</h3>
+      <p>{shortDescription}</p>
+      <dl class="product-card__trade">
+        <div>
+          <dt>Pack</dt>
+          <dd>{packSize}</dd>
+        </div>
+        <div>
+          <dt>MOQ</dt>
+          <dd>{moq}</dd>
+        </div>
+      </dl>
+      <div class="product-card__footer">
+        <span class="price">
+          <span class="price__label">Sugg. retail</span>
+          {formatPrice(price, currency)}
+        </span>
+        <span class="product-card__cue">View SKU</span>
+      </div>
+    </div>
+  </a>
+</article>

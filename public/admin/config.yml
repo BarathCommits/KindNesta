@@ -1,0 +1,49 @@
+# Decap CMS — product catalog admin
+# 1. Replace repo below with your GitHub repo (owner/name)
+# 2. Set up GitHub OAuth for the GitHub backend (see DEPLOY.md)
+# 3. Visit /admin on the published site
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USER/kindnesta
+  branch: main
+
+media_folder: public/images/products
+public_folder: /images/products
+
+collections:
+  - name: products
+    label: Products
+    folder: src/content/products
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: SKU, name: sku, widget: string }
+      - { label: Suggested retail price, name: price, widget: number, value_type: float, min: 0 }
+      - { label: Currency, name: currency, widget: string, default: USD }
+      - { label: Pack size, name: packSize, widget: string, default: "1 unit" }
+      - { label: MOQ (units), name: moq, widget: number, value_type: int, min: 1, default: 1 }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: Home, value: home }
+          - { label: Personal care, value: personal-care }
+          - { label: Kitchen, value: kitchen }
+          - { label: Garden, value: garden }
+          - { label: Dress, value: dress }
+      - { label: Image, name: image, widget: image }
+      - { label: Short description, name: shortDescription, widget: string }
+      - { label: Kindness Score (0–100), name: kindnessScore, widget: number, value_type: int, min: 0, max: 100 }
+      - { label: Kindness Score notes, name: kindnessScoreNotes, widget: text, required: false }
+      - label: Eco tags
+        name: ecoTags
+        widget: list
+        required: false
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Featured on homepage, name: featured, widget: boolean, default: false }
+      - { label: Available for partner orders, name: inStock, widget: boolean, default: true }
+      - { label: Body, name: body, widget: markdown }

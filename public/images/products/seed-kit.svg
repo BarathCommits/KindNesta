@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Seed starting kit">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a5c48"/>
+      <stop offset="100%" stop-color="#163628"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#bg)"/>
+  <g fill="#8b5a2b">
+    <rect x="170" y="250" width="90" height="80" rx="10"/>
+    <rect x="275" y="250" width="90" height="80" rx="10"/>
+    <rect x="380" y="250" width="90" height="80" rx="10"/>
+  </g>
+  <g fill="#3f8f63">
+    <ellipse cx="215" cy="240" rx="18" ry="28"/>
+    <ellipse cx="320" cy="230" rx="20" ry="34"/>
+    <ellipse cx="425" cy="245" rx="16" ry="26"/>
+  </g>
+  <path d="M215 240v40M320 230v50M425 245v35" stroke="#1f4336" stroke-width="4"/>
+</svg>

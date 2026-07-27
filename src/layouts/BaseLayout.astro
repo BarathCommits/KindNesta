@@ -1,0 +1,163 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  transparentHeader?: boolean;
+}
+
+const {
+  title,
+  description = 'KindNesta sources and sells eco-friendly products for retail outlets and enterprise buyers — with transparent Kindness Scores.',
+  transparentHeader = false,
+} = Astro.props;
+const pathname = Astro.url.pathname;
+const year = new Date().getFullYear();
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/products/', label: 'Products' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+function isCurrent(href: string) {
+  if (href === '/') return pathname === '/' || pathname === '';
+  return pathname.startsWith(href.replace(/\/$/, '')) || pathname.startsWith(href);
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#d32f2f" />
+    <link rel="icon" type="image/png" href="/images/kindnesta-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class:list={['site-header', transparentHeader && 'site-header--transparent']} id="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="/">
+          <img class="brand__logo" src="/images/kindnesta-logo.png" alt="" width="36" height="36" />
+          <span class="brand__wordmark">Kind<span>Nesta</span></span>
+        </a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          id="nav-toggle"
+        >
+          <span class="visually-hidden">Menu</span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <nav class="nav" id="primary-nav" aria-label="Primary">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+          <a class="btn btn--primary btn--sm nav__cta" href="/contact/">Contact sales</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <a class="brand" href="/">
+              <img class="brand__logo" src="/images/kindnesta-logo.png" alt="" width="36" height="36" />
+              <span class="brand__wordmark">Kind<span>Nesta</span></span>
+            </a>
+            <p>
+              KindNesta sources and sells eco-friendly products for retail outlets and enterprise
+              programs — with a Kindness Score on every product.
+            </p>
+          </div>
+          <div class="site-footer__col">
+            <h3>Products</h3>
+            <ul>
+              <li><a href="/products/">All products</a></li>
+              <li><a href="/products/?category=kitchen">Kitchen</a></li>
+              <li><a href="/products/?category=home">Home</a></li>
+              <li><a href="/products/?category=personal-care">Personal care</a></li>
+              <li><a href="/products/?category=garden">Garden</a></li>
+              <li><a href="/products/?category=dress">Dress</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/about/#retail">Retail outlets</a></li>
+              <li><a href="/about/#enterprise">Enterprise</a></li>
+              <li><a href="/about/#kindness-score">Kindness Score</a></li>
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="site-footer__bottom">
+          <span>© {year} KindNesta</span>
+          <span>Sourcing &amp; selling eco-friendly products</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const header = document.getElementById('site-header');
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('primary-nav');
+
+      const onScroll = () => {
+        if (!header) return;
+        header.classList.toggle('is-scrolled', window.scrollY > 12);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      toggle?.addEventListener('click', () => {
+        const open = header?.classList.toggle('is-nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+
+      nav?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          header?.classList.remove('is-nav-open');
+          toggle?.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

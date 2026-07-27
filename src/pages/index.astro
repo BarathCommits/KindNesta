@@ -1,0 +1,233 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { categoryLabel } from '../lib/products';
+import '../styles/global.css';
+
+const products = await getCollection('products');
+const featured = products
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.kindnessScore - a.data.kindnessScore)
+  .slice(0, 3);
+
+const categories = [
+  {
+    id: 'kitchen',
+    blurb: 'Reusable tools and wraps for grocery and foodservice.',
+  },
+  {
+    id: 'home',
+    blurb: 'Refills, totes, and low-waste staples for everyday living.',
+  },
+  {
+    id: 'personal-care',
+    blurb: 'Waterless bars and plastic-free care for people and hospitality.',
+  },
+  {
+    id: 'garden',
+    blurb: 'Peat-free kits for grow-at-home and seasonal programs.',
+  },
+  {
+    id: 'dress',
+    blurb: 'Sustainable apparel for retail and branded programs.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="KindNesta — Sourcing & selling kinder eco products"
+  description="KindNesta is a startup that sources and sells eco-friendly products for retail outlets and enterprise buyers, with Kindness Scores on every product."
+  transparentHeader
+>
+  <section class="hero">
+    <div class="hero__media" aria-hidden="true"></div>
+    <img
+      class="hero__logo-blend"
+      src="/images/kindnesta-logo.png"
+      alt=""
+      width="320"
+      height="320"
+      decoding="async"
+      aria-hidden="true"
+    />
+    <div class="hero__shell">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Sourcing · Selling · Kindness Score</p>
+        <h1 class="hero__brand">
+          <span class="hero__brand-primary">Kind</span><span class="hero__brand-secondary">Nesta</span>
+        </h1>
+        <p class="hero__lead">
+          We source and sell eco-friendly products for retail outlets and enterprise programs — with
+          a Kindness Score on every item so you can choose with clarity.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="/products/">Browse products</a>
+          <a class="btn btn--secondary" href="/contact/">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-strip reveal" aria-label="What KindNesta offers">
+    <div class="container trust-strip__inner">
+      <p><strong>We source</strong> — curated eco products from trusted makers</p>
+      <p><strong>We sell</strong> — to retail outlets and enterprise buyers</p>
+      <p><strong>Kindness Score</strong> — compare impact before you buy</p>
+    </div>
+  </section>
+
+  <section class="section reveal" id="buyers">
+    <div class="container">
+      <div class="section__head">
+        <span class="section__eyebrow">Who we serve</span>
+        <h2>Built for buyers who stock and scale</h2>
+        <p>The same KindNesta assortment, two ways to buy.</p>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <span class="audience-card__label">Retail outlets</span>
+          <h3>Grocery, gift, and specialty retail</h3>
+          <p>
+            Shelf-ready eco products with clear impact stories, case packs, and Kindness Scores your
+            customers can understand at a glance.
+          </p>
+          <ul class="audience-card__list">
+            <li>Case packs &amp; MOQs listed per product</li>
+            <li>Suggested retail reference pricing</li>
+            <li>Shelf-ready impact messaging</li>
+          </ul>
+          <a class="btn btn--ghost" href="/about/#retail">Retail partner details</a>
+        </article>
+        <article class="audience-card audience-card--enterprise">
+          <span class="audience-card__label audience-card__label--green">Enterprise</span>
+          <h3>Procurement, facilities &amp; amenities</h3>
+          <p>
+            Lower-impact essentials for workplaces, hospitality, and employee programs — with
+            transparent scoring for sustainability reporting.
+          </p>
+          <ul class="audience-card__list">
+            <li>Program-ready personal care &amp; home care</li>
+            <li>Score notes for vendor questionnaires</li>
+            <li>Volume ordering support</li>
+          </ul>
+          <a class="btn btn--ghost" href="/about/#enterprise">Enterprise details</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" id="categories">
+    <div class="container">
+      <div class="section__head">
+        <span class="section__eyebrow section__eyebrow--green">Products</span>
+        <h2>Browse by category</h2>
+        <p>Start with the aisle or program you need to fill.</p>
+      </div>
+      <ul class="category-list">
+        {
+          categories.map((cat, i) => (
+            <li>
+              <a class="category-link" href={`/products/?category=${cat.id}`}>
+                <span class="category-link__index">{String(i + 1).padStart(2, '0')}</span>
+                <span class="category-link__name">{categoryLabel(cat.id)}</span>
+                <span class="category-link__blurb">{cat.blurb}</span>
+                <span class="category-link__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section reveal" id="featured">
+    <div class="container">
+      <div class="section__head">
+        <span class="section__eyebrow">Featured</span>
+        <h2>High-scoring picks</h2>
+        <p>Strong Kindness Scores from what we source and sell today.</p>
+      </div>
+      <div class="product-grid">
+        {
+          featured.map((product, i) => (
+            <ProductCard product={product} style={`animation-delay: ${i * 100}ms`} />
+          ))
+        }
+      </div>
+      <p class="section__cta">
+        <a class="btn btn--ghost" href="/products/">View all products</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" id="kindness-score">
+    <div class="container split">
+      <div class="section__head" style="margin-bottom: 0;">
+        <span class="section__eyebrow">Transparency</span>
+        <h2>Kindness Score on every product</h2>
+      </div>
+      <div>
+        <p class="split__copy">
+          Every product we sell is rated <strong>0–100</strong> on materials, packaging, and
+          sourcing. Use it to compare options for retail shelves or enterprise programs — with notes
+          on each product page.
+        </p>
+        <div class="score-bands">
+          <span data-band="high">80–100 Strong</span>
+          <span data-band="mid">50–79 Good</span>
+          <span data-band="low">0–49 Fair</span>
+        </div>
+        <p style="margin-top: 1.75rem;">
+          <a class="btn btn--ghost" href="/about/#kindness-score">How we score</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="process">
+    <div class="container">
+      <div class="section__head">
+        <span class="section__eyebrow">How it works</span>
+        <h2>From discovery to delivery</h2>
+        <p>A simple path to buy kinder products from KindNesta.</p>
+      </div>
+      <ol class="process-list">
+        <li>
+          <h3>Browse products</h3>
+          <p>Filter by category and Kindness Score. Review pack size and MOQ.</p>
+        </li>
+        <li>
+          <h3>Shortlist what fits</h3>
+          <p>Open product pages for impact notes and suggested retail reference pricing.</p>
+        </li>
+        <li>
+          <h3>Place an inquiry</h3>
+          <p>Tell us outlet type, volume, and timeline — our team shares pricing and next steps.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--cta reveal" id="get-in-touch">
+    <div class="container">
+      <div class="cta-block">
+        <img
+          class="cta-block__logo-blend"
+          src="/images/kindnesta-logo.png"
+          alt=""
+          width="220"
+          height="220"
+          decoding="async"
+          aria-hidden="true"
+        />
+        <h2>Ready to stock kinder products?</h2>
+        <p>Retail and enterprise buyers — let’s talk about what you need to source.</p>
+        <div class="hero__actions" style="margin-top: 1.5rem;">
+          <a class="btn btn--primary" href="/contact/">Contact sales</a>
+          <a class="btn btn--secondary" href="/products/">Browse products</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

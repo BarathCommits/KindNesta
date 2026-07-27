@@ -1,0 +1,26 @@
+---
+import { kindnessBand, kindnessBandLabel } from '../lib/products';
+
+interface Props {
+  score: number;
+  compact?: boolean;
+}
+
+const { score, compact = false } = Astro.props;
+const band = kindnessBand(score);
+const label = kindnessBandLabel(score);
+---
+
+<span
+  class:list={['kindness-badge', compact && 'kindness-badge--compact']}
+  data-band={band}
+  title={`Kindness Score ${score} · ${label}`}
+>
+  <span class="kindness-badge__heart" aria-hidden="true">♥</span>
+  <span class="kindness-badge__ring" style={`--pct: ${score}`}>
+    <span>{score}</span>
+  </span>
+  <span class="kindness-badge__text">
+    {compact ? label : `Kindness Score · ${label}`}
+  </span>
+</span>

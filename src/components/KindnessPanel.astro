@@ -1,0 +1,33 @@
+---
+import { kindnessBand, kindnessBandLabel } from '../lib/products';
+
+interface Props {
+  score: number;
+  notes?: string;
+}
+
+const { score, notes } = Astro.props;
+const band = kindnessBand(score);
+const label = kindnessBandLabel(score);
+---
+
+<aside class="kindness-panel" data-band={band} aria-label={`Kindness Score ${score} · ${label}`}>
+  <div class="kindness-panel__score">
+    <div class="kindness-badge__ring kindness-badge__ring--lg" style={`--pct: ${score}`}>
+      <span>{score}</span>
+    </div>
+    <div>
+      <div class="kindness-panel__label">
+        <span class="kindness-panel__heart" aria-hidden="true">♥</span>
+        Kindness Score · {label}
+      </div>
+      <p class="kindness-panel__notes" style="margin-top: 0.3rem;">
+        Rated 0–100 on materials, packaging, and sourcing — for clearer buying decisions.
+      </p>
+      <p class="kindness-panel__link">
+        <a href="/about/#kindness-score">How we score</a>
+      </p>
+    </div>
+  </div>
+  {notes && <p class="kindness-panel__notes">{notes}</p>}
+</aside>
