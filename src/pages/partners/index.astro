@@ -276,21 +276,21 @@ const steps = [
   </section>
 
   <section class="section reveal">
-    <div class="container" style="text-align: center; max-width: 36rem; margin-inline: auto;">
-      <h2>Ready to partner?</h2>
-      <p style="color: var(--md-sys-color-on-surface-variant);">
-        Download the pack, complete your first SKUs, and send the sheet plus evidence. Questions about
-        scope or certs? Contact us.
-      </p>
-      <p style="margin-top: 1.25rem;">
+    <div class="container">
+      <div class="section__head" style="max-width: 36rem; margin-inline: 0;">
+        <h2>Ready to partner?</h2>
+        <p>
+          Download the pack, complete your first SKUs, and send the sheet plus evidence. Questions
+          about scope or certs? Contact us.
+        </p>
+      </div>
+      <div class="page-actions">
         <a class="btn btn--primary" href="mailto:kindnesta@proton.me?subject=Supplier%20inquiry">
-          Email{' '}kindnesta@proton.me
+          Email kindnesta@proton.me
         </a>
-        <a class="btn btn--ghost" href={withBase('contact/?interest=supplier')} style="margin-left: 0.5rem;">
-          Contact form
-        </a>
-        <a class="btn btn--ghost" href="#downloads" style="margin-left: 0.5rem;">Back to downloads</a>
-      </p>
+        <a class="btn btn--ghost" href={withBase('contact/?interest=supplier')}>Contact form</a>
+        <a class="btn btn--ghost" href="#downloads">Back to downloads</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

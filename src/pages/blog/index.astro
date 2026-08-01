@@ -8,7 +8,26 @@ const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const regions = [...new Set(posts.map((p) => p.data.region))].sort();
+const regions = [...new Set(posts.map((p) => p.data.region))].sort((a, b) =>
+  a.localeCompare(b)
+);
+
+const topicOptions = [
+  'regulation',
+  'packaging',
+  'plastics',
+  'green-claims',
+  'climate',
+  'recycling',
+  'textiles',
+  'oceans',
+  'epr',
+  'circular-economy',
+] as const;
+
+const availableTopics = topicOptions.filter((topic) =>
+  posts.some((p) => p.data.tags.includes(topic))
+);
 
 const payload = posts.map((post) => ({
   id: post.id,
@@ -16,6 +35,7 @@ const payload = posts.map((post) => ({
   title: post.data.title,
   description: post.data.description,
   region: post.data.region,
+  tags: post.data.tags,
   pubDate: post.data.pubDate.toISOString(),
   pubLabel: post.data.pubDate.toLocaleDateString('en-GB', {
     year: 'numeric',
@@ -24,6 +44,13 @@ const payload = posts.map((post) => ({
   }),
   stats: post.data.stats.slice(0, 2),
 }));
+
+function topicLabel(tag: string) {
+  return tag
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
 ---
 
 <BaseLayout
@@ -43,22 +70,67 @@ const payload = posts.map((post) => ({
 
   <section class="section reveal" style="padding-top: 1rem;">
     <div class="container">
-      <div class="blog-regions" id="blog-regions" aria-label="Filter by region">
-        <button type="button" class="tag tag--active" data-region="all">All regions</button>
-        {regions.map((r) => (
-          <button type="button" class="tag" data-region={r}>
-            {r}
-          </button>
-        ))}
+      <div class="blog-filters" aria-label="Journal filters">
+        <div class="blog-filters__group">
+          <p class="blog-filters__label" id="region-filter-label">Region</p>
+          <div
+            class="blog-filters__grid"
+            id="blog-regions"
+            role="group"
+            aria-labelledby="region-filter-label"
+          >
+            <button type="button" class="tag tag--active" data-region="all">All regions</button>
+            {
+              regions.map((r) => (
+                <button type="button" class="tag" data-region={r} title={r}>
+                  {r}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        {
+          availableTopics.length > 0 && (
+            <div class="blog-filters__group">
+              <p class="blog-filters__label" id="topic-filter-label">
+                Topic
+              </p>
+              <div
+                class="blog-filters__grid"
+                id="blog-topics"
+                role="group"
+                aria-labelledby="topic-filter-label"
+              >
+                <button type="button" class="tag tag--active" data-topic="all">
+                  All topics
+                </button>
+                {availableTopics.map((t) => (
+                  <button type="button" class="tag" data-topic={t} title={topicLabel(t)}>
+                    {topicLabel(t)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        }
       </div>
-      <p class="filters__count" id="blog-count" style="margin: 1rem 0 1.5rem;">
-        {posts.length} articles
-      </p>
+
+      <div class="blog-filters__meta">
+        <p class="filters__count" id="blog-count">{posts.length} articles</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="blog-clear" hidden>
+          Clear filters
+        </button>
+      </div>
 
       <div class="blog-grid" id="blog-grid">
         {
           posts.map((post) => (
-            <article class="blog-card" data-region={post.data.region}>
+            <article
+              class="blog-card"
+              data-region={post.data.region}
+              data-tags={post.data.tags.join(' ')}
+            >
               <a class="blog-card__link" href={withBase(`blog/${post.id}/`)}>
                 <div class="blog-card__meta">
                   <span class="blog-card__region">{post.data.region}</span>
@@ -83,6 +155,7 @@ const payload = posts.map((post) => ({
           ))
         }
       </div>
+      <p id="blog-empty" class="catalog-empty" hidden>No articles match these filters.</p>
     </div>
   </section>
 </BaseLayout>
@@ -91,29 +164,56 @@ const payload = posts.map((post) => ({
 
 <script>
   const regionsEl = document.getElementById('blog-regions');
+  const topicsEl = document.getElementById('blog-topics');
   const grid = document.getElementById('blog-grid');
   const countEl = document.getElementById('blog-count');
+  const emptyEl = document.getElementById('blog-empty');
+  const clearBtn = document.getElementById('blog-clear');
+
   if (regionsEl && grid && countEl) {
     const cards = [...grid.querySelectorAll('.blog-card')];
-    const buttons = [...regionsEl.querySelectorAll('[data-region]')];
+    const regionButtons = [...regionsEl.querySelectorAll('[data-region]')];
+    const topicButtons = topicsEl ? [...topicsEl.querySelectorAll('[data-topic]')] : [];
 
-    function apply(region) {
+    let activeRegion = 'all';
+    let activeTopic = 'all';
+
+    function apply() {
       let visible = 0;
       cards.forEach((card) => {
-        const match = region === 'all' || card.getAttribute('data-region') === region;
+        const regionOk =
+          activeRegion === 'all' || card.getAttribute('data-region') === activeRegion;
+        const tags = (card.getAttribute('data-tags') || '').split(/\s+/).filter(Boolean);
+        const topicOk = activeTopic === 'all' || tags.includes(activeTopic);
+        const match = regionOk && topicOk;
         card.hidden = !match;
         if (match) visible += 1;
       });
-      buttons.forEach((btn) => {
-        btn.classList.toggle('tag--active', btn.getAttribute('data-region') === region);
+
+      regionButtons.forEach((btn) => {
+        btn.classList.toggle('tag--active', btn.getAttribute('data-region') === activeRegion);
       });
-      countEl.textContent =
-        region === 'all'
-          ? `${visible} articles`
-          : `${visible} article${visible === 1 ? '' : 's'} · ${region}`;
-      const params = new URLSearchParams(window.location.search);
-      if (region === 'all') params.delete('region');
-      else params.set('region', region);
+      topicButtons.forEach((btn) => {
+        btn.classList.toggle('tag--active', btn.getAttribute('data-topic') === activeTopic);
+      });
+
+      const parts = [`${visible} article${visible === 1 ? '' : 's'}`];
+      if (activeRegion !== 'all') parts.push(activeRegion);
+      if (activeTopic !== 'all') {
+        parts.push(
+          activeTopic
+            .split('-')
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ')
+        );
+      }
+      countEl.textContent = parts.join(' · ');
+      if (emptyEl) emptyEl.hidden = visible > 0;
+      if (clearBtn) clearBtn.hidden = activeRegion === 'all' && activeTopic === 'all';
+
+      const params = new URLSearchParams();
+      if (activeRegion !== 'all') params.set('region', activeRegion);
+      if (activeTopic !== 'all') params.set('topic', activeTopic);
       const query = params.toString();
       window.history.replaceState({}, '', query ? `?${query}` : window.location.pathname);
     }
@@ -121,10 +221,26 @@ const payload = posts.map((post) => ({
     regionsEl.addEventListener('click', (event) => {
       const btn = event.target.closest('[data-region]');
       if (!btn) return;
-      apply(btn.getAttribute('data-region') || 'all');
+      activeRegion = btn.getAttribute('data-region') || 'all';
+      apply();
     });
 
-    const initial = new URLSearchParams(window.location.search).get('region') || 'all';
-    if (initial !== 'all') apply(initial);
+    topicsEl?.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-topic]');
+      if (!btn) return;
+      activeTopic = btn.getAttribute('data-topic') || 'all';
+      apply();
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      activeRegion = 'all';
+      activeTopic = 'all';
+      apply();
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    activeRegion = params.get('region') || 'all';
+    activeTopic = params.get('topic') || 'all';
+    if (activeRegion !== 'all' || activeTopic !== 'all') apply();
   }
 </script>
