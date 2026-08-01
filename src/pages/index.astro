@@ -25,8 +25,8 @@ const categories = [
 ---
 
 <BaseLayout
-  title="KindNesta — The kinder way to buy"
-  description="KindNesta — the kinder way to buy. A sustainability e-commerce destination with a transparent Kindness Score on every listing."
+  title="KindNesta — B2B sustainability marketplace"
+  description="KindNesta is a B2B sustainability marketplace for retail and enterprise buyers — with a Kindness Score on every listing. Request quotes and samples; trade pricing stays private."
   transparentHeader
 >
   <section class="hero" style={`--hero-image: url('${withBase("images/hero-botanical.svg")}')`}>
@@ -42,17 +42,17 @@ const categories = [
     />
     <div class="hero__shell">
       <div class="hero__content">
-        <p class="hero__eyebrow">The kinder way to buy.</p>
+        <p class="hero__eyebrow">B2B marketplace · The kinder way to buy.</p>
         <h1 class="hero__brand">
           <span class="hero__brand-primary">Kind</span><span class="hero__brand-secondary">Nesta</span>
         </h1>
         <p class="hero__lead">
-          A sustainability e-commerce destination for kinder products — from everyday essentials to
-          specialty goods — with a Kindness Score on every listing.
+          A B2B sustainability marketplace for retail programmes and enterprise procurement — with a
+          Kindness Score on every listing. Browse the catalogue, then request a quote or sample.
         </p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href={withBase("products/")}>Browse products</a>
-          <a class="btn btn--secondary" href={withBase("contact/")}>Get in touch</a>
+          <a class="btn btn--primary" href={withBase("products/")}>Browse catalogue</a>
+          <a class="btn btn--secondary" href={withBase("contact/?interest=quote")}>Request a quote</a>
         </div>
       </div>
     </div>
@@ -60,8 +60,8 @@ const categories = [
 
   <section class="trust-strip reveal" aria-label="What KindNesta offers">
     <div class="container trust-strip__inner">
+      <p><strong>B2B only</strong> — retail buyers and enterprise procurement, not consumer checkout</p>
       <p><strong>Evidence-first</strong> — specific claims, not vague green slogans</p>
-      <p><strong>Growing assortment</strong> — across categories, not one niche</p>
       <p><strong>Kindness Score</strong> — internal rating; provisional until verified</p>
     </div>
   </section>
@@ -70,8 +70,10 @@ const categories = [
     <div class="container">
       <div class="section__head">
         <span class="section__eyebrow">Who we serve</span>
-        <h2>Built for buyers who stock and scale</h2>
-        <p>One KindNesta marketplace — for retail programmes and enterprise procurement.</p>
+        <h2>Built for business buyers who stock and scale</h2>
+        <p>
+          KindNesta is a B2B marketplace — for retail programmes and enterprise procurement teams.
+        </p>
       </div>
       <div class="audience-grid">
         <article class="audience-card">
@@ -109,9 +111,9 @@ const categories = [
   <section class="section section--tint reveal" id="categories">
     <div class="container">
       <div class="section__head">
-        <span class="section__eyebrow section__eyebrow--green">Products</span>
+        <span class="section__eyebrow section__eyebrow--green">Catalogue</span>
         <h2>Browse by category</h2>
-        <p>Shop the current marketplace aisles — more categories as verified partners join.</p>
+        <p>Source from the current B2B catalogue — more categories as verified partners join.</p>
       </div>
       <ul class="category-list">
         {
@@ -135,7 +137,7 @@ const categories = [
       <div class="section__head">
         <span class="section__eyebrow">Featured</span>
         <h2>High-scoring picks</h2>
-        <p>Strong Kindness Scores from our current assortment (provisional until verified).</p>
+        <p>Strong Kindness Scores from our current B2B catalogue (provisional until verified).</p>
       </div>
       <div class="product-grid">
         {
@@ -145,7 +147,7 @@ const categories = [
         }
       </div>
       <p class="section__cta">
-        <a class="btn btn--ghost" href={withBase("products/")}>View all products</a>
+        <a class="btn btn--ghost" href={withBase("products/")}>View full catalogue</a>
       </p>
     </div>
   </section>
@@ -178,21 +180,21 @@ const categories = [
     <div class="container">
       <div class="section__head">
         <span class="section__eyebrow">How it works</span>
-        <h2>From discovery to delivery</h2>
-        <p>A simple path to shop kinder, sustainability-focused products from KindNesta.</p>
+        <h2>From shortlist to quote</h2>
+        <p>A simple B2B path to source kinder, sustainability-focused products.</p>
       </div>
       <ol class="process-list">
         <li>
-          <h3>Browse products</h3>
-          <p>Filter by category and Kindness Score. Read the description and score notes.</p>
+          <h3>Browse the catalogue</h3>
+          <p>Filter by category and Kindness Score. Read materials, claims, and score notes.</p>
         </li>
         <li>
-          <h3>Compare impact</h3>
-          <p>Use Kindness Scores to shortlist kinder options for your assortment.</p>
+          <h3>Compare for your programme</h3>
+          <p>Use Kindness Scores to shortlist options for retail shelves or enterprise programmes.</p>
         </li>
         <li>
-          <h3>Get in touch</h3>
-          <p>Tell us what you need — our team can help with next steps.</p>
+          <h3>Request a quote or sample</h3>
+          <p>Tell us volume, locations, and timeline — we respond with trade next steps.</p>
         </li>
       </ol>
     </div>
@@ -210,11 +212,11 @@ const categories = [
           decoding="async"
           aria-hidden="true"
         />
-        <h2>Ready to choose kinder products?</h2>
-        <p>Retail and enterprise buyers — tell us what you’re looking for.</p>
+        <h2>Ready to source kinder products?</h2>
+        <p>Retail and enterprise buyers — request a quote, sample, or catalogue walkthrough.</p>
         <div class="page-actions" style="margin-top: 1.5rem;">
-          <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
-          <a class="btn btn--secondary" href={withBase("products/")}>Browse products</a>
+          <a class="btn btn--primary" href={withBase("contact/?interest=quote")}>Request a quote</a>
+          <a class="btn btn--secondary" href={withBase("products/")}>Browse catalogue</a>
         </div>
       </div>
     </div>

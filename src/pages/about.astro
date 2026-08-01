@@ -6,15 +6,16 @@ import '../styles/global.css';
 
 <BaseLayout
   title="About — KindNesta"
-  description="KindNesta — the kinder way to buy. A sustainability e-commerce destination with Kindness Scores on every product."
+  description="KindNesta is a B2B sustainability marketplace for retail and enterprise buyers, with Kindness Scores on every product."
 >
   <section class="page-hero reveal">
     <div class="container">
       <span class="section__eyebrow">About</span>
-      <h1>The kinder way to buy.</h1>
+      <h1>A B2B marketplace for kinder sourcing.</h1>
       <p>
-        KindNesta is a sustainability e-commerce destination — helping buyers discover kinder
-        products and compare impact with a Kindness Score on every listing.
+        KindNesta helps retail and enterprise buyers discover sustainability-focused products and
+        compare impact with a Kindness Score on every listing — then request quotes and samples for
+        trade programmes.
       </p>
     </div>
   </section>
@@ -22,6 +23,15 @@ import '../styles/global.css';
   <section class="section reveal" style="padding-top: 1.5rem;">
     <div class="container">
       <div class="about-layout">
+        <div class="about-block">
+          <h2>Built for business, not consumer checkout</h2>
+          <p>
+            KindNesta is a <strong>B2B</strong> sustainability marketplace. We serve retail buyers
+            and enterprise procurement teams who need scored products for programmes, shelves, and
+            vendor reviews — not a consumer cart.
+          </p>
+        </div>
+
         <div class="about-block">
           <h2>Who scores the products?</h2>
           <p>
@@ -41,6 +51,10 @@ import '../styles/global.css';
             </li>
             <li>Typical response: 1–2 business days</li>
             <li>
+              Buyers:
+              <a href={withBase('contact/?interest=quote')}>request a quote</a>
+            </li>
+            <li>
               Suppliers: use the
               <a href={withBase('partners/')}>partner hub</a>
               template pack
@@ -56,18 +70,18 @@ import '../styles/global.css';
       <div class="section__head">
         <span class="section__eyebrow">Who we serve</span>
         <h2>Built for buyers who stock and scale</h2>
-        <p>One KindNesta marketplace — for retail programmes and enterprise procurement.</p>
+        <p>One KindNesta B2B marketplace — for retail programmes and enterprise procurement.</p>
       </div>
 
       <div class="partner-grid">
         <article class="partner-panel partner-panel--retail" id="retail">
           <h2>For retail outlets</h2>
           <p>
-            Grocery, gift, zero-waste, and lifestyle retailers use KindNesta to find products with a
-            clear Kindness Score and a merchandisable story.
+            Grocery, gift, zero-waste, and lifestyle retailers use KindNesta to source products with
+            a clear Kindness Score and a merchandisable story.
           </p>
           <ul>
-            <li>Growing marketplace assortment across categories</li>
+            <li>Growing B2B catalogue across categories</li>
             <li>Score notes for staff training and buyer decks</li>
             <li>Specific claim language buyers can stand behind</li>
           </ul>
@@ -107,9 +121,9 @@ import '../styles/global.css';
       </div>
 
       <div class="page-actions">
-        <a class="btn btn--primary" href={withBase('contact/')}>Get in touch</a>
+        <a class="btn btn--primary" href={withBase('contact/?interest=quote')}>Request a quote</a>
         <a class="btn btn--secondary" href={withBase('kindness-score/')}>Kindness Score</a>
-        <a class="btn btn--ghost" href={withBase('products/')}>Browse products</a>
+        <a class="btn btn--ghost" href={withBase('products/')}>Browse catalogue</a>
       </div>
     </div>
   </section>

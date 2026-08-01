@@ -1,12 +1,13 @@
 # KindNesta
 
-KindNesta is a **sustainability e-commerce** destination with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages** (static hosting only — no separate web server). Tagline: **The kinder way to buy.**
+KindNesta is a **B2B sustainability marketplace** for retail and enterprise buyers, with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages**. Tagline: **The kinder way to buy.**
 
 ## Features
 
-- Product catalog (hangtags, hangers, packaging, bags, labels, trims, stationery)
+- B2B product catalogue (quotes & samples — no consumer checkout)
 - Kindness Score (0–100) with materials and certification notes
-- Contact inquiry flow
+- Contact / quote inquiry flow for retail and enterprise buyers
+- Partner hub for supplier collaborations
 - Editable CSV catalog — update in Google Sheets or Excel
 - GitHub Actions / Pages deploy workflow
 
