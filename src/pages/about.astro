@@ -20,31 +20,33 @@ import '../styles/global.css';
   </section>
 
   <section class="section reveal" style="padding-top: 1.5rem;">
-    <div class="container about-layout">
-      <div class="about-block">
-        <h2>Who scores the products?</h2>
-        <p>
-          KindNesta reviews supplier submissions against our EU-aligned checklist (gates A1–A7 and
-          evidence pillars). The Kindness Score is our <strong>internal comparison rating</strong> —
-          not a third-party ecolabel, PEF study, or official EU mark. Until certificates and material
-          evidence are verified, scores are marked <strong>provisional</strong>.
-        </p>
-      </div>
+    <div class="container">
+      <div class="about-layout">
+        <div class="about-block">
+          <h2>Who scores the products?</h2>
+          <p>
+            KindNesta reviews supplier submissions against our EU-aligned checklist (gates A1–A7 and
+            evidence pillars). The Kindness Score is our <strong>internal comparison rating</strong>
+            — not a third-party ecolabel, PEF study, or official EU mark. Until certificates and
+            material evidence are verified, scores are marked <strong>provisional</strong>.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h2>How to reach us</h2>
-        <ul class="about-list">
-          <li>
-            Email:
-            <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
-          </li>
-          <li>Typical response: 1–2 business days</li>
-          <li>
-            Suppliers: use the
-            <a href={withBase('partners/')}>partner hub</a>
-            template pack
-          </li>
-        </ul>
+        <div class="about-block">
+          <h2>How to reach us</h2>
+          <ul class="about-list">
+            <li>
+              Email:
+              <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
+            </li>
+            <li>Typical response: 1–2 business days</li>
+            <li>
+              Suppliers: use the
+              <a href={withBase('partners/')}>partner hub</a>
+              template pack
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -88,21 +90,23 @@ import '../styles/global.css';
   </section>
 
   <section class="section reveal" id="kindness-score">
-    <div class="container about-layout">
-      <div class="about-block">
-        <h2>How Kindness Score works</h2>
-        <p>
-          Every product carries a <strong>Kindness Score from 0 to 100</strong>. Higher means a
-          stronger evidence profile. Scores follow KindNesta’s EU-aligned checklist — informed by
-          EmpCo green-claim rules, PPWR packaging expectations, REACH, and ESPR / Digital Product
-          Passport readiness.
-        </p>
-        <p>
-          <a href={withBase('kindness-score/')}>Read the full Kindness Score guide →</a>
-        </p>
+    <div class="container">
+      <div class="about-layout">
+        <div class="about-block">
+          <h2>How Kindness Score works</h2>
+          <p>
+            Every product carries a <strong>Kindness Score from 0 to 100</strong>. Higher means a
+            stronger evidence profile. Scores follow KindNesta’s EU-aligned checklist — informed by
+            EmpCo green-claim rules, PPWR packaging expectations, REACH, and ESPR / Digital Product
+            Passport readiness.
+          </p>
+          <p>
+            <a href={withBase('kindness-score/')}>Read the full Kindness Score guide →</a>
+          </p>
+        </div>
       </div>
 
-      <div class="hero__actions" style="margin-top: 0.5rem;">
+      <div class="page-actions">
         <a class="btn btn--primary" href={withBase('contact/')}>Get in touch</a>
         <a class="btn btn--secondary" href={withBase('kindness-score/')}>Kindness Score</a>
         <a class="btn btn--ghost" href={withBase('products/')}>Browse products</a>

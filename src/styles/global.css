@@ -97,6 +97,7 @@ body {
   font: var(--body-lg);
   letter-spacing: var(--tracking-normal);
   color: var(--md-sys-color-on-surface);
+  overflow-x: clip;
   background:
     linear-gradient(180deg, #fff5f4 0%, var(--md-sys-color-surface) 18%, #faf7f6 100%);
   min-height: 100vh;
@@ -333,7 +334,7 @@ p {
 
 .nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-end;
   gap: 0.15rem;
@@ -359,7 +360,7 @@ p {
   margin-left: 0.35rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 960px) {
   .nav-toggle {
     display: inline-flex;
   }
@@ -372,6 +373,7 @@ p {
     left: 0;
     z-index: 50;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: stretch;
     gap: 0.25rem;
     padding: 0.75rem;
@@ -2275,7 +2277,7 @@ p {
 .about-layout {
   display: grid;
   gap: 1.75rem;
-  max-width: 46rem;
+  max-width: 40rem;
 }
 
 .about-block h2 {
@@ -2288,7 +2290,6 @@ p {
   margin: 0 0 0.85rem;
   font: var(--body-lg);
   color: var(--md-sys-color-on-surface-variant);
-  max-width: 40rem;
 }
 
 .about-block p:last-child {
@@ -2308,6 +2309,14 @@ p {
   color: var(--brand-green);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1.75rem;
 }
 
 .section--tint .partner-grid {
