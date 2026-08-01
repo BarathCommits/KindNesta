@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { product, style } = Astro.props;
-const { title, shortDescription, category, subcategory, brand, image, kindnessScore, bulletPoints } =
+const { title, shortDescription, category, subcategory, brand, image, kindnessScore, bulletPoints, scoreVerified } =
   product.data;
 const href = withBase(`products/${product.id}/`);
 const imageSrc = withBase(image);
@@ -25,7 +25,7 @@ const previewBullets = bulletPoints.slice(0, 2);
     <div class="product-card__body">
       <div class="product-card__meta">
         <span class="product-card__category">{subcategory || categoryLabel(category)}</span>
-        <KindnessBadge score={kindnessScore} compact />
+        <KindnessBadge score={kindnessScore} compact verified={scoreVerified} />
       </div>
       <p class="product-card__brand">{brand}</p>
       <h3>{title}</h3>

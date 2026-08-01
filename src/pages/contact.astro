@@ -7,18 +7,41 @@ const contactEmail = 'kindnesta@proton.me';
 const params = Astro.url.searchParams;
 const sku = params.get('sku') ?? '';
 const interest = params.get('interest') ?? 'sales';
+
+const subject =
+  interest === 'sample'
+    ? sku
+      ? `Sample request · ${sku}`
+      : 'Sample request'
+    : interest === 'quote'
+      ? sku
+        ? `Quote request · ${sku}`
+        : 'Quote request'
+      : sku
+        ? `Product inquiry · ${sku}`
+        : 'KindNesta inquiry';
+
+const defaultMessage =
+  interest === 'sample'
+    ? `I would like to request a sample${sku ? ` for SKU ${sku}` : ''}.`
+    : interest === 'quote'
+      ? `I would like a quote${sku ? ` for SKU ${sku}` : ''}. Volume / timeline: `
+      : interest === 'supplier'
+        ? 'I would like to supply products. I have downloaded the partner template.'
+        : '';
 ---
 
 <BaseLayout
   title="Contact — KindNesta"
-  description="Contact KindNesta about products, samples, or partnerships."
+  description="Contact KindNesta about quotes, samples, products, or supplier partnerships."
 >
   <section class="page-hero reveal">
     <div class="container">
       <span class="section__eyebrow">Contact</span>
       <h1>Talk to the KindNesta team</h1>
       <p>
-        Questions about a product, samples, or how Kindness Scores work? Tell us what you need.
+        Quotes, samples, Kindness Score questions, or supplier submissions — we typically reply
+        within 1–2 business days.
       </p>
     </div>
   </section>
@@ -30,28 +53,24 @@ const interest = params.get('interest') ?? 'sales';
         <p class="contact-primary__lead">Reach us directly:</p>
         <a
           class="btn btn--primary"
-          href={`mailto:${contactEmail}?subject=${encodeURIComponent(
-            sku ? `Product inquiry · ${sku}` : 'KindNesta inquiry'
-          )}`}
+          href={`mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`}
         >
           {contactEmail}
         </a>
         <ul class="contact-primary__list">
+          <li>Quote &amp; sample requests</li>
           <li>Product questions</li>
-          <li>Sample requests</li>
           <li>Retail &amp; enterprise programs</li>
           <li>
             <a href={withBase('partners/')}>Supplier submissions</a>
           </li>
         </ul>
-        <p class="contact-primary__hint">
-          Typical response within 1–2 business days.
-        </p>
+        <p class="contact-primary__hint">Typical response within 1–2 business days.</p>
       </div>
 
       <form
         class="contact-form"
-        action={`mailto:${contactEmail}`}
+        action={`mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`}
         method="post"
         enctype="text/plain"
       >
@@ -61,14 +80,32 @@ const interest = params.get('interest') ?? 'sales';
         </p>
 
         <div class="field">
-          <label for="buyer-type">Buyer type</label>
+          <label for="buyer-type">I am</label>
           <select id="buyer-type" name="buyer_type" required>
-            <option value="retail" selected={interest !== 'enterprise' && interest !== 'supplier'}>
-              Retail outlet
+            <option
+              value="retail"
+              selected={interest !== 'enterprise' && interest !== 'supplier'}
+            >
+              Retail buyer
             </option>
-            <option value="enterprise" selected={interest === 'enterprise'}>Enterprise / procurement</option>
-            <option value="supplier" selected={interest === 'supplier'}>Supplier / manufacturer</option>
+            <option value="enterprise" selected={interest === 'enterprise'}>
+              Enterprise / procurement
+            </option>
+            <option value="supplier" selected={interest === 'supplier'}>
+              Supplier / manufacturer
+            </option>
             <option value="other">Other / distributor</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="interest-type">Request type</label>
+          <select id="interest-type" name="interest_type" required>
+            <option value="quote" selected={interest === 'quote' || interest === 'sales'}>
+              Quote
+            </option>
+            <option value="sample" selected={interest === 'sample'}>Sample</option>
+            <option value="supplier" selected={interest === 'supplier'}>Supplier onboarding</option>
+            <option value="other">General question</option>
           </select>
         </div>
         <div class="field">
@@ -85,7 +122,7 @@ const interest = params.get('interest') ?? 'sales';
         </div>
         <div class="field">
           <label for="sku">Product / SKU of interest (optional)</label>
-          <input id="sku" name="sku" type="text" value={sku} placeholder="e.g. KN-KIT-BU-001" />
+          <input id="sku" name="sku" type="text" value={sku} placeholder="e.g. PSP-001" />
         </div>
         <div class="field">
           <label for="volume">Estimated volume / locations</label>
@@ -103,11 +140,7 @@ const interest = params.get('interest') ?? 'sales';
             name="message"
             required
             placeholder="Timeline, assortment needs, sample request…"
-          >{interest === 'sample'
-            ? 'I would like to request a sample.'
-            : interest === 'supplier'
-              ? 'I would like to supply products. I have downloaded the partner template.'
-              : ''}</textarea>
+          >{defaultMessage}</textarea>
         </div>
         <button class="btn btn--secondary" type="submit">Open email draft</button>
       </form>

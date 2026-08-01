@@ -22,21 +22,22 @@ const payload = sorted.map((p) => ({
   bulletPoints: p.data.bulletPoints.slice(0, 2),
   image: withBase(p.data.image),
   kindnessScore: p.data.kindnessScore,
+  scoreVerified: p.data.scoreVerified,
   href: withBase(`products/${p.id}/`),
 }));
 ---
 
 <BaseLayout
   title="Products — KindNesta"
-  description="Browse KindNesta products with Kindness Scores — compare impact at a glance."
+  description="Browse KindNesta’s marketplace with Kindness Scores — compare impact at a glance."
 >
   <section class="page-hero">
     <div class="container">
-      <span class="section__eyebrow">Products</span>
-      <h1>Our catalog</h1>
+      <span class="section__eyebrow">Marketplace</span>
+      <h1>Shop kinder products</h1>
       <p>
-        Shop by category or Kindness Score. Each listing shows the product story, key details, and
-        score — similar to a marketplace product card.
+        Browse by category or Kindness Score. Each listing shows the product story, key details, and
+        score — like a modern e-commerce product card.
       </p>
     </div>
   </section>
@@ -132,6 +133,9 @@ const payload = sorted.map((p) => ({
     const label = kindnessBandLabel(p.kindnessScore);
     const title = escapeHtml(p.title);
     const desc = escapeHtml(p.shortDescription);
+    const verified = Boolean(p.scoreVerified);
+    const status = verified ? 'Verified' : 'Provisional';
+    const statusShort = verified ? '' : ' · Prov.';
     const bullets = (p.bulletPoints || [])
       .map((b) => `<li>${escapeHtml(b)}</li>`)
       .join('');
@@ -144,10 +148,9 @@ const payload = sorted.map((p) => ({
           <div class="product-card__body">
             <div class="product-card__meta">
               <span class="product-card__category">${escapeHtml(p.subcategory || p.categoryLabel)}</span>
-              <span class="kindness-badge kindness-badge--compact" data-band="${band}" title="Kindness Score ${p.kindnessScore} · ${label}">
-                <span class="kindness-badge__heart" aria-hidden="true">♥</span>
+              <span class="kindness-badge kindness-badge--compact${verified ? '' : ' kindness-badge--provisional'}" data-band="${band}" title="Kindness Score ${p.kindnessScore} · ${label} · ${status} (KindNesta internal rating)">
                 <span class="kindness-badge__ring" style="--pct: ${p.kindnessScore}"><span>${p.kindnessScore}</span></span>
-                <span class="kindness-badge__text">${label}</span>
+                <span class="kindness-badge__text">${label}<span class="kindness-badge__status">${statusShort}</span></span>
               </span>
             </div>
             <p class="product-card__brand">${escapeHtml(p.brand || 'KindNesta')}</p>

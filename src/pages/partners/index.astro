@@ -80,14 +80,14 @@ const steps = [
   {
     n: '4',
     title: 'Send to KindNesta',
-    body: 'Email the completed CSV + evidence pack to kindnesta@proton.me. We validate gates, confirm the score, then list the product.',
+    body: 'Email the completed CSV + evidence pack to kindnesta@proton.me. We acknowledge within 2 business days, complete an initial gate review within ~10 business days, then confirm the score and list the product.',
   },
 ];
 ---
 
 <BaseLayout
   title="Partners & suppliers — KindNesta"
-  description="Supply KindNesta: download the product template, fill guide, and Kindness Score checklist for hangtags, packaging, bags, labels, and trims."
+  description="Supply KindNesta: download the product template, fill guide, and Kindness Score checklist for our sustainability marketplace."
 >
   <section class="page-hero reveal">
     <div class="container">
@@ -112,9 +112,9 @@ const steps = [
         <div>
           <h2>Who this is for</h2>
           <p>
-            Manufacturers and brand suppliers of apparel packaging and trims — hangtags, hangers,
-            bags, polybags, labels, stationery, and related packaging — who want transparent listing
-            with a Kindness Score buyers can trust.
+            Manufacturers and brand suppliers of sustainability-focused products — from everyday
+            essentials to specialty goods — who want transparent marketplace listing with a Kindness
+            Score buyers can trust.
           </p>
         </div>
         <div>
@@ -158,7 +158,7 @@ const steps = [
 
       <p class="download-hint">
         Quick start: open the <strong>product template</strong>, read the <strong>fill guide</strong>,
-        replace example rows, attach PDFs named in <code>evidencePackFileNames</code>, then email
+        replace example rows, attach PDFs named in <code>evidencePackFileNames</code>, then email{' '}
         <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>.
       </p>
     </div>
@@ -242,8 +242,12 @@ const steps = [
 
   <section class="section section--tint reveal" id="categories">
     <div class="container">
-      <span class="section__eyebrow">Catalogue</span>
-      <h2 class="section__title">Categories we list</h2>
+      <span class="section__eyebrow">Marketplace</span>
+      <h2 class="section__title">Categories live today</h2>
+      <p style="max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
+        These are the aisles open in the KindNesta marketplace now. More categories welcome as
+        verified suppliers join.
+      </p>
       <div class="blog-regions" style="margin-top: 1rem;">
         {
           ['hangtags', 'hangers', 'packaging', 'bags', 'polybags', 'stationery', 'labels', 'trims'].map(
@@ -256,7 +260,10 @@ const steps = [
         }
       </div>
       <p style="margin-top: 1.5rem; max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
-        Use exactly these category values in the template’s <code>category</code> column.
+        After you email <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>, we acknowledge
+        within <strong>2 business days</strong> and aim to complete an initial gate review within
+        about <strong>10 business days</strong>. Use exactly these category values in the template’s
+        <code>category</code> column (or ask us before adding a new aisle).
       </p>
     </div>
   </section>
@@ -270,7 +277,7 @@ const steps = [
       </p>
       <p style="margin-top: 1.25rem;">
         <a class="btn btn--primary" href="mailto:kindnesta@proton.me?subject=Supplier%20inquiry">
-          Email kindnesta@proton.me
+          Email{' '}kindnesta@proton.me
         </a>
         <a class="btn btn--ghost" href={withBase('contact/?interest=supplier')} style="margin-left: 0.5rem;">
           Contact form

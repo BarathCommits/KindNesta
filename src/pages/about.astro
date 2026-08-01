@@ -6,40 +6,58 @@ import '../styles/global.css';
 
 <BaseLayout
   title="About — KindNesta"
-  description="KindNesta offers eco-friendly packaging and apparel trims — with Kindness Scores on every product."
+  description="KindNesta — the kinder way to buy. A sustainability e-commerce destination with Kindness Scores on every product."
 >
   <section class="page-hero reveal">
     <div class="container">
       <span class="section__eyebrow">About</span>
-      <h1>Kinder products, clearly scored</h1>
+      <h1>The kinder way to buy.</h1>
       <p>
-        KindNesta helps buyers discover eco-friendly packaging and apparel trims — and compare
-        impact with a Kindness Score on every product.
+        KindNesta is a sustainability e-commerce destination — helping buyers discover kinder
+        products and compare impact with a Kindness Score on every listing.
       </p>
     </div>
   </section>
 
   <section class="section reveal" style="padding-top: 1rem;">
+    <div class="container prose-page">
+      <h2>Who scores the products?</h2>
+      <p>
+        KindNesta reviews supplier submissions against our EU-aligned checklist (gates A1–A7 and
+        evidence pillars). The Kindness Score is our <strong>internal comparison rating</strong> —
+        not a third-party ecolabel, PEF study, or official EU mark. Until certificates and material
+        evidence are verified, scores are marked <strong>provisional</strong>.
+      </p>
+      <h2>How to reach us</h2>
+      <ul>
+        <li>Email: <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a></li>
+        <li>Typical response: 1–2 business days</li>
+        <li>Suppliers: use the <a href={withBase('partners/')}>partner hub</a> template pack</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" style="padding-top: 1rem;">
     <div class="container">
       <div class="partner-grid">
         <article class="partner-panel partner-panel--retail" id="retail">
           <h2>For retail outlets</h2>
           <p>
-            Specialty grocery, gift, zero-waste, and lifestyle retailers use KindNesta to find
-            products with a clear Kindness Score and a merchandisable story.
+            Grocery, gift, zero-waste, and lifestyle retailers use KindNesta to find products with a
+            clear Kindness Score and a merchandisable story.
           </p>
           <ul>
-            <li>Assortment across hangtags, packaging, bags, labels, and trims</li>
-            <li>Score notes for shelf talkers and staff training</li>
-            <li>Impact messaging customers can understand at a glance</li>
+            <li>Growing marketplace assortment across categories</li>
+            <li>Score notes for staff training and buyer decks</li>
+            <li>Specific claim language buyers can stand behind</li>
           </ul>
         </article>
 
         <article class="partner-panel partner-panel--enterprise" id="enterprise">
           <h2>For enterprise buyers</h2>
           <p>
-            Facilities, hospitality, and people-ops teams explore kinder essentials for workplaces
-            and programs — with scoring that supports sustainability conversations.
+            Brand, facilities, and procurement teams use KindNesta for programmes that need
+            transparent scoring for questionnaires and supplier reviews.
           </p>
           <ul>
             <li>Transparent inputs: materials, packaging, certifications</li>
@@ -49,23 +67,15 @@ import '../styles/global.css';
         </article>
       </div>
 
-      <div class="prose" id="kindness-score">
+      <div class="prose" id="kindness-score" style="margin-top: 2rem;">
         <h2>How Kindness Score works</h2>
         <p>
           Every product carries a <strong>Kindness Score from 0 to 100</strong>. Higher means a
-          stronger evidence profile for people and planet. Scores follow KindNesta’s
-          <strong>EU-aligned checklist</strong> (chemical safety, material %, third-party
-          certifications, circularity, packaging, and traceability) — informed by EmpCo green-claim
-          rules, PPWR packaging expectations, REACH, and ESPR / Digital Product Passport readiness.
+          stronger evidence profile. Scores follow KindNesta’s EU-aligned checklist — informed by
+          EmpCo green-claim rules, PPWR packaging expectations, REACH, and ESPR / Digital Product
+          Passport readiness.
         </p>
-        <ul>
-          <li>Gate checks stop weak or illegal-style green claims</li>
-          <li>Pillar checks award points only when evidence is on file</li>
-          <li>Recognised third-party certifications score higher than unverified claims</li>
-        </ul>
         <p>
-          Scores are not a third-party life-cycle assessment. They are a transparent rating so you
-          can compare products quickly.
           <a href={withBase("kindness-score/")}>Read the full Kindness Score guide →</a>
         </p>
       </div>

@@ -5,30 +5,43 @@ import { withBase } from '../lib/urls';
 interface Props {
   score: number;
   notes?: string;
+  verified?: boolean;
 }
 
-const { score, notes } = Astro.props;
+const { score, notes, verified = false } = Astro.props;
 const band = kindnessBand(score);
 const label = kindnessBandLabel(score);
+const status = verified ? 'Verified evidence' : 'Provisional';
 ---
 
-<aside class="kindness-panel" data-band={band} aria-label={`Kindness Score ${score} · ${label}`}>
+<aside class="kindness-panel" data-band={band} aria-label={`Kindness Score ${score} · ${label} · ${status}`}>
   <div class="kindness-panel__score">
     <div class="kindness-badge__ring kindness-badge__ring--lg" style={`--pct: ${score}`}>
       <span>{score}</span>
     </div>
     <div>
       <div class="kindness-panel__label">
-        <span class="kindness-panel__heart" aria-hidden="true">♥</span>
         Kindness Score · {label}
+        <span class:list={['kindness-panel__status', verified ? 'is-verified' : 'is-provisional']}>
+          {status}
+        </span>
       </div>
       <p class="kindness-panel__notes" style="margin-top: 0.3rem;">
-        Rated 0–100 on materials, packaging, and sourcing — for clearer buying decisions.
+        KindNesta internal rating (0–100) on materials, product packaging, certifications, and
+        evidence — not a third-party ecolabel or LCA.
       </p>
       <p class="kindness-panel__link">
         <a href={withBase("kindness-score/")}>How we score</a>
       </p>
     </div>
   </div>
-  {notes && <p class="kindness-panel__notes">{notes}</p>}
+  {
+    !verified && (
+      <p class="kindness-panel__provisional">
+        This score is <strong>provisional</strong> until certificates, material %, and chemical
+        statements are verified against our checklist.
+      </p>
+    )
+  }
+  {notes && <p class="kindness-panel__notes"><strong>Notes:</strong> {notes}</p>}
 </aside>

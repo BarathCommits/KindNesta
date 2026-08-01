@@ -9,11 +9,26 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const regions = [...new Set(posts.map((p) => p.data.region))].sort();
+
+const payload = posts.map((post) => ({
+  id: post.id,
+  href: withBase(`blog/${post.id}/`),
+  title: post.data.title,
+  description: post.data.description,
+  region: post.data.region,
+  pubDate: post.data.pubDate.toISOString(),
+  pubLabel: post.data.pubDate.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }),
+  stats: post.data.stats.slice(0, 2),
+}));
 ---
 
 <BaseLayout
   title="Impact journal — KindNesta"
-  description="Regional notes on environmental impacts, packaging rules, green claims, and sustainability stats from around the world."
+  description="Regional briefings on packaging rules, green claims, plastics, and climate-linked supply-chain risks."
 >
   <section class="page-hero reveal">
     <div class="container">
@@ -28,15 +43,22 @@ const regions = [...new Set(posts.map((p) => p.data.region))].sort();
 
   <section class="section reveal" style="padding-top: 1rem;">
     <div class="container">
-      <div class="blog-regions" aria-label="Regions covered">
-        {regions.map((r) => <span class="tag">{r}</span>)}
+      <div class="blog-regions" id="blog-regions" aria-label="Filter by region">
+        <button type="button" class="tag tag--active" data-region="all">All regions</button>
+        {regions.map((r) => (
+          <button type="button" class="tag" data-region={r}>
+            {r}
+          </button>
+        ))}
       </div>
-      <p class="filters__count" style="margin: 1rem 0 1.5rem;">{posts.length} articles</p>
+      <p class="filters__count" id="blog-count" style="margin: 1rem 0 1.5rem;">
+        {posts.length} articles
+      </p>
 
-      <div class="blog-grid">
+      <div class="blog-grid" id="blog-grid">
         {
           posts.map((post) => (
-            <article class="blog-card">
+            <article class="blog-card" data-region={post.data.region}>
               <a class="blog-card__link" href={withBase(`blog/${post.id}/`)}>
                 <div class="blog-card__meta">
                   <span class="blog-card__region">{post.data.region}</span>
@@ -64,3 +86,45 @@ const regions = [...new Set(posts.map((p) => p.data.region))].sort();
     </div>
   </section>
 </BaseLayout>
+
+<script type="application/json" id="blog-data" set:html={JSON.stringify(payload)} />
+
+<script>
+  const regionsEl = document.getElementById('blog-regions');
+  const grid = document.getElementById('blog-grid');
+  const countEl = document.getElementById('blog-count');
+  if (regionsEl && grid && countEl) {
+    const cards = [...grid.querySelectorAll('.blog-card')];
+    const buttons = [...regionsEl.querySelectorAll('[data-region]')];
+
+    function apply(region) {
+      let visible = 0;
+      cards.forEach((card) => {
+        const match = region === 'all' || card.getAttribute('data-region') === region;
+        card.hidden = !match;
+        if (match) visible += 1;
+      });
+      buttons.forEach((btn) => {
+        btn.classList.toggle('tag--active', btn.getAttribute('data-region') === region);
+      });
+      countEl.textContent =
+        region === 'all'
+          ? `${visible} articles`
+          : `${visible} article${visible === 1 ? '' : 's'} · ${region}`;
+      const params = new URLSearchParams(window.location.search);
+      if (region === 'all') params.delete('region');
+      else params.set('region', region);
+      const query = params.toString();
+      window.history.replaceState({}, '', query ? `?${query}` : window.location.pathname);
+    }
+
+    regionsEl.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-region]');
+      if (!btn) return;
+      apply(btn.getAttribute('data-region') || 'all');
+    });
+
+    const initial = new URLSearchParams(window.location.search).get('region') || 'all';
+    if (initial !== 'all') apply(initial);
+  }
+</script>

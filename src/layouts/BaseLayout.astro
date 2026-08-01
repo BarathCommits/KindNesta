@@ -5,24 +5,26 @@ interface Props {
   title: string;
   description?: string;
   transparentHeader?: boolean;
+  ogImage?: string;
 }
 
 const {
   title,
-  description = 'KindNesta offers eco-friendly packaging and apparel trims — with transparent Kindness Scores.',
+  description = 'KindNesta — the kinder way to buy. A sustainability e-commerce destination with a Kindness Score on every listing.',
   transparentHeader = false,
+  ogImage = 'images/kindnesta-logo.png',
 } = Astro.props;
 const pathname = Astro.url.pathname;
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(withBase(ogImage).replace(/^\//, ''), Astro.site).href;
 const nav = [
-  { href: withBase(), label: 'Home' },
   { href: withBase('products/'), label: 'Products' },
-  { href: withBase('kindness-score/'), label: 'Kindness Score' },
+  { href: withBase('kindness-score/'), label: 'Score' },
   { href: withBase('partners/'), label: 'Partners' },
   { href: withBase('blog/'), label: 'Journal' },
   { href: withBase('about/'), label: 'About' },
-  { href: withBase('contact/'), label: 'Contact' },
 ];
 
 function normalize(path: string) {
@@ -44,12 +46,21 @@ function isCurrent(href: string) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#d32f2f" />
+    <meta name="theme-color" content="#0f6b45" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="icon" type="image/png" href={withBase('images/kindnesta-logo.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Sora:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -60,7 +71,7 @@ function isCurrent(href: string) {
       <div class="container site-header__inner">
         <a class="brand" href={withBase()}>
           <img class="brand__logo" src={withBase('images/kindnesta-logo.png')} alt="" width="36" height="36" />
-          <span class="brand__wordmark">Kind<span>Nesta</span></span>
+          <span class="brand__wordmark"><span class="brand__kind">Kind</span><span class="brand__nesta">Nesta</span></span>
         </a>
         <button
           class="nav-toggle"
@@ -82,7 +93,9 @@ function isCurrent(href: string) {
               </a>
             ))
           }
-          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>Contact</a>
+          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>
+            Contact
+          </a>
         </nav>
       </div>
     </header>
@@ -95,11 +108,11 @@ function isCurrent(href: string) {
           <div class="site-footer__brand">
             <a class="brand" href={withBase()}>
               <img class="brand__logo" src={withBase('images/kindnesta-logo.png')} alt="" width="36" height="36" />
-              <span class="brand__wordmark">Kind<span>Nesta</span></span>
+              <span class="brand__wordmark"><span class="brand__kind">Kind</span><span class="brand__nesta">Nesta</span></span>
             </a>
             <p>
-              KindNesta offers eco-friendly packaging and apparel trims — with a Kindness Score on
-              every product.
+              The kinder way to buy — a sustainability e-commerce destination with a Kindness Score
+              on every listing.
             </p>
           </div>
           <div class="site-footer__col">
@@ -107,9 +120,12 @@ function isCurrent(href: string) {
             <ul>
               <li><a href={withBase('products/')}>All products</a></li>
               <li><a href={withBase('products/?category=hangtags')}>Hangtags</a></li>
+              <li><a href={withBase('products/?category=hangers')}>Hangers</a></li>
               <li><a href={withBase('products/?category=packaging')}>Packaging</a></li>
-              <li><a href={withBase('products/?category=labels')}>Labels</a></li>
               <li><a href={withBase('products/?category=bags')}>Shopping bags</a></li>
+              <li><a href={withBase('products/?category=polybags')}>Polybags</a></li>
+              <li><a href={withBase('products/?category=labels')}>Labels</a></li>
+              <li><a href={withBase('products/?category=stationery')}>Stationery</a></li>
               <li><a href={withBase('products/?category=trims')}>Trims &amp; tapes</a></li>
             </ul>
           </div>
@@ -120,15 +136,15 @@ function isCurrent(href: string) {
               <li><a href={withBase('kindness-score/')}>Kindness Score</a></li>
               <li><a href={withBase('partners/')}>Partners &amp; suppliers</a></li>
               <li><a href={withBase('blog/')}>Impact journal</a></li>
-              <li><a href={withBase('about/#retail')}>Retail outlets</a></li>
               <li><a href={withBase('contact/')}>Contact</a></li>
+              <li><a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a></li>
             </ul>
           </div>
         </div>
         <div class="site-footer__bottom">
           <span>© {year} KindNesta</span>
           <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
-          <span>Kinder products, clearly scored</span>
+          <span>The kinder way to buy.</span>
         </div>
       </div>
     </footer>
