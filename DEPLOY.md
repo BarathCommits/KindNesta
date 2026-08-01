@@ -74,3 +74,27 @@ Configured for `kindnesta.com`:
 2. `astro.config.mjs` uses `site: 'https://kindnesta.com'` and `base: '/'`
 3. In **Settings → Pages**, add the custom domain and enable **Enforce HTTPS** once the certificate is ready
 4. DNS should point at GitHub Pages (A/AAAA or CNAME per GitHub’s docs)
+
+### Expected DNS (GoDaddy)
+
+| Host | Type | Value |
+|------|------|--------|
+| `@` | A | `185.199.108.153` |
+| `@` | A | `185.199.109.153` |
+| `@` | A | `185.199.110.153` |
+| `@` | A | `185.199.111.153` |
+| `@` | AAAA | `2606:50c0:8000::153` |
+| `@` | AAAA | `2606:50c0:8001::153` |
+| `@` | AAAA | `2606:50c0:8002::153` |
+| `@` | AAAA | `2606:50c0:8003::153` |
+| `www` | CNAME | `barathcommits.github.io.` |
+
+Do not add extra A/AAAA/CNAME records for `@` or `www` beyond the table above — extras can block certificate issuance. If you use CAA records, allow `letsencrypt.org`.
+
+### Browser “certificate” / NET::ERR_CERT errors
+
+If HTTPS shows a certificate for `*.github.io` instead of `kindnesta.com`, GitHub never finished provisioning the custom-domain cert (or it got stuck). DNS can be correct while this still happens.
+
+**Repair (repo Actions):** run the **Fix Pages SSL certificate** workflow (`workflow_dispatch`). It clears and re-adds `kindnesta.com`, waits for Let’s Encrypt approval, then turns on **Enforce HTTPS**.
+
+**Repair (GitHub UI):** Settings → Pages → remove the custom domain → Save → add `kindnesta.com` again → wait until the domain shows a checkmark → enable **Enforce HTTPS**.

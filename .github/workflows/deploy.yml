@@ -48,3 +48,25 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Keep custom-domain HTTPS on after deploys when the cert is ready.
+      - name: Ensure custom domain HTTPS
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          pages=$(gh api "repos/${{ github.repository }}/pages")
+          printf '%s\n' "$pages" | jq '{cname, https_enforced, https_certificate}'
+          cname=$(printf '%s' "$pages" | jq -r '.cname // empty')
+          state=$(printf '%s' "$pages" | jq -r '.https_certificate.state // empty')
+          enforced=$(printf '%s' "$pages" | jq -r '.https_enforced')
+          if [ "$cname" != "kindnesta.com" ]; then
+            echo "Setting custom domain to kindnesta.com"
+            printf '%s\n' '{"cname":"kindnesta.com","https_enforced":false}' \
+              | gh api --method PUT "repos/${{ github.repository }}/pages" --input -
+          fi
+          if [ "$state" = "approved" ] && [ "$enforced" != "true" ]; then
+            echo "Enforcing HTTPS"
+            printf '%s\n' '{"cname":"kindnesta.com","https_enforced":true}' \
+              | gh api --method PUT "repos/${{ github.repository }}/pages" --input -
+          fi
