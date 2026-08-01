@@ -7,7 +7,8 @@ Send suppliers these files (also mirrored under `/docs/` on the site):
 | File | Purpose |
 | --- | --- |
 | [`partner-product-template.csv`](./partner-product-template.csv) | **Master spreadsheet** — product listing + EU evidence + gate checks |
-| [`SUPPLIER-FILL-GUIDE.md`](./SUPPLIER-FILL-GUIDE.md) | **How to fill** every column |
+| [`SUPPLIER-FILL-GUIDE.pdf`](./SUPPLIER-FILL-GUIDE.pdf) | **How to fill** (printable PDF) |
+| [`SUPPLIER-FILL-GUIDE.md`](./SUPPLIER-FILL-GUIDE.md) | Same guide in Markdown |
 | [`KINDNESS-SCORE-STANDARD.md`](./KINDNESS-SCORE-STANDARD.md) | Full scoring rules |
 | [`partner-score-checklist.csv`](./partner-score-checklist.csv) | Optional slim Pass/Fail sheet |
 
