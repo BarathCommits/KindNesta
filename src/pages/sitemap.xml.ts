@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-export const GET: APIRoute = async () => {
-  const site = 'https://barathcommits.github.io/KindNesta';
+export const GET: APIRoute = async ({ site }) => {
+  const origin = (site?.origin ?? 'https://kindnesta.com').replace(/\/$/, '');
   const products = await getCollection('products');
   const posts = await getCollection('blog');
 
@@ -17,9 +17,9 @@ export const GET: APIRoute = async () => {
   ];
 
   const urls = [
-    ...staticRoutes.map((path) => `${site}/${path}`),
-    ...products.map((p) => `${site}/products/${p.id}/`),
-    ...posts.map((p) => `${site}/blog/${p.id}/`),
+    ...staticRoutes.map((path) => `${origin}/${path}`),
+    ...products.map((p) => `${origin}/products/${p.id}/`),
+    ...posts.map((p) => `${origin}/blog/${p.id}/`),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

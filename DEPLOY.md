@@ -2,11 +2,11 @@
 
 KindNesta is a **static site**. Hosting is on **GitHub Pages** — no GoDaddy or other web server.
 
-Build output lives in `docs/` (`astro.config.mjs`: `base: '/KindNesta'`, `outDir: './docs'`).
+Build output lives in `docs/` (`astro.config.mjs`: `base: '/'`, `outDir: './docs'`, custom domain).
 
 Live URL:
 
-- `https://barathcommits.github.io/KindNesta/`
+- `https://kindnesta.com/` (GitHub Pages + custom domain)
 
 ## Option A — GitHub Actions (recommended)
 
@@ -64,13 +64,13 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:4321/KindNesta/`.
+Open `http://localhost:4321/`.
 
-## Custom domain later (optional)
+## Custom domain
 
-Still on GitHub Pages — no separate host:
+Configured for `kindnesta.com`:
 
-1. Add the domain under **Settings → Pages**
-2. Add `public/CNAME` with your domain
-3. In `astro.config.mjs`, set `site` to your domain and change `base` to `'/'`
-4. Rebuild and push
+1. `public/CNAME` contains `kindnesta.com`
+2. `astro.config.mjs` uses `site: 'https://kindnesta.com'` and `base: '/'`
+3. In **Settings → Pages**, add the custom domain and enable **Enforce HTTPS** once the certificate is ready
+4. DNS should point at GitHub Pages (A/AAAA or CNAME per GitHub’s docs)

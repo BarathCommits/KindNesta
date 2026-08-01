@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://barathcommits.github.io/KindNesta/sitemap.xml
+Sitemap: https://kindnesta.com/sitemap.xml
