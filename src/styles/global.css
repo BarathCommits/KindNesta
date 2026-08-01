@@ -466,14 +466,14 @@ p {
 /* —— Hero —— */
 .hero {
   position: relative;
-  min-height: min(88vh, 720px);
+  min-height: min(58vh, 480px);
   display: flex;
   align-items: center;
   overflow: hidden;
   color: #fff;
   isolation: isolate;
   margin-top: calc(var(--header-h) * -1);
-  padding: calc(var(--header-h) + 1.5rem) 0 3rem;
+  padding: calc(var(--header-h) + 1.25rem) 0 2.25rem;
 }
 
 .hero__media {
@@ -482,14 +482,14 @@ p {
   z-index: -2;
   background:
     linear-gradient(
-      105deg,
-      rgba(154, 0, 7, 0.88) 0%,
-      rgba(154, 0, 7, 0.78) 42%,
-      rgba(15, 107, 69, 0.35) 100%
+      115deg,
+      rgba(154, 0, 7, 0.55) 0%,
+      rgba(15, 107, 69, 0.72) 28%,
+      rgba(6, 53, 40, 0.88) 100%
     ),
-    radial-gradient(ellipse 50% 55% at 85% 35%, rgba(247, 242, 237, 0.12), transparent 55%),
+    radial-gradient(ellipse 45% 50% at 88% 30%, rgba(247, 242, 237, 0.14), transparent 55%),
     var(--hero-image, none) center / cover no-repeat,
-    var(--brand-heart-deep);
+    var(--brand-green-deep);
   animation: heroDrift 24s ease-in-out infinite alternate;
 }
 
