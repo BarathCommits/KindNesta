@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title,
-  description = 'KindNesta — the kinder way to buy. A sustainability e-commerce destination with a Kindness Score on every listing.',
+  description = 'KindNesta is a B2B sustainability marketplace for retail and enterprise buyers, with a Kindness Score on every listing.',
   transparentHeader = false,
   ogImage = 'images/kindnesta-logo.png',
 } = Astro.props;
@@ -93,8 +93,8 @@ function isCurrent(href: string) {
               </a>
             ))
           }
-          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>
-            Contact
+          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/?interest=quote')}>
+            Request a quote
           </a>
         </nav>
       </div>
@@ -111,8 +111,8 @@ function isCurrent(href: string) {
               <span class="brand__wordmark"><span class="brand__kind">Kind</span><span class="brand__nesta">Nesta</span></span>
             </a>
             <p>
-              The kinder way to buy — a sustainability e-commerce destination with a Kindness Score
-              on every listing.
+              B2B sustainability marketplace for retail and enterprise buyers — with a Kindness
+              Score on every listing. The kinder way to buy.
             </p>
           </div>
           <div class="site-footer__col">
@@ -144,7 +144,7 @@ function isCurrent(href: string) {
         <div class="site-footer__bottom">
           <span>© {year} KindNesta</span>
           <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
-          <span>The kinder way to buy.</span>
+          <span>B2B · The kinder way to buy.</span>
         </div>
       </div>
     </footer>
