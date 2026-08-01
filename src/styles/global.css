@@ -170,7 +170,11 @@ p {
   color: #fff;
 }
 
-.site-header--transparent .brand__wordmark span {
+.site-header--transparent .brand__kind {
+  color: #ff6b63;
+}
+
+.site-header--transparent .brand__nesta {
   color: #a8e6c5;
 }
 
@@ -196,11 +200,16 @@ p {
 
 .site-header--transparent.is-scrolled .brand,
 .site-header--transparent.is-nav-open .brand {
+  color: var(--md-sys-color-on-surface);
+}
+
+.site-header--transparent.is-scrolled .brand__kind,
+.site-header--transparent.is-nav-open .brand__kind {
   color: var(--brand-heart);
 }
 
-.site-header--transparent.is-scrolled .brand__wordmark span,
-.site-header--transparent.is-nav-open .brand__wordmark span {
+.site-header--transparent.is-scrolled .brand__nesta,
+.site-header--transparent.is-nav-open .brand__nesta {
   color: var(--brand-green);
 }
 
@@ -232,7 +241,7 @@ p {
   gap: 0.65rem;
   font: var(--title-lg);
   letter-spacing: 0;
-  color: var(--brand-heart);
+  color: var(--md-sys-color-on-surface);
   flex-shrink: 0;
 }
 
@@ -248,13 +257,17 @@ p {
 }
 
 .brand__wordmark {
-  color: inherit;
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: var(--tracking-tight);
 }
 
-.brand__wordmark span {
+.brand__kind {
+  color: var(--brand-heart);
+  font-weight: 600;
+}
+
+.brand__nesta {
   color: var(--brand-green);
   font-weight: 600;
 }
@@ -557,15 +570,14 @@ p {
   font: var(--display-sm);
   letter-spacing: 0;
   margin: 0 0 0.65rem;
-  color: #fff;
 }
 
 .hero__brand-primary {
-  color: #ffb4b0;
+  color: #ff6b63; /* Kind — brand red, readable on dark hero */
 }
 
 .hero__brand-secondary {
-  color: #a8e6c5;
+  color: #a8e6c5; /* Nesta — brand green */
 }
 
 @media (min-width: 720px) {
