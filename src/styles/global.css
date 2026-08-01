@@ -1,29 +1,31 @@
 :root {
-  /* Primary = heart red; Secondary = forest green */
-  --brand-heart: #d32f2f;
-  --brand-heart-deep: #9a0007;
-  --brand-heart-soft: #ffdad6;
+  /* Brand: forest primary, warm ink, heart accent sparingly */
+  --brand-heart: #c62828;
+  --brand-heart-deep: #8e0000;
+  --brand-heart-soft: #fdecea;
   --brand-green: #0f6b45;
   --brand-green-deep: #063528;
-  --brand-green-soft: #d8f3e4;
+  --brand-green-soft: #e3f2eb;
+  --brand-sand: #f3efe6;
+  --brand-ink: #1a2420;
 
-  --md-sys-color-primary: var(--brand-heart);
+  --md-sys-color-primary: var(--brand-green);
   --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-primary-container: var(--brand-heart-soft);
-  --md-sys-color-on-primary-container: #410006;
-  --md-sys-color-secondary: var(--brand-green);
+  --md-sys-color-primary-container: var(--brand-green-soft);
+  --md-sys-color-on-primary-container: #002113;
+  --md-sys-color-secondary: var(--brand-green-deep);
   --md-sys-color-on-secondary: #ffffff;
-  --md-sys-color-secondary-container: var(--brand-green-soft);
+  --md-sys-color-secondary-container: #d8ebe1;
   --md-sys-color-on-secondary-container: #002113;
-  --md-sys-color-tertiary: var(--brand-green);
-  --md-sys-color-surface: #fff8f7;
-  --md-sys-color-surface-container: #f7efee;
-  --md-sys-color-surface-container-high: #efe4e3;
-  --md-sys-color-surface-container-lowest: #ffffff;
-  --md-sys-color-on-surface: #1c1b1b;
-  --md-sys-color-on-surface-variant: #524341;
-  --md-sys-color-outline: #857370;
-  --md-sys-color-outline-variant: #d8c2be;
+  --md-sys-color-tertiary: #8a5a2b;
+  --md-sys-color-surface: var(--brand-sand);
+  --md-sys-color-surface-container: #ebe6dc;
+  --md-sys-color-surface-container-high: #e2dcd0;
+  --md-sys-color-surface-container-lowest: #fffcf7;
+  --md-sys-color-on-surface: var(--brand-ink);
+  --md-sys-color-on-surface-variant: #4a554f;
+  --md-sys-color-outline: #6f7a73;
+  --md-sys-color-outline-variant: #c9cfc9;
   --md-sys-color-error: #b3261e;
 
   --heart: var(--brand-heart);
@@ -41,42 +43,40 @@
   --surface-2: var(--md-sys-color-surface-container);
   --line: color-mix(in srgb, var(--md-sys-color-outline-variant) 85%, transparent);
   --line-strong: var(--md-sys-color-outline-variant);
-  --score-high: var(--brand-heart);
-  --score-mid: var(--brand-heart);
+  --score-high: var(--brand-green);
+  --score-mid: #b45309;
   --score-low: #9a3412;
 
-  /* Material shape */  /* Material shape */
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 28px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
   --ease: cubic-bezier(0.2, 0, 0, 1);
-  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-  --elevation-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --elevation-1: 0 1px 2px rgba(26, 36, 32, 0.06);
+  --elevation-2: 0 2px 8px rgba(26, 36, 32, 0.08);
 
-  /* Google / Material: Roboto only */
-  --font: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font: "Source Sans 3", "Segoe UI", sans-serif;
 
-  /* Material 3 type scale (Roboto) */
-  --display-lg: 400 3.5625rem/4rem var(--font);
-  --display-md: 400 2.8125rem/3.25rem var(--font);
-  --display-sm: 400 2.25rem/2.75rem var(--font);
-  --headline-lg: 400 2rem/2.5rem var(--font);
-  --headline-md: 400 1.75rem/2.25rem var(--font);
-  --headline-sm: 400 1.5rem/2rem var(--font);
-  --title-lg: 400 1.375rem/1.75rem var(--font);
-  --title-md: 500 1rem/1.5rem var(--font);
-  --title-sm: 500 0.875rem/1.25rem var(--font);
-  --body-lg: 400 1rem/1.5rem var(--font);
-  --body-md: 400 0.875rem/1.25rem var(--font);
-  --body-sm: 400 0.75rem/1rem var(--font);
-  --label-lg: 500 0.875rem/1.25rem var(--font);
-  --label-md: 500 0.75rem/1rem var(--font);
-  --label-sm: 500 0.6875rem/1rem var(--font);
+  --display-lg: 600 3.25rem/1.1 var(--font-display);
+  --display-md: 600 2.6rem/1.15 var(--font-display);
+  --display-sm: 600 2.1rem/1.2 var(--font-display);
+  --headline-lg: 600 2rem/1.25 var(--font-display);
+  --headline-md: 600 1.65rem/1.3 var(--font-display);
+  --headline-sm: 600 1.35rem/1.35 var(--font-display);
+  --title-lg: 600 1.25rem/1.4 var(--font-display);
+  --title-md: 600 1.05rem/1.4 var(--font);
+  --title-sm: 600 0.95rem/1.35 var(--font);
+  --body-lg: 400 1.05rem/1.55 var(--font);
+  --body-md: 400 0.95rem/1.5 var(--font);
+  --body-sm: 400 0.82rem/1.4 var(--font);
+  --label-lg: 600 0.9rem/1.3 var(--font);
+  --label-md: 600 0.78rem/1.25 var(--font);
+  --label-sm: 600 0.72rem/1.2 var(--font);
 
-  --tracking-tight: 0;
-  --tracking-normal: 0.01em;
-  --tracking-label: 0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-label: 0.04em;
 
   --max: 1120px;
   --header-h: 64px;
@@ -249,11 +249,14 @@ p {
 
 .brand__wordmark {
   color: inherit;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
 }
 
 .brand__wordmark span {
   color: var(--brand-green);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .nav-toggle {
@@ -953,8 +956,73 @@ p {
 }
 
 .kindness-badge[data-band="mid"] {
-  background: var(--brand-heart-soft);
-  color: var(--brand-heart-deep);
+  background: #fff4e5;
+  color: #7c2d12;
+}
+
+.kindness-badge[data-band="mid"] .kindness-badge__text {
+  color: #9a3412;
+}
+
+.kindness-badge[data-band="mid"] .kindness-badge__ring {
+  background: conic-gradient(
+    var(--score-mid) calc(var(--pct) * 1%),
+    color-mix(in srgb, var(--score-mid) 18%, white) 0
+  );
+}
+
+.kindness-badge--provisional {
+  border: 1px dashed color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.kindness-badge__status {
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.kindness-panel__status {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font: var(--label-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.kindness-panel__status.is-provisional {
+  background: #fff4e5;
+  color: #9a3412;
+  border: 1px solid #f0d2a8;
+}
+
+.kindness-panel__status.is-verified {
+  background: var(--brand-green-soft);
+  color: var(--brand-green-deep);
+  border: 1px solid color-mix(in srgb, var(--brand-green) 30%, white);
+}
+
+.kindness-panel__provisional {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, #fff4e5 80%, white);
+  border: 1px solid #f0d2a8;
+  font: var(--body-md);
+  color: #7c2d12;
+}
+
+.kindness-panel[data-band="mid"] {
+  background: #fff8f0;
+  border-color: #f0d2a8;
+}
+
+.kindness-panel[data-band="mid"] .kindness-panel__label {
+  color: #9a3412;
+}
+
+.kindness-panel[data-band="mid"] .kindness-panel__link a {
+  color: #b45309;
 }
 
 .kindness-badge[data-band="low"] {
@@ -2190,10 +2258,20 @@ p {
   margin: 0.4rem 0;
 }
 
-.blog-regions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+.tag--active {
+  background: var(--brand-green);
+  color: #fff;
+  border-color: var(--brand-green);
+}
+
+.blog-regions a.tag,
+.blog-regions button.tag {
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container-lowest);
+  color: inherit;
+  font: inherit;
 }
 
 .blog-grid {

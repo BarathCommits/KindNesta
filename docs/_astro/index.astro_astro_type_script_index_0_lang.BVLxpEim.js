@@ -1,4 +1,4 @@
-var e=document.getElementById(`catalog`),t=document.getElementById(`empty`),n=document.getElementById(`result-count`),r=document.getElementById(`filter-chips`),i=document.getElementById(`category`),a=document.getElementById(`score-band`),o=document.getElementById(`sort`),s=document.getElementById(`catalog-data`);if(!(!e||!i||!a||!o||!s)){let c=JSON.parse(s.textContent||`[]`),l={high:`Strong · 80–100`,mid:`Good · 50–79`,low:`Fair · 0–49`};function u(e){return e>=80?`high`:e>=50?`mid`:`low`}function d(e){let t=u(e);return t===`high`?`Strong`:t===`mid`?`Good`:`Fair`}function f(e){return String(e).replaceAll(`&`,`&amp;`).replaceAll(`<`,`&lt;`).replaceAll(`>`,`&gt;`).replaceAll(`"`,`&quot;`)}function p(e){let t=u(e.kindnessScore),n=d(e.kindnessScore),r=f(e.title),i=f(e.shortDescription),a=(e.bulletPoints||[]).map(e=>`<li>${f(e)}</li>`).join(``);return`
+var e=document.getElementById(`catalog`),t=document.getElementById(`empty`),n=document.getElementById(`result-count`),r=document.getElementById(`filter-chips`),i=document.getElementById(`category`),a=document.getElementById(`score-band`),o=document.getElementById(`sort`),s=document.getElementById(`catalog-data`);if(!(!e||!i||!a||!o||!s)){let c=JSON.parse(s.textContent||`[]`),l={high:`Strong · 80–100`,mid:`Good · 50–79`,low:`Fair · 0–49`};function u(e){return e>=80?`high`:e>=50?`mid`:`low`}function d(e){let t=u(e);return t===`high`?`Strong`:t===`mid`?`Good`:`Fair`}function f(e){return String(e).replaceAll(`&`,`&amp;`).replaceAll(`<`,`&lt;`).replaceAll(`>`,`&gt;`).replaceAll(`"`,`&quot;`)}function p(e){let t=u(e.kindnessScore),n=d(e.kindnessScore),r=f(e.title),i=f(e.shortDescription),a=!!e.scoreVerified,o=a?`Verified`:`Provisional`,s=a?``:` · Prov.`,c=(e.bulletPoints||[]).map(e=>`<li>${f(e)}</li>`).join(``);return`
       <article class="product-card">
         <a class="product-card__link" href="${e.href}">
           <div class="product-card__media">
@@ -7,16 +7,15 @@ var e=document.getElementById(`catalog`),t=document.getElementById(`empty`),n=do
           <div class="product-card__body">
             <div class="product-card__meta">
               <span class="product-card__category">${f(e.subcategory||e.categoryLabel)}</span>
-              <span class="kindness-badge kindness-badge--compact" data-band="${t}" title="Kindness Score ${e.kindnessScore} · ${n}">
-                <span class="kindness-badge__heart" aria-hidden="true">♥</span>
+              <span class="kindness-badge kindness-badge--compact${a?``:` kindness-badge--provisional`}" data-band="${t}" title="Kindness Score ${e.kindnessScore} · ${n} · ${o} (KindNesta internal rating)">
                 <span class="kindness-badge__ring" style="--pct: ${e.kindnessScore}"><span>${e.kindnessScore}</span></span>
-                <span class="kindness-badge__text">${n}</span>
+                <span class="kindness-badge__text">${n}<span class="kindness-badge__status">${s}</span></span>
               </span>
             </div>
             <p class="product-card__brand">${f(e.brand||`KindNesta`)}</p>
             <h3>${r}</h3>
             <p>${i}</p>
-            ${a?`<ul class="product-card__bullets">${a}</ul>`:``}
+            ${c?`<ul class="product-card__bullets">${c}</ul>`:``}
             <div class="product-card__footer">
               <span class="product-card__cue">View product</span>
             </div>

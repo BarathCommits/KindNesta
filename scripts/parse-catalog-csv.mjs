@@ -117,6 +117,7 @@ export function parseCatalogCsv(text) {
       variantValue: raw.variantValue || undefined,
       kindnessScore,
       kindnessScoreNotes: raw.kindnessScoreNotes || undefined,
+      scoreVerified: truthy(raw.scoreVerified ?? ''),
       ecoTags: listField(raw.ecoTags),
       searchKeywords: listField(raw.searchKeywords),
       relatedIds: listField(raw.relatedIds),

@@ -31,6 +31,7 @@ const productSchema = z.object({
   variantValue: z.string().optional(),
   kindnessScore: z.number().int().min(0).max(100),
   kindnessScoreNotes: z.string().optional(),
+  scoreVerified: z.boolean().default(false),
   ecoTags: z.array(z.string()).default([]),
   searchKeywords: z.array(z.string()).default([]),
   relatedIds: z.array(z.string()).default([]),

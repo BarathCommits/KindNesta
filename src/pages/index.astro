@@ -17,14 +17,16 @@ const categories = [
   { id: 'hangers', blurb: 'Paper hangers — cotton recycled and FSC certified board.' },
   { id: 'packaging', blurb: 'Boxes, envelopes, tissue, and case-making packaging.' },
   { id: 'bags', blurb: 'Shopping bags in cotton recycled board and FSC paper.' },
-  { id: 'labels', blurb: 'Organic cotton, GOTS, GRS, and Oeko-Tex apparel labels.' },
+  { id: 'polybags', blurb: 'GRS recycled LDPE polybags, including PVC-free options.' },
+  { id: 'labels', blurb: 'Organic cotton, GOTS, GRS, and OEKO-TEX apparel labels.' },
+  { id: 'stationery', blurb: 'Cards, envelopes, and paper goods for retail programmes.' },
   { id: 'trims', blurb: 'Hangtag strings, tapes, ropes, and recycled elastics.' },
 ] as const;
 ---
 
 <BaseLayout
-  title="KindNesta — Sustainable packaging & trims"
-  description="KindNesta offers eco packaging, hangtags, labels, and trims for apparel and retail buyers — with Kindness Scores on every product."
+  title="KindNesta — The kinder way to buy"
+  description="KindNesta — the kinder way to buy. Scored packaging and apparel trims with a transparent Kindness Score on every listing."
   transparentHeader
 >
   <section class="hero" style={`--hero-image: url('${withBase("images/hero-botanical.svg")}')`}>
@@ -40,17 +42,18 @@ const categories = [
     />
     <div class="hero__shell">
       <div class="hero__content">
-        <p class="hero__eyebrow">Eco products · Kindness Score</p>
+        <p class="hero__eyebrow">The kinder way to buy.</p>
         <h1 class="hero__brand">
           <span class="hero__brand-primary">Kind</span><span class="hero__brand-secondary">Nesta</span>
         </h1>
         <p class="hero__lead">
-          Certified eco packaging and apparel trims — hangtags, hangers, bags, labels, and more —
-          with a Kindness Score on every product.
+          A scored catalog of packaging and apparel trims — hangtags, hangers, bags, labels, and
+          more — with a Kindness Score on every listing. Broader categories as verified partners
+          join.
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href={withBase("products/")}>Browse products</a>
-          <a class="btn btn--secondary" href={withBase("contact/")}>Get in touch</a>
+          <a class="btn btn--secondary" href={withBase("contact/?interest=quote")}>Request a quote</a>
         </div>
       </div>
     </div>
@@ -58,9 +61,9 @@ const categories = [
 
   <section class="trust-strip reveal" aria-label="What KindNesta offers">
     <div class="container trust-strip__inner">
-      <p><strong>Certified materials</strong> — GRS, FSC, GOTS, and more</p>
-      <p><strong>Clear assortment</strong> — packaging, labels, and trims</p>
-      <p><strong>Kindness Score</strong> — compare impact before you choose</p>
+      <p><strong>Evidence-first</strong> — specific claims, not vague green slogans</p>
+      <p><strong>Packaging &amp; trims first</strong> — expanding with verified partners</p>
+      <p><strong>Kindness Score</strong> — internal rating; provisional until verified</p>
     </div>
   </section>
 
@@ -69,33 +72,33 @@ const categories = [
       <div class="section__head">
         <span class="section__eyebrow">Who we serve</span>
         <h2>Built for buyers who stock and scale</h2>
-        <p>The same KindNesta assortment, two ways to buy.</p>
+        <p>One KindNesta catalog — for retail programmes and enterprise procurement.</p>
       </div>
       <div class="audience-grid">
         <article class="audience-card">
           <span class="audience-card__label">Retail outlets</span>
-          <h3>Grocery, gift, and specialty retail</h3>
+          <h3>Apparel, gift, and specialty retail</h3>
           <p>
-            Shelf-ready eco products with clear impact stories, case packs, and Kindness Scores your
-            customers can understand at a glance.
+            Packaging and trim assortments with clear Kindness Scores and claim notes your team can
+            explain on the floor.
           </p>
           <ul class="audience-card__list">
-            <li>Clear Kindness Scores on every product</li>
-            <li>Impact notes for shelf talkers and staff</li>
-            <li>Assortment support for greener shelves</li>
+            <li>Kindness Scores on every product (provisional until verified)</li>
+            <li>Impact notes for staff and buyer decks</li>
+            <li>Assortment support for lower-impact shelves</li>
           </ul>
           <a class="btn btn--ghost" href={withBase("partners/")}>Partner &amp; supplier hub</a>
         </article>
         <article class="audience-card audience-card--enterprise">
           <span class="audience-card__label audience-card__label--green">Enterprise</span>
-          <h3>Procurement, facilities &amp; amenities</h3>
+          <h3>Procurement &amp; brand programmes</h3>
           <p>
-            Lower-impact essentials for workplaces, hospitality, and employee programs — with
-            transparent scoring for sustainability reporting.
+            Scored packaging and trims for brand, facilities, and supplier programmes — with notes
+            suited to vendor questionnaires.
           </p>
           <ul class="audience-card__list">
             <li>Program-ready packaging, labels &amp; trims</li>
-            <li>Score notes for vendor questionnaires</li>
+            <li>Score notes for questionnaires</li>
             <li>Volume ordering support</li>
           </ul>
           <a class="btn btn--ghost" href={withBase("about/#enterprise")}>Enterprise details</a>
@@ -109,7 +112,7 @@ const categories = [
       <div class="section__head">
         <span class="section__eyebrow section__eyebrow--green">Products</span>
         <h2>Browse by category</h2>
-        <p>Start with the aisle or program you need to fill.</p>
+        <p>Current assortment focuses on packaging and apparel trims.</p>
       </div>
       <ul class="category-list">
         {
@@ -133,7 +136,7 @@ const categories = [
       <div class="section__head">
         <span class="section__eyebrow">Featured</span>
         <h2>High-scoring picks</h2>
-        <p>Strong Kindness Scores from our current assortment.</p>
+        <p>Strong Kindness Scores from our current assortment (provisional until verified).</p>
       </div>
       <div class="product-grid">
         {
@@ -156,8 +159,9 @@ const categories = [
       </div>
       <div>
         <p class="split__copy">
-          Every product is rated <strong>0–100</strong> on materials, packaging, and certifications.
-          Use it to compare options — with notes on each product page.
+          Every product is rated <strong>0–100</strong> on materials, packaging, certifications, and
+          related evidence. It is KindNesta’s internal comparison tool — not a third-party ecolabel.
+          Scores stay <strong>provisional</strong> until evidence is verified.
         </p>
         <div class="score-bands">
           <span data-band="high">80–100 Strong</span>
@@ -175,8 +179,8 @@ const categories = [
     <div class="container">
       <div class="section__head">
         <span class="section__eyebrow">How it works</span>
-        <h2>From discovery to delivery</h2>
-        <p>A simple path to buy kinder products from KindNesta.</p>
+        <h2>From discovery to quote</h2>
+        <p>A simple path to shortlist scored packaging and trims.</p>
       </div>
       <ol class="process-list">
         <li>
@@ -185,11 +189,11 @@ const categories = [
         </li>
         <li>
           <h3>Compare impact</h3>
-          <p>Use Kindness Scores to shortlist kinder options for your assortment.</p>
+          <p>Use Kindness Scores to shortlist options — check provisional vs verified status.</p>
         </li>
         <li>
-          <h3>Get in touch</h3>
-          <p>Tell us what you need — our team can help with next steps.</p>
+          <h3>Request a quote</h3>
+          <p>Tell us SKU, volume, and timeline — we reply within 1–2 business days.</p>
         </li>
       </ol>
     </div>
@@ -210,7 +214,7 @@ const categories = [
         <h2>Ready to choose kinder products?</h2>
         <p>Retail and enterprise buyers — tell us what you’re looking for.</p>
         <div class="hero__actions" style="margin-top: 1.5rem;">
-          <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
+          <a class="btn btn--primary" href={withBase("contact/?interest=quote")}>Request a quote</a>
           <a class="btn btn--secondary" href={withBase("products/")}>Browse products</a>
         </div>
       </div>

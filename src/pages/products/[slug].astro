@@ -28,6 +28,7 @@ const {
   imageGallery,
   kindnessScore,
   kindnessScoreNotes,
+  scoreVerified,
   ecoTags,
   materials,
   dimensions,
@@ -38,6 +39,10 @@ const {
   relatedIds,
   inStock,
   productFamily,
+  sku,
+  packSize,
+  moq,
+  unit,
 } = product.data;
 
 const gallery = (imageGallery?.length ? imageGallery : [image]).map((src) => withBase(src));
@@ -58,12 +63,22 @@ const related = relatedIds.length
       .slice(0, 4);
 
 const specs = [
+  sku ? { label: 'SKU', value: sku } : null,
   materials ? { label: 'Materials', value: materials } : null,
   dimensions ? { label: 'Dimensions', value: dimensions } : null,
   weight ? { label: 'Weight', value: weight } : null,
+  packSize ? { label: 'Case pack', value: packSize } : null,
+  moq ? { label: 'MOQ', value: `${moq} ${unit === 'meter' ? 'm' : 'pcs'}` } : null,
   subcategory ? { label: 'Browse node', value: subcategory } : null,
   variantType && variantValue ? { label: variantType, value: variantValue } : null,
 ].filter(Boolean) as { label: string; value: string }[];
+
+const quoteHref = withBase(
+  `contact/?sku=${encodeURIComponent(sku)}&interest=quote`
+);
+const sampleHref = withBase(
+  `contact/?sku=${encodeURIComponent(sku)}&interest=sample`
+);
 ---
 
 <BaseLayout title={`${title} — KindNesta`} description={shortDescription}>
@@ -120,11 +135,15 @@ const specs = [
           <p class="amazon-pdp__lead">{shortDescription}</p>
 
           <div class="amazon-pdp__score-row">
-            <KindnessPanel score={kindnessScore} notes={kindnessScoreNotes} />
+            <KindnessPanel
+              score={kindnessScore}
+              notes={kindnessScoreNotes}
+              verified={scoreVerified}
+            />
           </div>
 
           <p class="stock" data-out={!inStock}>
-            {inStock ? 'In stock' : 'Currently unavailable'}
+            {inStock ? 'Available to order' : 'Currently unavailable'}
           </p>
 
           {
@@ -183,8 +202,9 @@ const specs = [
           }
 
           <div class="amazon-pdp__actions">
-            <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
-            <a class="btn btn--secondary" href={withBase("products/")}>Back to products</a>
+            <a class="btn btn--primary" href={quoteHref}>Request a quote</a>
+            <a class="btn btn--secondary" href={sampleHref}>Request a sample</a>
+            <a class="btn btn--ghost" href={withBase("products/")}>Back to products</a>
           </div>
         </div>
       </div>
@@ -221,7 +241,7 @@ const specs = [
         <div class="container">
           <div class="section__head">
             <span class="section__eyebrow">Related</span>
-            <h2>Customers also viewed</h2>
+            <h2>Related in this category</h2>
           </div>
           <div class="product-grid">
             {related.map((item, i) => (
