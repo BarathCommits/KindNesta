@@ -19,26 +19,44 @@ import '../styles/global.css';
     </div>
   </section>
 
-  <section class="section reveal" style="padding-top: 1rem;">
-    <div class="container prose-page">
-      <h2>Who scores the products?</h2>
-      <p>
-        KindNesta reviews supplier submissions against our EU-aligned checklist (gates A1–A7 and
-        evidence pillars). The Kindness Score is our <strong>internal comparison rating</strong> —
-        not a third-party ecolabel, PEF study, or official EU mark. Until certificates and material
-        evidence are verified, scores are marked <strong>provisional</strong>.
-      </p>
-      <h2>How to reach us</h2>
-      <ul>
-        <li>Email: <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a></li>
-        <li>Typical response: 1–2 business days</li>
-        <li>Suppliers: use the <a href={withBase('partners/')}>partner hub</a> template pack</li>
-      </ul>
+  <section class="section reveal" style="padding-top: 1.5rem;">
+    <div class="container about-layout">
+      <div class="about-block">
+        <h2>Who scores the products?</h2>
+        <p>
+          KindNesta reviews supplier submissions against our EU-aligned checklist (gates A1–A7 and
+          evidence pillars). The Kindness Score is our <strong>internal comparison rating</strong> —
+          not a third-party ecolabel, PEF study, or official EU mark. Until certificates and material
+          evidence are verified, scores are marked <strong>provisional</strong>.
+        </p>
+      </div>
+
+      <div class="about-block">
+        <h2>How to reach us</h2>
+        <ul class="about-list">
+          <li>
+            Email:
+            <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
+          </li>
+          <li>Typical response: 1–2 business days</li>
+          <li>
+            Suppliers: use the
+            <a href={withBase('partners/')}>partner hub</a>
+            template pack
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section section--tint reveal" style="padding-top: 1rem;">
+  <section class="section section--tint reveal">
     <div class="container">
+      <div class="section__head">
+        <span class="section__eyebrow">Who we serve</span>
+        <h2>Built for buyers who stock and scale</h2>
+        <p>One KindNesta marketplace — for retail programmes and enterprise procurement.</p>
+      </div>
+
       <div class="partner-grid">
         <article class="partner-panel partner-panel--retail" id="retail">
           <h2>For retail outlets</h2>
@@ -66,8 +84,12 @@ import '../styles/global.css';
           </ul>
         </article>
       </div>
+    </div>
+  </section>
 
-      <div class="prose" id="kindness-score" style="margin-top: 2rem;">
+  <section class="section reveal" id="kindness-score">
+    <div class="container about-layout">
+      <div class="about-block">
         <h2>How Kindness Score works</h2>
         <p>
           Every product carries a <strong>Kindness Score from 0 to 100</strong>. Higher means a
@@ -76,15 +98,15 @@ import '../styles/global.css';
           Passport readiness.
         </p>
         <p>
-          <a href={withBase("kindness-score/")}>Read the full Kindness Score guide →</a>
+          <a href={withBase('kindness-score/')}>Read the full Kindness Score guide →</a>
         </p>
       </div>
 
-      <p style="margin-top: 2.25rem;">
-        <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
-        <a class="btn btn--ghost" href={withBase("kindness-score/")} style="margin-left: 0.5rem;">Kindness Score</a>
-        <a class="btn btn--ghost" href={withBase("products/")} style="margin-left: 0.5rem;">Browse products</a>
-      </p>
+      <div class="hero__actions" style="margin-top: 0.5rem;">
+        <a class="btn btn--primary" href={withBase('contact/')}>Get in touch</a>
+        <a class="btn btn--secondary" href={withBase('kindness-score/')}>Kindness Score</a>
+        <a class="btn btn--ghost" href={withBase('products/')}>Browse products</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

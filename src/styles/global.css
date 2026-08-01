@@ -2271,6 +2271,49 @@ p {
   margin: 0.4rem 0;
 }
 
+/* —— About page —— */
+.about-layout {
+  display: grid;
+  gap: 1.75rem;
+  max-width: 46rem;
+}
+
+.about-block h2 {
+  margin: 0 0 0.65rem;
+  font: var(--title-lg);
+  color: var(--md-sys-color-on-surface);
+}
+
+.about-block p {
+  margin: 0 0 0.85rem;
+  font: var(--body-lg);
+  color: var(--md-sys-color-on-surface-variant);
+  max-width: 40rem;
+}
+
+.about-block p:last-child {
+  margin-bottom: 0;
+}
+
+.about-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+  font: var(--body-lg);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.about-list a {
+  color: var(--brand-green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.section--tint .partner-grid {
+  margin-bottom: 0;
+}
+
 .tag--active {
   background: var(--brand-green);
   color: #fff;
