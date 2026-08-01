@@ -1,7 +1,7 @@
 # KindNesta Kindness Score — EU-aligned standard
 
 **Status:** KindNesta internal standard for product scoring and partner evidence  
-**Scope:** Packaging, hangtags, hangers, bags, labels, trims, stationery sold into or marketed for the EU  
+**Scope:** Products sold on the KindNesta sustainability marketplace (including packaging, hangtags, hangers, bags, labels, trims, stationery, and expanding categories) marketed for or into the EU  
 **Not:** A third-party life-cycle assessment (LCA) or PEF study. Scores help compare assortment; public claims must still follow EU green-claim rules.
 
 ## Legal anchors (Europe)

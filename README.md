@@ -1,6 +1,6 @@
 # KindNesta
 
-KindNesta offers **scored packaging and apparel trims** with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages** (static hosting only — no separate web server). Tagline: **The kinder way to buy.**
+KindNesta is a **sustainability e-commerce** destination with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages** (static hosting only — no separate web server). Tagline: **The kinder way to buy.**
 
 ## Features
 
