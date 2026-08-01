@@ -95,6 +95,19 @@ Do not add extra A/AAAA/CNAME records for `@` or `www` beyond the table above �
 
 If HTTPS shows a certificate for `*.github.io` instead of `kindnesta.com`, GitHub never finished provisioning the custom-domain cert (or it got stuck). DNS can be correct while this still happens.
 
-**Repair (repo Actions):** run the **Fix Pages SSL certificate** workflow (`workflow_dispatch`). It clears and re-adds `kindnesta.com`, waits for Let’s Encrypt approval, then turns on **Enforce HTTPS**.
+GitHub Actions cannot repair this automatically — updating the custom domain requires **repo admin** access (the Actions `GITHUB_TOKEN` is not enough).
 
-**Repair (GitHub UI):** Settings → Pages → remove the custom domain → Save → add `kindnesta.com` again → wait until the domain shows a checkmark → enable **Enforce HTTPS**.
+**Repair (GitHub UI) — recommended:**
+
+1. Open [Settings → Pages](https://github.com/BarathCommits/KindNesta/settings/pages)
+2. Under **Custom domain**, remove `kindnesta.com` → **Save**
+3. Add `kindnesta.com` again → **Save**
+4. Wait until GitHub shows a checkmark next to the domain (TLS cert issued; often a few minutes, up to ~1 hour)
+5. Enable **Enforce HTTPS**
+
+**Repair (CLI, as repo admin):**
+
+```bash
+gh auth login   # must be BarathCommits (or another admin)
+./scripts/fix-pages-ssl.sh
+```
