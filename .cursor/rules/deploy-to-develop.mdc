@@ -1,0 +1,40 @@
+---
+description: Always commit/push local work to the develop branch, not main
+alwaysApply: true
+---
+
+# Deploy local → develop
+
+KindNesta uses a **develop-first** Git flow. Production Pages deploys from `main`; day-to-day work goes to `develop`.
+
+## Default branch
+
+- Do all feature work on **`develop`**.
+- If the current branch is `main` (or anything else) when making changes, **switch to `develop`** (or create it from `main`) before committing.
+- After local changes the user wants saved/shipped: **commit and `git push origin develop`** (not `main`), unless they explicitly ask to update `main` or open a PR.
+
+## Do / don't
+
+```text
+✅ git checkout develop
+✅ git push -u origin develop
+✅ Open PR develop → main when asked to release
+
+❌ git push origin main          (unless user explicitly requests release)
+❌ Commit unfinished work on main
+❌ Merge to main without the user asking
+```
+
+## Release to production
+
+Only when the user asks to release / merge / deploy live:
+
+1. Ensure `develop` is pushed and green.
+2. Open or merge PR **`develop` → `main`** (or push `main` only if they explicitly say so).
+3. GitHub Actions on `main` publishes GitHub Pages.
+
+## Push notes
+
+- Prefer SSH remote `git@github.com:BarathCommits/KindNesta.git` if HTTPS auth fails.
+- Rebuild (`npm run build`) before commit when static `docs/` output must ship with the change.
+- Never force-push `main` or `develop` unless the user explicitly requests it.
