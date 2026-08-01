@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/urls';
+import '../../styles/global.css';
+
+const downloads = [
+  {
+    title: 'Product template (CSV)',
+    file: 'docs/partner-product-template.csv',
+    type: 'Spreadsheet',
+    blurb: 'Master sheet — listing fields, certificates, BOM, chemicals, packaging, gates A1–A7, and proposed Kindness Score. One row per SKU.',
+    primary: true,
+  },
+  {
+    title: 'Supplier fill guide',
+    file: 'docs/SUPPLIER-FILL-GUIDE.md',
+    type: 'Guideline',
+    blurb: 'Column-by-column instructions, claim wording rules, cert map, and pre-send quality checklist.',
+    primary: true,
+  },
+  {
+    title: 'Kindness Score standard',
+    file: 'docs/KINDNESS-SCORE-STANDARD.md',
+    type: 'Standard',
+    blurb: 'EU-aligned scoring rules: gate checks, evidence pillars, and how scores map to Strong / Good / Fair.',
+    primary: false,
+  },
+  {
+    title: 'Score checklist (CSV)',
+    file: 'docs/partner-score-checklist.csv',
+    type: 'Optional',
+    blurb: 'Slim Pass/Fail sheet if you want a quick gate review before filling the full template.',
+    primary: false,
+  },
+];
+
+const requirements = [
+  {
+    title: 'Honest product data',
+    body: 'Clear title, materials, dimensions, images, and specific public claims only — no generic “eco-friendly” fluff.',
+  },
+  {
+    title: 'Evidence for green claims',
+    body: 'If you claim recycled, organic, FSC, etc., attach matching certificates with numbers, scope, and expiry dates.',
+  },
+  {
+    title: 'Chemical baseline',
+    body: 'REACH compliance answers for EU-bound goods. SVHC disclosure if above threshold. OEKO-TEX or equivalent when relevant.',
+  },
+  {
+    title: 'Traceability',
+    body: 'Country of manufacture, tier-1 identity, main material origin, and batch-level traceability where available (DPP-ready).',
+  },
+  {
+    title: 'Shipped packaging facts',
+    body: 'Pack materials, weight, recycled plastic %, overpack justification, and sorting/label plan for PPWR-minded buyers.',
+  },
+  {
+    title: 'Gate self-check',
+    body: 'Complete A1–A7 on the template. Any FAIL caps the Kindness Score at 49 until fixed.',
+  },
+];
+
+const steps = [
+  {
+    n: '1',
+    title: 'Download the pack',
+    body: 'Get the CSV template and fill guide below. Open the CSV in Google Sheets or Excel.',
+  },
+  {
+    n: '2',
+    title: 'Fill one row per SKU',
+    body: 'Keep the header row. Replace example rows. Use the same parentId for variants.',
+  },
+  {
+    n: '3',
+    title: 'Attach evidence',
+    body: 'Certificate PDFs, REACH letter, BOM, pack spec, and photos — filenames must match the sheet.',
+  },
+  {
+    n: '4',
+    title: 'Send to KindNesta',
+    body: 'Email the completed CSV + evidence pack to kindnesta@proton.me. We validate gates, confirm the score, then list the product.',
+  },
+];
+---
+
+<BaseLayout
+  title="Partners & suppliers — KindNesta"
+  description="Supply KindNesta: download the product template, fill guide, and Kindness Score checklist for hangtags, packaging, bags, labels, and trims."
+>
+  <section class="page-hero reveal">
+    <div class="container">
+      <span class="section__eyebrow">Partners</span>
+      <h1>Supplier &amp; partner hub</h1>
+      <p>
+        Everything suppliers need to list products on KindNesta — data requirements, EU claim rules,
+        and downloadable sheets you can share with your team.
+      </p>
+      <p style="margin-top: 1.25rem;">
+        <a class="btn btn--primary" href="#downloads">Download templates</a>
+        <a class="btn btn--ghost" href={withBase('contact/?interest=supplier')} style="margin-left: 0.5rem;">
+          Become a supplier
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section reveal" style="padding-top: 0.5rem;">
+    <div class="container">
+      <div class="partner-intro">
+        <div>
+          <h2>Who this is for</h2>
+          <p>
+            Manufacturers and brand suppliers of apparel packaging and trims — hangtags, hangers,
+            bags, polybags, labels, stationery, and related packaging — who want transparent listing
+            with a Kindness Score buyers can trust.
+          </p>
+        </div>
+        <div>
+          <h2>What KindNesta publishes</h2>
+          <p>
+            Product pages show description, materials, and Kindness Score — not your trade prices or
+            MOQ. Trade fields in the template stay for our review only.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" id="downloads">
+    <div class="container">
+      <span class="section__eyebrow">Downloads</span>
+      <h2 class="section__title">Partner pack</h2>
+      <p class="section__lead">
+        Share these files with every supplier. Open the CSV in Sheets or Excel; keep the header row
+        unchanged.
+      </p>
+
+      <div class="download-grid">
+        {
+          downloads.map((d) => (
+            <article class:list={['download-card', d.primary && 'download-card--primary']}>
+              <span class="download-card__type">{d.type}</span>
+              <h3>{d.title}</h3>
+              <p>{d.blurb}</p>
+              <a
+                class:list={['btn', d.primary ? 'btn--primary' : 'btn--secondary', 'btn--sm']}
+                href={withBase(d.file)}
+                download
+              >
+                Download
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="download-hint">
+        Quick start: open the <strong>product template</strong>, read the <strong>fill guide</strong>,
+        replace example rows, attach PDFs named in <code>evidencePackFileNames</code>, then email
+        <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section reveal" id="process">
+    <div class="container">
+      <span class="section__eyebrow">Process</span>
+      <h2 class="section__title">How to submit products</h2>
+      <ol class="process-steps">
+        {
+          steps.map((s) => (
+            <li>
+              <span class="process-steps__n" aria-hidden="true">
+                {s.n}
+              </span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" id="requirements">
+    <div class="container">
+      <span class="section__eyebrow">Requirements</span>
+      <h2 class="section__title">What we need from suppliers</h2>
+      <p class="section__lead">
+        Certificates are not required just to be listed — but they <strong>are</strong> required if
+        you want recycled / organic / FSC-style claims or a Strong Kindness Score.
+      </p>
+      <div class="req-grid">
+        {
+          requirements.map((r) => (
+            <article class="req-card">
+              <h3>{r.title}</h3>
+              <p>{r.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="claims">
+    <div class="container prose-page">
+      <h2>EU claim rules (read before writing copy)</h2>
+      <p>
+        Under EmpCo (from 27 Sep 2026 in the EU), generic words like <em>eco-friendly</em>,
+        <em>green</em>, <em>sustainable</em>, or <em>climate neutral</em> face strict limits without
+        excellent, verified performance. Prefer specific claims with % and scheme names.
+      </p>
+      <ul>
+        <li>
+          <strong>Good:</strong> Made from 100% GRS-certified recycled cotton paper
+        </li>
+        <li>
+          <strong>Bad:</strong> Eco-friendly hangtag
+        </li>
+      </ul>
+      <p>Typical proof by claim type:</p>
+      <ul>
+        <li>Recycled content → <strong>GRS</strong> or <strong>RCS</strong></li>
+        <li>Organic cotton → <strong>GOTS</strong></li>
+        <li>Responsible paper / forest fibre → <strong>FSC</strong> or <strong>PEFC</strong></li>
+        <li>Harmful-substance testing (textiles) → <strong>OEKO-TEX Standard 100</strong></li>
+        <li>Broad excellent performance → <strong>EU Ecolabel</strong> / Blue Angel</li>
+      </ul>
+      <p>
+        Full scoring detail:
+        <a href={withBase('kindness-score/')}>Kindness Score for buyers</a>
+        ·
+        <a href={withBase('docs/KINDNESS-SCORE-STANDARD.md')}>scoring standard download</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tint reveal" id="categories">
+    <div class="container">
+      <span class="section__eyebrow">Catalogue</span>
+      <h2 class="section__title">Categories we list</h2>
+      <div class="blog-regions" style="margin-top: 1rem;">
+        {
+          ['hangtags', 'hangers', 'packaging', 'bags', 'polybags', 'stationery', 'labels', 'trims'].map(
+            (c) => (
+              <a class="tag" href={withBase(`products/?category=${c}`)}>
+                {c}
+              </a>
+            )
+          )
+        }
+      </div>
+      <p style="margin-top: 1.5rem; max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
+        Use exactly these category values in the template’s <code>category</code> column.
+      </p>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="container" style="text-align: center; max-width: 36rem; margin-inline: auto;">
+      <h2>Ready to partner?</h2>
+      <p style="color: var(--md-sys-color-on-surface-variant);">
+        Download the pack, complete your first SKUs, and send the sheet plus evidence. Questions about
+        scope or certs? Contact us.
+      </p>
+      <p style="margin-top: 1.25rem;">
+        <a class="btn btn--primary" href="mailto:kindnesta@proton.me?subject=Supplier%20inquiry">
+          Email kindnesta@proton.me
+        </a>
+        <a class="btn btn--ghost" href={withBase('contact/?interest=supplier')} style="margin-left: 0.5rem;">
+          Contact form
+        </a>
+        <a class="btn btn--ghost" href="#downloads" style="margin-left: 0.5rem;">Back to downloads</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

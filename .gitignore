@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # leftover scaffold debris
 former-fusion/
+
+# Supplier price list (keep private — not for public Pages)
+data/PSP-Products-Price-List.pdf

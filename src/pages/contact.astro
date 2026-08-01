@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/urls';
 import '../styles/global.css';
 
-const contactEmail = 'hello@kindnesta.example';
+const contactEmail = 'kindnesta@proton.me';
 const params = Astro.url.searchParams;
 const sku = params.get('sku') ?? '';
 const interest = params.get('interest') ?? 'sales';
@@ -10,15 +11,14 @@ const interest = params.get('interest') ?? 'sales';
 
 <BaseLayout
   title="Contact — KindNesta"
-  description="Contact KindNesta about products, samples, retail partnerships, or enterprise orders."
+  description="Contact KindNesta about products, samples, or partnerships."
 >
   <section class="page-hero reveal">
     <div class="container">
       <span class="section__eyebrow">Contact</span>
       <h1>Talk to the KindNesta team</h1>
       <p>
-        Questions about a product, samples, retail restocks, or enterprise volume? We source and sell
-        — tell us what you need.
+        Questions about a product, samples, or how Kindness Scores work? Tell us what you need.
       </p>
     </div>
   </section>
@@ -31,18 +31,21 @@ const interest = params.get('interest') ?? 'sales';
         <a
           class="btn btn--primary"
           href={`mailto:${contactEmail}?subject=${encodeURIComponent(
-            sku ? `Product inquiry · ${sku}` : 'KindNesta sales inquiry'
+            sku ? `Product inquiry · ${sku}` : 'KindNesta inquiry'
           )}`}
         >
           {contactEmail}
         </a>
         <ul class="contact-primary__list">
-          <li>Retail assortment &amp; restocks</li>
-          <li>Enterprise / multi-site programs</li>
-          <li>Samples &amp; line reviews</li>
+          <li>Product questions</li>
+          <li>Sample requests</li>
+          <li>Retail &amp; enterprise programs</li>
+          <li>
+            <a href={withBase('partners/')}>Supplier submissions</a>
+          </li>
         </ul>
         <p class="contact-primary__hint">
-          Typical response within 1–2 business days with availability and next steps.
+          Typical response within 1–2 business days.
         </p>
       </div>
 
@@ -60,8 +63,11 @@ const interest = params.get('interest') ?? 'sales';
         <div class="field">
           <label for="buyer-type">Buyer type</label>
           <select id="buyer-type" name="buyer_type" required>
-            <option value="retail" selected={interest !== 'enterprise'}>Retail outlet</option>
+            <option value="retail" selected={interest !== 'enterprise' && interest !== 'supplier'}>
+              Retail outlet
+            </option>
             <option value="enterprise" selected={interest === 'enterprise'}>Enterprise / procurement</option>
+            <option value="supplier" selected={interest === 'supplier'}>Supplier / manufacturer</option>
             <option value="other">Other / distributor</option>
           </select>
         </div>
@@ -97,7 +103,11 @@ const interest = params.get('interest') ?? 'sales';
             name="message"
             required
             placeholder="Timeline, assortment needs, sample request…"
-          >{interest === 'sample' ? 'I would like to request a sample.' : ''}</textarea>
+          >{interest === 'sample'
+            ? 'I would like to request a sample.'
+            : interest === 'supplier'
+              ? 'I would like to supply products. I have downloaded the partner template.'
+              : ''}</textarea>
         </div>
         <button class="btn btn--secondary" type="submit">Open email draft</button>
       </form>

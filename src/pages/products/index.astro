@@ -1,54 +1,48 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
 import { categoryLabel } from '../../lib/products';
 import { withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
 const products = await getCollection('products');
 const categories = [...new Set(products.map((p) => p.data.category))].sort();
-const payload = products.map((p) => ({
+
+const sorted = [...products].sort((a, b) => b.data.kindnessScore - a.data.kindnessScore);
+
+const payload = sorted.map((p) => ({
   id: p.id,
   title: p.data.title,
+  brand: p.data.brand,
   shortDescription: p.data.shortDescription,
-  price: p.data.price,
-  currency: p.data.currency,
   category: p.data.category,
   categoryLabel: categoryLabel(p.data.category),
+  subcategory: p.data.subcategory || categoryLabel(p.data.category),
+  bulletPoints: p.data.bulletPoints.slice(0, 2),
   image: withBase(p.data.image),
   kindnessScore: p.data.kindnessScore,
-  sku: p.data.sku,
-  packSize: p.data.packSize,
-  moq: p.data.moq,
   href: withBase(`products/${p.id}/`),
 }));
 ---
 
 <BaseLayout
   title="Products — KindNesta"
-  description="Browse eco-friendly products sourced and sold by KindNesta for retail outlets and enterprise buyers."
+  description="Browse KindNesta products with Kindness Scores — compare impact at a glance."
 >
-  <section class="page-hero reveal">
+  <section class="page-hero">
     <div class="container">
       <span class="section__eyebrow">Products</span>
-      <h1>What we source and sell</h1>
+      <h1>Our catalog</h1>
       <p>
-        Filter by category or Kindness Score. Each product shows pack size, MOQ, and suggested retail.
-        Contact sales for pricing and availability.
+        Shop by category or Kindness Score. Each listing shows the product story, key details, and
+        score — similar to a marketplace product card.
       </p>
     </div>
   </section>
 
-  <section class="section reveal" style="padding-top: 1.5rem;">
+  <section class="section" style="padding-top: 1.5rem;">
     <div class="container">
-      <div class="trade-banner">
-        <p>
-          <strong>Pricing on request.</strong> Figures shown are suggested retail reference — not
-          your partner cost.
-        </p>
-        <a class="btn btn--secondary btn--sm" href={withBase("contact/")}>Contact sales</a>
-      </div>
-
       <div class="filters">
         <div class="field">
           <label for="category">Category</label>
@@ -72,22 +66,26 @@ const payload = products.map((p) => ({
             <option value="score-desc">Kindness Score · high to low</option>
             <option value="score-asc">Kindness Score · low to high</option>
             <option value="name">Name</option>
-            <option value="price-asc">Sugg. retail · low to high</option>
-            <option value="price-desc">Sugg. retail · high to low</option>
           </select>
         </div>
-        <p id="result-count" class="filters__count" aria-live="polite"></p>
+        <p id="result-count" class="filters__count" aria-live="polite">{sorted.length} products</p>
       </div>
 
       <div class="filter-chips" id="filter-chips" hidden></div>
 
-      <div class="product-grid" id="catalog" aria-live="polite"></div>
+      <div class="product-grid" id="catalog" aria-live="polite">
+        {sorted.map((product, i) => (
+          <ProductCard product={product} style={`animation-delay: ${Math.min(i, 12) * 40}ms`} />
+        ))}
+      </div>
       <p id="empty" hidden class="catalog-empty">No products match these filters.</p>
     </div>
   </section>
 </BaseLayout>
 
-<script define:vars={{ payload }}>
+<script type="application/json" id="catalog-data" set:html={JSON.stringify(payload)} />
+
+<script>
   const catalog = document.getElementById('catalog');
   const empty = document.getElementById('empty');
   const resultCount = document.getElementById('result-count');
@@ -95,47 +93,48 @@ const payload = products.map((p) => ({
   const categorySelect = document.getElementById('category');
   const scoreSelect = document.getElementById('score-band');
   const sortSelect = document.getElementById('sort');
+  const dataEl = document.getElementById('catalog-data');
 
-  const scoreLabels = {
-    high: 'Strong · 80–100',
-    mid: 'Good · 50–79',
-    low: 'Fair · 0–49',
-  };
+  if (!catalog || !categorySelect || !scoreSelect || !sortSelect || !dataEl) {
+    // SSR cards remain visible
+  } else {
+    const payload = JSON.parse(dataEl.textContent || '[]');
 
-  function kindnessBand(score) {
-    if (score >= 80) return 'high';
-    if (score >= 50) return 'mid';
-    return 'low';
-  }
+    const scoreLabels = {
+      high: 'Strong · 80–100',
+      mid: 'Good · 50–79',
+      low: 'Fair · 0–49',
+    };
 
-  function kindnessBandLabel(score) {
-    const band = kindnessBand(score);
-    if (band === 'high') return 'Strong';
-    if (band === 'mid') return 'Good';
-    return 'Fair';
-  }
+    function kindnessBand(score) {
+      if (score >= 80) return 'high';
+      if (score >= 50) return 'mid';
+      return 'low';
+    }
 
-  function formatPrice(price, currency) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-      maximumFractionDigits: 0,
-    }).format(price);
-  }
+    function kindnessBandLabel(score) {
+      const band = kindnessBand(score);
+      if (band === 'high') return 'Strong';
+      if (band === 'mid') return 'Good';
+      return 'Fair';
+    }
 
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;');
-  }
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+    }
 
   function cardHtml(p) {
     const band = kindnessBand(p.kindnessScore);
     const label = kindnessBandLabel(p.kindnessScore);
     const title = escapeHtml(p.title);
     const desc = escapeHtml(p.shortDescription);
+    const bullets = (p.bulletPoints || [])
+      .map((b) => `<li>${escapeHtml(b)}</li>`)
+      .join('');
     return `
       <article class="product-card">
         <a class="product-card__link" href="${p.href}">
@@ -144,23 +143,19 @@ const payload = products.map((p) => ({
           </div>
           <div class="product-card__body">
             <div class="product-card__meta">
-              <span class="product-card__category">${escapeHtml(p.categoryLabel)}</span>
+              <span class="product-card__category">${escapeHtml(p.subcategory || p.categoryLabel)}</span>
               <span class="kindness-badge kindness-badge--compact" data-band="${band}" title="Kindness Score ${p.kindnessScore} · ${label}">
                 <span class="kindness-badge__heart" aria-hidden="true">♥</span>
                 <span class="kindness-badge__ring" style="--pct: ${p.kindnessScore}"><span>${p.kindnessScore}</span></span>
                 <span class="kindness-badge__text">${label}</span>
               </span>
             </div>
-            <p class="product-card__sku">${escapeHtml(p.sku)}</p>
+            <p class="product-card__brand">${escapeHtml(p.brand || 'KindNesta')}</p>
             <h3>${title}</h3>
             <p>${desc}</p>
-            <dl class="product-card__trade">
-              <div><dt>Pack</dt><dd>${escapeHtml(p.packSize)}</dd></div>
-              <div><dt>MOQ</dt><dd>${p.moq}</dd></div>
-            </dl>
+            ${bullets ? `<ul class="product-card__bullets">${bullets}</ul>` : ''}
             <div class="product-card__footer">
-              <span class="price"><span class="price__label">Sugg. retail</span>${formatPrice(p.price, p.currency)}</span>
-              <span class="product-card__cue">View SKU</span>
+              <span class="product-card__cue">View product</span>
             </div>
           </div>
         </a>
@@ -168,34 +163,34 @@ const payload = products.map((p) => ({
     `;
   }
 
-  function syncUrl() {
-    const params = new URLSearchParams();
-    if (categorySelect.value !== 'all') params.set('category', categorySelect.value);
-    if (scoreSelect.value !== 'all') params.set('score', scoreSelect.value);
-    if (sortSelect.value !== 'score-desc') params.set('sort', sortSelect.value);
-    const query = params.toString();
-    const next = query ? `${window.location.pathname}?${query}` : window.location.pathname;
-    window.history.replaceState({}, '', next);
-  }
-
-  function renderChips() {
-    const chips = [];
-    if (categorySelect.value !== 'all') {
-      const label = categorySelect.options[categorySelect.selectedIndex].text;
-      chips.push({ key: 'category', label: `Category: ${label}` });
-    }
-    if (scoreSelect.value !== 'all') {
-      chips.push({ key: 'score', label: `Score: ${scoreLabels[scoreSelect.value]}` });
+    function syncUrl() {
+      const params = new URLSearchParams();
+      if (categorySelect.value !== 'all') params.set('category', categorySelect.value);
+      if (scoreSelect.value !== 'all') params.set('score', scoreSelect.value);
+      if (sortSelect.value !== 'score-desc') params.set('sort', sortSelect.value);
+      const query = params.toString();
+      const next = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+      window.history.replaceState({}, '', next);
     }
 
-    if (!chips.length) {
-      chipsEl.hidden = true;
-      chipsEl.innerHTML = '';
-      return;
-    }
+    function renderChips() {
+      const chips = [];
+      if (categorySelect.value !== 'all') {
+        const label = categorySelect.options[categorySelect.selectedIndex].text;
+        chips.push({ key: 'category', label: `Category: ${label}` });
+      }
+      if (scoreSelect.value !== 'all') {
+        chips.push({ key: 'score', label: `Score: ${scoreLabels[scoreSelect.value]}` });
+      }
 
-    chipsEl.hidden = false;
-    chipsEl.innerHTML = `
+      if (!chips.length) {
+        chipsEl.hidden = true;
+        chipsEl.innerHTML = '';
+        return;
+      }
+
+      chipsEl.hidden = false;
+      chipsEl.innerHTML = `
       <div class="filter-chips__list" role="list">
         ${chips
           .map(
@@ -209,61 +204,67 @@ const payload = products.map((p) => ({
         <button type="button" class="filter-chip filter-chip--clear" data-clear="all">Clear all</button>
       </div>
     `;
-  }
+    }
 
-  function render() {
-    const category = categorySelect.value;
-    const scoreBand = scoreSelect.value;
-    const sort = sortSelect.value;
+    function render() {
+      const category = categorySelect.value;
+      const scoreBand = scoreSelect.value;
+      const sort = sortSelect.value;
 
-    let list = payload.filter((p) => {
-      if (category !== 'all' && p.category !== category) return false;
-      if (scoreBand !== 'all' && kindnessBand(p.kindnessScore) !== scoreBand) return false;
-      return true;
+      let list = payload.filter((p) => {
+        if (category !== 'all' && p.category !== category) return false;
+        if (scoreBand !== 'all' && kindnessBand(p.kindnessScore) !== scoreBand) return false;
+        return true;
+      });
+
+      list = [...list].sort((a, b) => {
+        if (sort === 'score-desc') return b.kindnessScore - a.kindnessScore;
+        if (sort === 'score-asc') return a.kindnessScore - b.kindnessScore;
+        return a.title.localeCompare(b.title);
+      });
+
+      catalog.innerHTML = list.map(cardHtml).join('');
+      empty.hidden = list.length > 0;
+      resultCount.textContent = `${list.length} product${list.length === 1 ? '' : 's'}`;
+      renderChips();
+      syncUrl();
+    }
+
+    categorySelect.addEventListener('change', render);
+    scoreSelect.addEventListener('change', render);
+    sortSelect.addEventListener('change', render);
+
+    chipsEl.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-clear]');
+      if (!button) return;
+      const key = button.getAttribute('data-clear');
+      if (key === 'category' || key === 'all') categorySelect.value = 'all';
+      if (key === 'score' || key === 'all') scoreSelect.value = 'all';
+      if (key === 'all') sortSelect.value = 'score-desc';
+      render();
     });
 
-    list = [...list].sort((a, b) => {
-      if (sort === 'score-desc') return b.kindnessScore - a.kindnessScore;
-      if (sort === 'score-asc') return a.kindnessScore - b.kindnessScore;
-      if (sort === 'price-asc') return a.price - b.price;
-      if (sort === 'price-desc') return b.price - a.price;
-      return a.title.localeCompare(b.title);
-    });
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get('category');
+    const initialScore = params.get('score');
+    const initialSort = params.get('sort');
+    if (initialCategory && [...categorySelect.options].some((o) => o.value === initialCategory)) {
+      categorySelect.value = initialCategory;
+    }
+    if (initialScore && [...scoreSelect.options].some((o) => o.value === initialScore)) {
+      scoreSelect.value = initialScore;
+    }
+    if (initialSort && [...sortSelect.options].some((o) => o.value === initialSort)) {
+      sortSelect.value = initialSort;
+    }
 
-    catalog.innerHTML = list.map(cardHtml).join('');
-    empty.hidden = list.length > 0;
-    resultCount.textContent = `${list.length} product${list.length === 1 ? '' : 's'}`;
-    renderChips();
-    syncUrl();
+    // Only re-render when a filter is active; otherwise keep SSR markup
+    if (
+      categorySelect.value !== 'all' ||
+      scoreSelect.value !== 'all' ||
+      sortSelect.value !== 'score-desc'
+    ) {
+      render();
+    }
   }
-
-  categorySelect.addEventListener('change', render);
-  scoreSelect.addEventListener('change', render);
-  sortSelect.addEventListener('change', render);
-
-  chipsEl.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-clear]');
-    if (!button) return;
-    const key = button.getAttribute('data-clear');
-    if (key === 'category' || key === 'all') categorySelect.value = 'all';
-    if (key === 'score' || key === 'all') scoreSelect.value = 'all';
-    if (key === 'all') sortSelect.value = 'score-desc';
-    render();
-  });
-
-  const params = new URLSearchParams(window.location.search);
-  const initialCategory = params.get('category');
-  const initialScore = params.get('score');
-  const initialSort = params.get('sort');
-  if (initialCategory && [...categorySelect.options].some((o) => o.value === initialCategory)) {
-    categorySelect.value = initialCategory;
-  }
-  if (initialScore && [...scoreSelect.options].some((o) => o.value === initialScore)) {
-    scoreSelect.value = initialScore;
-  }
-  if (initialSort && [...sortSelect.options].some((o) => o.value === initialSort)) {
-    sortSelect.value = initialSort;
-  }
-
-  render();
 </script>

@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/urls';
+import '../../styles/global.css';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const regions = [...new Set(posts.map((p) => p.data.region))].sort();
+---
+
+<BaseLayout
+  title="Impact journal — KindNesta"
+  description="Regional notes on environmental impacts, packaging rules, green claims, and sustainability stats from around the world."
+>
+  <section class="page-hero reveal">
+    <div class="container">
+      <span class="section__eyebrow">Journal</span>
+      <h1>Environmental impact journal</h1>
+      <p>
+        Short briefings on regulations, plastics, textiles, and climate-linked supply-chain risks —
+        organised by region so buyers can see how rules differ.
+      </p>
+    </div>
+  </section>
+
+  <section class="section reveal" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="blog-regions" aria-label="Regions covered">
+        {regions.map((r) => <span class="tag">{r}</span>)}
+      </div>
+      <p class="filters__count" style="margin: 1rem 0 1.5rem;">{posts.length} articles</p>
+
+      <div class="blog-grid">
+        {
+          posts.map((post) => (
+            <article class="blog-card">
+              <a class="blog-card__link" href={withBase(`blog/${post.id}/`)}>
+                <div class="blog-card__meta">
+                  <span class="blog-card__region">{post.data.region}</span>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString('en-GB', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                </div>
+                <h2>{post.data.title}</h2>
+                <p>{post.data.description}</p>
+                <ul class="blog-card__stats">
+                  {post.data.stats.slice(0, 2).map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+                <span class="product-card__cue">Read briefing</span>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

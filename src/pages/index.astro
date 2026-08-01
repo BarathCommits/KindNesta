@@ -13,32 +13,18 @@ const featured = products
   .slice(0, 3);
 
 const categories = [
-  {
-    id: 'kitchen',
-    blurb: 'Reusable tools and wraps for grocery and foodservice.',
-  },
-  {
-    id: 'home',
-    blurb: 'Refills, totes, and low-waste staples for everyday living.',
-  },
-  {
-    id: 'personal-care',
-    blurb: 'Waterless bars and plastic-free care for people and hospitality.',
-  },
-  {
-    id: 'garden',
-    blurb: 'Peat-free kits for grow-at-home and seasonal programs.',
-  },
-  {
-    id: 'dress',
-    blurb: 'Sustainable apparel for retail and branded programs.',
-  },
+  { id: 'hangtags', blurb: 'GRS and FSC hangtags from recycled cotton paper and kraft.' },
+  { id: 'hangers', blurb: 'Paper hangers — cotton recycled and FSC certified board.' },
+  { id: 'packaging', blurb: 'Boxes, envelopes, tissue, and case-making packaging.' },
+  { id: 'bags', blurb: 'Shopping bags in cotton recycled board and FSC paper.' },
+  { id: 'labels', blurb: 'Organic cotton, GOTS, GRS, and Oeko-Tex apparel labels.' },
+  { id: 'trims', blurb: 'Hangtag strings, tapes, ropes, and recycled elastics.' },
 ] as const;
 ---
 
 <BaseLayout
-  title="KindNesta — Sourcing & selling kinder eco products"
-  description="KindNesta is a startup that sources and sells eco-friendly products for retail outlets and enterprise buyers, with Kindness Scores on every product."
+  title="KindNesta — Sustainable packaging & trims"
+  description="KindNesta offers eco packaging, hangtags, labels, and trims for apparel and retail buyers — with Kindness Scores on every product."
   transparentHeader
 >
   <section class="hero" style={`--hero-image: url('${withBase("images/hero-botanical.svg")}')`}>
@@ -54,17 +40,17 @@ const categories = [
     />
     <div class="hero__shell">
       <div class="hero__content">
-        <p class="hero__eyebrow">Sourcing · Selling · Kindness Score</p>
+        <p class="hero__eyebrow">Eco products · Kindness Score</p>
         <h1 class="hero__brand">
           <span class="hero__brand-primary">Kind</span><span class="hero__brand-secondary">Nesta</span>
         </h1>
         <p class="hero__lead">
-          We source and sell eco-friendly products for retail outlets and enterprise programs — with
-          a Kindness Score on every item so you can choose with clarity.
+          Certified eco packaging and apparel trims — hangtags, hangers, bags, labels, and more —
+          with a Kindness Score on every product.
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href={withBase("products/")}>Browse products</a>
-          <a class="btn btn--secondary" href={withBase("contact/")}>Talk to sales</a>
+          <a class="btn btn--secondary" href={withBase("contact/")}>Get in touch</a>
         </div>
       </div>
     </div>
@@ -72,9 +58,9 @@ const categories = [
 
   <section class="trust-strip reveal" aria-label="What KindNesta offers">
     <div class="container trust-strip__inner">
-      <p><strong>We source</strong> — curated eco products from trusted makers</p>
-      <p><strong>We sell</strong> — to retail outlets and enterprise buyers</p>
-      <p><strong>Kindness Score</strong> — compare impact before you buy</p>
+      <p><strong>Certified materials</strong> — GRS, FSC, GOTS, and more</p>
+      <p><strong>Clear assortment</strong> — packaging, labels, and trims</p>
+      <p><strong>Kindness Score</strong> — compare impact before you choose</p>
     </div>
   </section>
 
@@ -94,11 +80,11 @@ const categories = [
             customers can understand at a glance.
           </p>
           <ul class="audience-card__list">
-            <li>Case packs &amp; MOQs listed per product</li>
-            <li>Suggested retail reference pricing</li>
-            <li>Shelf-ready impact messaging</li>
+            <li>Clear Kindness Scores on every product</li>
+            <li>Impact notes for shelf talkers and staff</li>
+            <li>Assortment support for greener shelves</li>
           </ul>
-          <a class="btn btn--ghost" href={withBase("about/#retail")}>Retail partner details</a>
+          <a class="btn btn--ghost" href={withBase("partners/")}>Partner &amp; supplier hub</a>
         </article>
         <article class="audience-card audience-card--enterprise">
           <span class="audience-card__label audience-card__label--green">Enterprise</span>
@@ -108,7 +94,7 @@ const categories = [
             transparent scoring for sustainability reporting.
           </p>
           <ul class="audience-card__list">
-            <li>Program-ready personal care &amp; home care</li>
+            <li>Program-ready packaging, labels &amp; trims</li>
             <li>Score notes for vendor questionnaires</li>
             <li>Volume ordering support</li>
           </ul>
@@ -147,7 +133,7 @@ const categories = [
       <div class="section__head">
         <span class="section__eyebrow">Featured</span>
         <h2>High-scoring picks</h2>
-        <p>Strong Kindness Scores from what we source and sell today.</p>
+        <p>Strong Kindness Scores from our current assortment.</p>
       </div>
       <div class="product-grid">
         {
@@ -170,9 +156,8 @@ const categories = [
       </div>
       <div>
         <p class="split__copy">
-          Every product we sell is rated <strong>0–100</strong> on materials, packaging, and
-          sourcing. Use it to compare options for retail shelves or enterprise programs — with notes
-          on each product page.
+          Every product is rated <strong>0–100</strong> on materials, packaging, and certifications.
+          Use it to compare options — with notes on each product page.
         </p>
         <div class="score-bands">
           <span data-band="high">80–100 Strong</span>
@@ -180,7 +165,7 @@ const categories = [
           <span data-band="low">0–49 Fair</span>
         </div>
         <p style="margin-top: 1.75rem;">
-          <a class="btn btn--ghost" href={withBase("about/#kindness-score")}>How we score</a>
+          <a class="btn btn--ghost" href={withBase("kindness-score/")}>How we score</a>
         </p>
       </div>
     </div>
@@ -196,15 +181,15 @@ const categories = [
       <ol class="process-list">
         <li>
           <h3>Browse products</h3>
-          <p>Filter by category and Kindness Score. Review pack size and MOQ.</p>
+          <p>Filter by category and Kindness Score. Read the description and score notes.</p>
         </li>
         <li>
-          <h3>Shortlist what fits</h3>
-          <p>Open product pages for impact notes and suggested retail reference pricing.</p>
+          <h3>Compare impact</h3>
+          <p>Use Kindness Scores to shortlist kinder options for your assortment.</p>
         </li>
         <li>
-          <h3>Place an inquiry</h3>
-          <p>Tell us outlet type, volume, and timeline — our team shares pricing and next steps.</p>
+          <h3>Get in touch</h3>
+          <p>Tell us what you need — our team can help with next steps.</p>
         </li>
       </ol>
     </div>
@@ -222,10 +207,10 @@ const categories = [
           decoding="async"
           aria-hidden="true"
         />
-        <h2>Ready to stock kinder products?</h2>
-        <p>Retail and enterprise buyers — let’s talk about what you need to source.</p>
+        <h2>Ready to choose kinder products?</h2>
+        <p>Retail and enterprise buyers — tell us what you’re looking for.</p>
         <div class="hero__actions" style="margin-top: 1.5rem;">
-          <a class="btn btn--primary" href={withBase("contact/")}>Contact sales</a>
+          <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
           <a class="btn btn--secondary" href={withBase("products/")}>Browse products</a>
         </div>
       </div>

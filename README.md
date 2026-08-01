@@ -1,28 +1,34 @@
 # KindNesta
 
-KindNesta is a startup that **sources and sells** eco-friendly products for retail outlets and enterprise buyers, with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages** + a **GoDaddy** custom domain.
+KindNesta offers **sustainable packaging and apparel trims** with **Kindness Scores** on every product. Built with [Astro](https://astro.build) for **GitHub Pages** (static hosting only — no separate web server).
 
 ## Features
 
-- Home, Products (filter/sort), Product detail, About, Contact
-- Kindness Score (0–100), pack size, MOQ, and suggested retail on every product
-- Sales inquiry flow for retail and enterprise buyers
-- Product content as Markdown in the repo
-- Decap CMS admin at `/admin` for browser-based updates
-- GitHub Actions deploy workflow
+- Product catalog (hangtags, hangers, packaging, bags, labels, trims, stationery)
+- Kindness Score (0–100) with materials and certification notes
+- Contact inquiry flow
+- Editable CSV catalog — update in Google Sheets or Excel
+- GitHub Actions / Pages deploy workflow
 
 ## Quick start
 
 ```bash
 npm install
+npm run sync-catalog   # validate catalog
 npm run dev
 ```
 
-See [DEPLOY.md](./DEPLOY.md) for GitHub Pages, GoDaddy DNS, and product update instructions.
+Update products anytime: edit [`data/psp-catalog.csv`](./data/psp-catalog.csv) in Sheets — see [`data/CATALOG.md`](./data/CATALOG.md).
+
+Share with partners: [`data/partner-product-template.csv`](./data/partner-product-template.csv) + [`data/SUPPLIER-FILL-GUIDE.md`](./data/SUPPLIER-FILL-GUIDE.md) (also at `/docs/` on the site).
+
+See [DEPLOY.md](./DEPLOY.md) for GitHub Pages instructions.
 
 ## Project layout
 
-- `src/content/products/` — product Markdown (source of truth)
-- `public/images/products/` — product images
+- `data/psp-catalog.csv` — product catalog (source of truth)
+- `data/partner-product-template.csv` — template for partners/suppliers
+- `data/PARTNER-TEMPLATE.md` — instructions for partners
+- `public/images/products/psp/` — product images
 - `public/admin/` — Decap CMS
 - `.github/workflows/deploy.yml` — Pages deploy

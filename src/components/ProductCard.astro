@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import KindnessBadge from './KindnessBadge.astro';
-import { categoryLabel, formatPrice } from '../lib/products';
+import { categoryLabel } from '../lib/products';
 import { withBase } from '../lib/urls';
 
 interface Props {
@@ -10,20 +10,11 @@ interface Props {
 }
 
 const { product, style } = Astro.props;
-const {
-  title,
-  shortDescription,
-  price,
-  currency,
-  category,
-  image,
-  kindnessScore,
-  sku,
-  packSize,
-  moq,
-} = product.data;
+const { title, shortDescription, category, subcategory, brand, image, kindnessScore, bulletPoints } =
+  product.data;
 const href = withBase(`products/${product.id}/`);
 const imageSrc = withBase(image);
+const previewBullets = bulletPoints.slice(0, 2);
 ---
 
 <article class="product-card" style={style}>
@@ -33,28 +24,23 @@ const imageSrc = withBase(image);
     </div>
     <div class="product-card__body">
       <div class="product-card__meta">
-        <span class="product-card__category">{categoryLabel(category)}</span>
+        <span class="product-card__category">{subcategory || categoryLabel(category)}</span>
         <KindnessBadge score={kindnessScore} compact />
       </div>
-      <p class="product-card__sku">{sku}</p>
+      <p class="product-card__brand">{brand}</p>
       <h3>{title}</h3>
       <p>{shortDescription}</p>
-      <dl class="product-card__trade">
-        <div>
-          <dt>Pack</dt>
-          <dd>{packSize}</dd>
-        </div>
-        <div>
-          <dt>MOQ</dt>
-          <dd>{moq}</dd>
-        </div>
-      </dl>
+      {
+        previewBullets.length > 0 && (
+          <ul class="product-card__bullets">
+            {previewBullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+        )
+      }
       <div class="product-card__footer">
-        <span class="price">
-          <span class="price__label">Sugg. retail</span>
-          {formatPrice(price, currency)}
-        </span>
-        <span class="product-card__cue">View SKU</span>
+        <span class="product-card__cue">View product</span>
       </div>
     </div>
   </a>

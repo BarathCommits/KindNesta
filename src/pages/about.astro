@@ -6,15 +6,15 @@ import '../styles/global.css';
 
 <BaseLayout
   title="About — KindNesta"
-  description="KindNesta sources and sells eco-friendly products for retail outlets and enterprise buyers — with Kindness Scores on every product."
+  description="KindNesta offers eco-friendly packaging and apparel trims — with Kindness Scores on every product."
 >
   <section class="page-hero reveal">
     <div class="container">
       <span class="section__eyebrow">About</span>
-      <h1>We source and sell kinder products</h1>
+      <h1>Kinder products, clearly scored</h1>
       <p>
-        KindNesta is a startup that sources and sells eco-friendly products — so buyers can compare
-        impact, pack economics, and assortment fit, then purchase with confidence.
+        KindNesta helps buyers discover eco-friendly packaging and apparel trims — and compare
+        impact with a Kindness Score on every product.
       </p>
     </div>
   </section>
@@ -25,28 +25,26 @@ import '../styles/global.css';
         <article class="partner-panel partner-panel--retail" id="retail">
           <h2>For retail outlets</h2>
           <p>
-            Specialty grocery, gift, zero-waste, and lifestyle retailers buy from KindNesta to fill
-            shelves with products that have a clear Kindness Score and a merchandisable story.
+            Specialty grocery, gift, zero-waste, and lifestyle retailers use KindNesta to find
+            products with a clear Kindness Score and a merchandisable story.
           </p>
           <ul>
-            <li>Case-ready formats across kitchen, home, care, garden, and dress</li>
-            <li>Pack size, MOQ, and suggested retail on every product</li>
+            <li>Assortment across hangtags, packaging, bags, labels, and trims</li>
             <li>Score notes for shelf talkers and staff training</li>
-            <li>Sales support for pricing, lead times, and samples</li>
+            <li>Impact messaging customers can understand at a glance</li>
           </ul>
         </article>
 
         <article class="partner-panel partner-panel--enterprise" id="enterprise">
           <h2>For enterprise buyers</h2>
           <p>
-            Facilities, hospitality, and people-ops teams buy kinder essentials for workplaces,
-            amenities, and employee programs — with scoring that supports vendor questionnaires.
+            Facilities, hospitality, and people-ops teams explore kinder essentials for workplaces
+            and programs — with scoring that supports sustainability conversations.
           </p>
           <ul>
-            <li>Volume-friendly personal care and home care formats</li>
-            <li>Transparent inputs: materials, packaging, sourcing</li>
-            <li>Support for RFPs and multi-site programs</li>
-            <li>Sample requests before line review or rollout</li>
+            <li>Transparent inputs: materials, packaging, certifications</li>
+            <li>Score notes for vendor questionnaires</li>
+            <li>Support for multi-site and program planning</li>
           </ul>
         </article>
       </div>
@@ -54,22 +52,27 @@ import '../styles/global.css';
       <div class="prose" id="kindness-score">
         <h2>How Kindness Score works</h2>
         <p>
-          Every product we sell carries a <strong>Kindness Score from 0 to 100</strong>. Higher means
-          a stronger profile for people and planet. Scores are set by the KindNesta team based on:
+          Every product carries a <strong>Kindness Score from 0 to 100</strong>. Higher means a
+          stronger evidence profile for people and planet. Scores follow KindNesta’s
+          <strong>EU-aligned checklist</strong> (chemical safety, material %, third-party
+          certifications, circularity, packaging, and traceability) — informed by EmpCo green-claim
+          rules, PPWR packaging expectations, REACH, and ESPR / Digital Product Passport readiness.
         </p>
         <ul>
-          <li>Materials and ingredients</li>
-          <li>Packaging and refill options</li>
-          <li>Sourcing and logistics signals we can verify</li>
+          <li>Gate checks stop weak or illegal-style green claims</li>
+          <li>Pillar checks award points only when evidence is on file</li>
+          <li>Recognised third-party certifications score higher than unverified claims</li>
         </ul>
         <p>
           Scores are not a third-party life-cycle assessment. They are a transparent rating so you
-          can compare products quickly. Product pages include the notes behind each number.
+          can compare products quickly.
+          <a href={withBase("kindness-score/")}>Read the full Kindness Score guide →</a>
         </p>
       </div>
 
       <p style="margin-top: 2.25rem;">
-        <a class="btn btn--primary" href={withBase("contact/")}>Contact sales</a>
+        <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
+        <a class="btn btn--ghost" href={withBase("kindness-score/")} style="margin-left: 0.5rem;">Kindness Score</a>
         <a class="btn btn--ghost" href={withBase("products/")} style="margin-left: 0.5rem;">Browse products</a>
       </p>
     </div>

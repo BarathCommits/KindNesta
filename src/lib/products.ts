@@ -1,20 +1,38 @@
-export function formatPrice(price: number, currency = 'USD'): string {
+export function formatPrice(price: number, currency = 'EUR'): string {
+  const fractionDigits = price < 10 ? 3 : 2;
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   }).format(price);
+}
+
+export function priceLabel(priceBasis?: string): string {
+  if (priceBasis === 'suggested-retail') return 'Sugg. retail';
+  return 'Ex-works';
 }
 
 export function categoryLabel(category: string): string {
   const labels: Record<string, string> = {
-    home: 'Home',
-    'personal-care': 'Personal care',
-    kitchen: 'Kitchen',
-    garden: 'Garden',
-    dress: 'Dress',
+    hangtags: 'Hangtags',
+    hangers: 'Hangers',
+    packaging: 'Packaging',
+    bags: 'Shopping bags',
+    polybags: 'Polybags',
+    stationery: 'Stationery',
+    labels: 'Labels',
+    trims: 'Trims & tapes',
   };
   return labels[category] ?? category;
+}
+
+export function ecoTagLabel(tag: string): string {
+  return tag
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
 }
 
 export type KindnessBand = 'high' | 'mid' | 'low';

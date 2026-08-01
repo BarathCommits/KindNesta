@@ -1,57 +1,61 @@
-# Deploy KindNesta (GitHub Pages + GoDaddy)
+# Deploy KindNesta (GitHub Pages only)
 
-## GitHub Pages from this repo
+KindNesta is a **static site**. Hosting is on **GitHub Pages** — no GoDaddy or other web server.
 
-This project now builds to plain static files in `docs/`, including `docs/index.html`.
-That means GitHub Pages can host it directly from the repository without a server.
+Build output lives in `docs/` (`astro.config.mjs`: `base: '/KindNesta'`, `outDir: './docs'`).
 
-## 1. Push the repo to GitHub
-
-```bash
-git add .
-git commit -m "Update KindNesta static site"
-git push origin main
-```
-
-## 2. Enable GitHub Pages
-
-In **GitHub → Settings → Pages**:
-
-1. **Source:** `Deploy from a branch`
-2. **Branch:** `main`
-3. **Folder:** `/docs`
-
-Your site will then be available at:
+Live URL:
 
 - `https://barathcommits.github.io/KindNesta/`
 
-## 3. Custom domain later (optional)
+## Option A — GitHub Actions (recommended)
 
-If you later attach a custom domain:
+This repo includes [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml). On every push to `main` it builds and deploys.
 
-1. Add the domain in **Settings → Pages**
-2. Add a `public/CNAME` file containing only your domain
-3. Update `astro.config.mjs`:
-   - set `site` to your real domain
-   - remove `base`
+1. Push to GitHub:
 
-## 4. Rebuild static files after changes
+```bash
+git add .
+git commit -m "Update KindNesta"
+git push origin main
+```
 
-Whenever you change content or styling:
+2. In **Settings → Pages**:
+   - **Source:** GitHub Actions
+
+3. Check the **Actions** tab that the “Deploy to GitHub Pages” workflow succeeded.
+
+## Option B — Branch folder `/docs`
+
+If you prefer not to use Actions:
+
+1. Run `npm run build` locally (updates `docs/`)
+2. Commit and push `docs/`
+3. In **Settings → Pages**:
+   - **Source:** Deploy from a branch
+   - **Branch:** `main`
+   - **Folder:** `/docs`
+
+## After you change the site
 
 ```bash
 npm run build
+git add .
+git commit -m "Rebuild static site"
+git push origin main
 ```
 
-That regenerates the plain static site in `docs/`.
+(With Option A, the Action rebuilds for you on push; you still need a build commit if you rely on Option B only.)
 
-## 5. Update products
+## Update products
 
-- Product content: `src/content/products/`
-- Product images: `public/images/products/`
-- Admin config: `public/admin/config.yml`
+See [`data/CATALOG.md`](./data/CATALOG.md).
 
-## 6. Local development
+- Edit `data/psp-catalog.csv`
+- Run `npm run sync-catalog`
+- Rebuild / push as above
+
+## Local development
 
 Requires Node.js 22+.
 
@@ -59,3 +63,14 @@ Requires Node.js 22+.
 npm install
 npm run dev
 ```
+
+Open `http://localhost:4321/KindNesta/`.
+
+## Custom domain later (optional)
+
+Still on GitHub Pages — no separate host:
+
+1. Add the domain under **Settings → Pages**
+2. Add `public/CNAME` with your domain
+3. In `astro.config.mjs`, set `site` to your domain and change `base` to `'/'`
+4. Rebuild and push

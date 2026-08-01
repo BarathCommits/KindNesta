@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title,
-  description = 'KindNesta sources and sells eco-friendly products for retail outlets and enterprise buyers — with transparent Kindness Scores.',
+  description = 'KindNesta offers eco-friendly packaging and apparel trims — with transparent Kindness Scores.',
   transparentHeader = false,
 } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -18,6 +18,9 @@ const base = import.meta.env.BASE_URL;
 const nav = [
   { href: withBase(), label: 'Home' },
   { href: withBase('products/'), label: 'Products' },
+  { href: withBase('kindness-score/'), label: 'Kindness Score' },
+  { href: withBase('partners/'), label: 'Partners' },
+  { href: withBase('blog/'), label: 'Journal' },
   { href: withBase('about/'), label: 'About' },
   { href: withBase('contact/'), label: 'Contact' },
 ];
@@ -79,7 +82,7 @@ function isCurrent(href: string) {
               </a>
             ))
           }
-          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>Contact sales</a>
+          <a class="btn btn--primary btn--sm nav__cta" href={withBase('contact/')}>Contact</a>
         </nav>
       </div>
     </header>
@@ -95,35 +98,37 @@ function isCurrent(href: string) {
               <span class="brand__wordmark">Kind<span>Nesta</span></span>
             </a>
             <p>
-              KindNesta sources and sells eco-friendly products for retail outlets and enterprise
-              programs — with a Kindness Score on every product.
+              KindNesta offers eco-friendly packaging and apparel trims — with a Kindness Score on
+              every product.
             </p>
           </div>
           <div class="site-footer__col">
             <h3>Products</h3>
             <ul>
               <li><a href={withBase('products/')}>All products</a></li>
-              <li><a href={withBase('products/?category=kitchen')}>Kitchen</a></li>
-              <li><a href={withBase('products/?category=home')}>Home</a></li>
-              <li><a href={withBase('products/?category=personal-care')}>Personal care</a></li>
-              <li><a href={withBase('products/?category=garden')}>Garden</a></li>
-              <li><a href={withBase('products/?category=dress')}>Dress</a></li>
+              <li><a href={withBase('products/?category=hangtags')}>Hangtags</a></li>
+              <li><a href={withBase('products/?category=packaging')}>Packaging</a></li>
+              <li><a href={withBase('products/?category=labels')}>Labels</a></li>
+              <li><a href={withBase('products/?category=bags')}>Shopping bags</a></li>
+              <li><a href={withBase('products/?category=trims')}>Trims &amp; tapes</a></li>
             </ul>
           </div>
           <div class="site-footer__col">
             <h3>Company</h3>
             <ul>
               <li><a href={withBase('about/')}>About</a></li>
+              <li><a href={withBase('kindness-score/')}>Kindness Score</a></li>
+              <li><a href={withBase('partners/')}>Partners &amp; suppliers</a></li>
+              <li><a href={withBase('blog/')}>Impact journal</a></li>
               <li><a href={withBase('about/#retail')}>Retail outlets</a></li>
-              <li><a href={withBase('about/#enterprise')}>Enterprise</a></li>
-              <li><a href={withBase('about/#kindness-score')}>Kindness Score</a></li>
               <li><a href={withBase('contact/')}>Contact</a></li>
             </ul>
           </div>
         </div>
         <div class="site-footer__bottom">
           <span>© {year} KindNesta</span>
-          <span>Sourcing &amp; selling eco-friendly products</span>
+          <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>
+          <span>Kinder products, clearly scored</span>
         </div>
       </div>
     </footer>

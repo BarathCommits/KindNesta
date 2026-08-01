@@ -1,9 +1,9 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import KindnessPanel from '../../components/KindnessPanel.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { categoryLabel, formatPrice } from '../../lib/products';
+import { categoryLabel, ecoTagLabel } from '../../lib/products';
 import { withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
@@ -16,32 +16,58 @@ export async function getStaticPaths() {
 }
 
 const { product, products } = Astro.props;
-const { Content } = await render(product);
 const {
   title,
+  brand,
   shortDescription,
-  price,
-  currency,
+  description,
+  bulletPoints,
   category,
+  subcategory,
   image,
+  imageGallery,
   kindnessScore,
   kindnessScoreNotes,
   ecoTags,
+  materials,
+  dimensions,
+  weight,
+  variantType,
+  variantValue,
+  parentId,
+  relatedIds,
   inStock,
-  sku,
-  packSize,
-  moq,
+  productFamily,
 } = product.data;
 
-const related = products
-  .filter((p) => p.id !== product.id && p.data.category === category)
-  .slice(0, 3);
+const gallery = (imageGallery?.length ? imageGallery : [image]).map((src) => withBase(src));
 
-const inquireHref = withBase(`contact/?sku=${encodeURIComponent(sku)}&interest=sales`);
+const variants = parentId
+  ? products
+      .filter((p) => p.data.parentId === parentId)
+      .sort((a, b) => (a.data.variantValue || '').localeCompare(b.data.variantValue || ''))
+  : [];
+
+const related = relatedIds.length
+  ? relatedIds
+      .map((id) => products.find((p) => p.id === id))
+      .filter(Boolean)
+      .slice(0, 4)
+  : products
+      .filter((p) => p.id !== product.id && p.data.category === category)
+      .slice(0, 4);
+
+const specs = [
+  materials ? { label: 'Materials', value: materials } : null,
+  dimensions ? { label: 'Dimensions', value: dimensions } : null,
+  weight ? { label: 'Weight', value: weight } : null,
+  subcategory ? { label: 'Browse node', value: subcategory } : null,
+  variantType && variantValue ? { label: variantType, value: variantValue } : null,
+].filter(Boolean) as { label: string; value: string }[];
 ---
 
 <BaseLayout title={`${title} — KindNesta`} description={shortDescription}>
-  <section class="section" style="padding-top: 2.5rem;">
+  <section class="section amazon-pdp" style="padding-top: 2rem;">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href={withBase()}>Home</a>
@@ -49,71 +75,143 @@ const inquireHref = withBase(`contact/?sku=${encodeURIComponent(sku)}&interest=s
         <a href={withBase("products/")}>Products</a>
         <span aria-hidden="true">/</span>
         <a href={withBase(`products/?category=${category}`)}>{categoryLabel(category)}</a>
-        <span aria-hidden="true">/</span>
-        <span aria-current="page">{title}</span>
+        {
+          subcategory && (
+            <>
+              <span aria-hidden="true">/</span>
+              <span>{subcategory}</span>
+            </>
+          )
+        }
       </nav>
 
-      <div class="product-detail">
-        <div class="product-detail__media reveal">
-          <img src={withBase(image)} alt={title} width="900" height="900" />
+      <div class="amazon-pdp__grid">
+        <div class="amazon-gallery reveal" data-gallery>
+          <div class="amazon-gallery__stage">
+            <img
+              id="gallery-main"
+              src={gallery[0]}
+              alt={title}
+              width="900"
+              height="900"
+            />
+          </div>
+          {
+            gallery.length > 1 && (
+              <div class="amazon-gallery__thumbs" role="list">
+                {gallery.map((src, i) => (
+                  <button
+                    type="button"
+                    class:list={['amazon-gallery__thumb', i === 0 && 'is-active']}
+                    data-gallery-src={src}
+                    aria-label={`View image ${i + 1}`}
+                  >
+                    <img src={src} alt="" width="72" height="72" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )
+          }
         </div>
-        <div class="product-detail__info reveal">
-          <p class="product-card__category">{categoryLabel(category)}</p>
-          <p class="product-card__sku">{sku}</p>
-          <h1 class="product-detail__title">{title}</h1>
-          <p class="product-detail__lead">{shortDescription}</p>
 
-          <div class="product-detail__pricing">
-            <p class="product-detail__price">
-              <span class="price__label">Suggested retail</span>
-              {formatPrice(price, currency)}
-            </p>
-            <p class="stock" data-out={!inStock}>
-              {inStock ? 'Available to order' : 'Temporarily unavailable'}
-            </p>
+        <div class="amazon-pdp__info reveal">
+          <p class="amazon-pdp__brand">{brand}</p>
+          <h1 class="amazon-pdp__title">{title}</h1>
+          <p class="amazon-pdp__lead">{shortDescription}</p>
+
+          <div class="amazon-pdp__score-row">
+            <KindnessPanel score={kindnessScore} notes={kindnessScoreNotes} />
           </div>
 
-          <dl class="trade-specs">
-            <div>
-              <dt>Pack size</dt>
-              <dd>{packSize}</dd>
-            </div>
-            <div>
-              <dt>Minimum order (MOQ)</dt>
-              <dd>{moq} units</dd>
-            </div>
-            <div>
-              <dt>Partner pricing</dt>
-              <dd>On inquiry</dd>
-            </div>
-          </dl>
+          <p class="stock" data-out={!inStock}>
+            {inStock ? 'In stock' : 'Currently unavailable'}
+          </p>
 
-          <KindnessPanel score={kindnessScore} notes={kindnessScoreNotes} />
+          {
+            variants.length > 1 && variantType && (
+              <div class="amazon-variants">
+                <p class="amazon-variants__label">
+                  {variantType}: <strong>{variantValue}</strong>
+                </p>
+                <div class="amazon-variants__list" role="list">
+                  {variants.map((v) => (
+                    <a
+                      role="listitem"
+                      class:list={[
+                        'amazon-variants__item',
+                        v.id === product.id && 'is-selected',
+                      ]}
+                      href={withBase(`products/${v.id}/`)}
+                      title={v.data.variantValue || v.data.title}
+                    >
+                      <img
+                        src={withBase(v.data.image)}
+                        alt={v.data.variantValue || v.data.title}
+                        width="64"
+                        height="64"
+                        loading="lazy"
+                      />
+                      <span>{v.data.variantValue}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          {
+            bulletPoints.length > 0 && (
+              <div class="amazon-bullets">
+                <h2>About this item</h2>
+                <ul>
+                  {bulletPoints.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
 
           {
             ecoTags.length > 0 && (
               <div class="tag-row">
                 {ecoTags.map((tag) => (
-                  <span class="tag">{tag}</span>
+                  <span class="tag">{ecoTagLabel(tag)}</span>
                 ))}
               </div>
             )
           }
 
-          <div class="product-detail__actions">
-            <a class="btn btn--primary" href={inquireHref}>Request pricing</a>
-            <a class="btn btn--secondary" href={withBase("contact/?interest=sample")}>Request a sample</a>
+          <div class="amazon-pdp__actions">
+            <a class="btn btn--primary" href={withBase("contact/")}>Get in touch</a>
+            <a class="btn btn--secondary" href={withBase("products/")}>Back to products</a>
           </div>
-
-          <div class="prose" style="margin-top: 1.75rem;">
-            <Content />
-          </div>
-
-          <p style="margin-top: 2rem;">
-            <a class="btn btn--ghost" href={withBase("products/")}>← Back to products</a>
-          </p>
         </div>
       </div>
+
+      {
+        specs.length > 0 && (
+          <section class="amazon-specs reveal">
+            <h2>Product details</h2>
+            <table>
+              <tbody>
+                {specs.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>{row.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        )
+      }
+
+      <section class="amazon-description prose reveal">
+        <h2>Product description</h2>
+        <p>{description}</p>
+        {productFamily && <p class="amazon-description__family">Family: {productFamily}</p>}
+      </section>
     </div>
   </section>
 
@@ -123,11 +221,11 @@ const inquireHref = withBase(`contact/?sku=${encodeURIComponent(sku)}&interest=s
         <div class="container">
           <div class="section__head">
             <span class="section__eyebrow">Related</span>
-            <h2>More from {categoryLabel(category)}</h2>
+            <h2>Customers also viewed</h2>
           </div>
           <div class="product-grid">
             {related.map((item, i) => (
-              <ProductCard product={item} style={`animation-delay: ${i * 80}ms`} />
+              <ProductCard product={item!} style={`animation-delay: ${i * 80}ms`} />
             ))}
           </div>
         </div>
@@ -135,3 +233,19 @@ const inquireHref = withBase(`contact/?sku=${encodeURIComponent(sku)}&interest=s
     )
   }
 </BaseLayout>
+
+<script>
+  const gallery = document.querySelector('[data-gallery]');
+  if (gallery) {
+    const main = gallery.querySelector('#gallery-main');
+    const thumbs = gallery.querySelectorAll('[data-gallery-src]');
+    thumbs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-gallery-src');
+        if (!src || !main) return;
+        main.setAttribute('src', src);
+        thumbs.forEach((t) => t.classList.toggle('is-active', t === btn));
+      });
+    });
+  }
+</script>
