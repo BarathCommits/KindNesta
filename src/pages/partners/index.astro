@@ -9,7 +9,7 @@ const downloads = [
     file: 'docs/partner-product-template.csv',
     type: 'Required',
     blurb:
-      'Listing fields plus gate checks and score evidence (materials, chemicals, circularity, packaging, traceability). Use N/A when a field does not apply. One row per SKU.',
+      'Row 1: company name. Row 2: date. Then listing, gate checks, and score evidence. Use N/A when a field does not apply. One data row per SKU.',
     primary: true,
   },
   {
@@ -45,7 +45,7 @@ const downloads = [
 const requirements = [
   {
     title: 'Listing fields',
-    body: 'SKU, title, brand, category, description, materials, image, public claims, and contact email.',
+    body: 'SKU, title, category, description, materials, image, public claims, and contact email — plus company name and date at the top of the sheet.',
   },
   {
     title: 'Gate checks A1–A7',
@@ -70,7 +70,7 @@ const steps = [
   {
     n: '2',
     title: 'Fill one row per SKU',
-    body: 'Complete listing, gates, and score columns. Write N/A where a field truly does not apply.',
+    body: 'Put company name and date on rows 1–2, then complete listing, gates, and score columns. Write N/A where a field truly does not apply.',
   },
   {
     n: '3',
@@ -133,8 +133,8 @@ const steps = [
       <span class="section__eyebrow">Downloads</span>
       <h2 class="section__title">Partner pack</h2>
       <p class="section__lead">
-        One CSV per supplier: listing fields, gate checks, and score evidence. Use N/A when a field
-        does not apply. Keep the header row.
+        One CSV per supplier: company name and date on top, then listing, gates, and score
+        evidence. Use N/A when a field does not apply. Keep the title row unchanged.
       </p>
 
       <div class="download-grid">

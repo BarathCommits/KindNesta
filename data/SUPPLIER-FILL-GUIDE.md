@@ -1,8 +1,26 @@
 # Supplier guideline — KindNesta product template
 
-Share **`partner-product-template.csv`**. Open in Google Sheets or Excel. Keep the header row. **One row = one SKU.**
+Share **`partner-product-template.csv`**. Open in Google Sheets or Excel.
 
-**Rule:** fill every column. Use **`N/A`** only when that field does not apply to the product (e.g. no plastic → virgin plastic `N/A` or `0`).
+**Sheet layout**
+
+| Row | What it is |
+| --- | --- |
+| 1 | **Company name** — put your company in column B |
+| 2 | **Date** — submission date (`YYYY-MM-DD`) in column B |
+| 3 | **Column titles** — do not change |
+| 4+ | **One row per SKU** |
+
+**Rule:** fill every product column. Use **`N/A`** only when that field does not apply (e.g. no plastic → virgin plastic `N/A` or `0`).
+
+---
+
+## 0. Header rows (once per sheet)
+
+| Row label | What to put in column B |
+| --- | --- |
+| `Company name` | Legal or trading name of the supplier |
+| `Date` | Date you send this sheet (`YYYY-MM-DD`) |
 
 ---
 
@@ -12,13 +30,12 @@ Share **`partner-product-template.csv`**. Open in Google Sheets or Excel. Keep t
 | --- | --- |
 | `sku` | Your article / SKU code |
 | `title` | Clear product name |
-| `brand` | Your company / brand |
 | `category` | Free text (e.g. packaging, home, other) |
 | `description` | What it is and who it is for |
 | `materials` | What it is made of |
 | `image` | Main photo filename |
 | `publicClaims` | Exact wording KindNesta may publish — or `none` |
-| `contactEmail` | Who we should reply to |
+| `contactEmail` | Who we should reply to for this SKU |
 
 **Claim rule:** no generic *eco-friendly / green / sustainable / climate neutral* without proof.
 
@@ -45,31 +62,68 @@ Mark each **`PASS` / `FAIL` / `N/A`**. Any **FAIL** caps the Kindness Score at *
 
 ### Certificates (pillar B3)
 
-`certNames`, `certNumbers`, `certExpiryDates`, `certFileNames` — or `N/A` if none.
+| Column | What to put |
+| --- | --- |
+| `certNames` | Scheme names, e.g. `GRS\|FSC` — or `N/A` |
+| `certNumbers` | Matching certificate numbers — or `N/A` |
+| `certExpiryDates` | `YYYY-MM-DD` (same order as names) — or `N/A` |
+| `certFileNames` | PDF filenames you attach — or `N/A` |
 
 ### Materials (pillar B2)
 
-`bomPercentByWeight`, `recycledContentPercent`, `recycledContentType`, `recycledCertScheme`, `bioBasedPercent`, `virginPlasticPercent`
+| Column | What to put |
+| --- | --- |
+| `bomPercentByWeight` | Breakdown that adds ~100%, e.g. `paper 98%\|coating 2%` |
+| `recycledContentPercent` | Number only (e.g. `100`) — or `N/A` |
+| `recycledContentType` | `pre-consumer` / `post-consumer` / `mixed` — or `N/A` |
+| `recycledCertScheme` | `GRS` / `RCS` / equivalent — or `N/A` |
+| `bioBasedPercent` | Number — or `N/A` |
+| `virginPlasticPercent` | `0` if none, else % — or `N/A` |
 
 ### Chemicals (pillar B1)
 
-`reachCompliant`, `svhcAboveThreshold`, `svhcList`, `oekoTexOrEquivalent`, `pvcFree`
+| Column | What to put |
+| --- | --- |
+| `reachCompliant` | `YES` / `NO` |
+| `svhcAboveThreshold` | `YES` / `NO` |
+| `svhcList` | Substance names if YES — else `N/A` |
+| `oekoTexOrEquivalent` | Cert name — or `N/A` |
+| `pvcFree` | `YES` / `NO` / `N/A` |
 
 ### Circularity (pillar B4)
 
-`designForRecycling`, `endOfLifeRoute`, `ppwrRecyclabilityGradeIntent` (packaging only — else `N/A`), `reuseOrRefill`
+| Column | What to put |
+| --- | --- |
+| `designForRecycling` | Short description — or `N/A` |
+| `endOfLifeRoute` | e.g. paper recycling / reuse — or `N/A` |
+| `ppwrRecyclabilityGradeIntent` | Packaging only (e.g. target grade B+) — else `N/A` |
+| `reuseOrRefill` | Only if relevant — else `N/A` |
 
 ### Shipped packaging (pillar B5)
 
-`shipPackMaterials`, `shipPackWeight`, `shipPackRecycledPlasticPercent`, `overpackJustified`, `sortingLabelPlan`
+| Column | What to put |
+| --- | --- |
+| `shipPackMaterials` | Outer / ship pack materials — or `N/A` |
+| `shipPackWeight` | Weight — or `N/A` |
+| `shipPackRecycledPlasticPercent` | `%`, `0`, or `no plastic pack` — or `N/A` |
+| `overpackJustified` | `YES`/`NO` + short reason — or `N/A` |
+| `sortingLabelPlan` | `YES` / `NO` — or `N/A` |
 
 ### Traceability (pillar B6)
 
-`countryOfManufacture`, `tier1SupplierName`, `mainMaterialOriginCountry`, `batchTraceability`, `careAndEndOfLifeInstructions`
+| Column | What to put |
+| --- | --- |
+| `countryOfManufacture` | Country where made |
+| `tier1SupplierName` | Factory / mill name — or `N/A` |
+| `mainMaterialOriginCountry` | Origin of main raw material — or `N/A` |
+| `batchTraceability` | `YES` / `NO` — or `N/A` |
+| `careAndEndOfLifeInstructions` | Care / disposal text — or `N/A` |
 
 ### Evidence pack
 
-`evidencePackFileNames` — all attached PDFs, separated by `|`
+| Column | What to put |
+| --- | --- |
+| `evidencePackFileNames` | All attached PDFs, separated by `\|` |
 
 Full scoring rules: `KINDNESS-SCORE-STANDARD.md`
 
@@ -77,9 +131,9 @@ Full scoring rules: `KINDNESS-SCORE-STANDARD.md`
 
 ## 4. What to send
 
-1. Completed `partner-product-template.csv`  
+1. Completed `partner-product-template.csv` (company name + date filled on rows 1–2)  
 2. Photos named as in `image`  
 3. Files listed in `certFileNames` / `evidencePackFileNames`
 
 Email: **kindnesta@proton.me**  
-Subject: `KindNesta product submission — [Brand] — [Date]`
+Subject: `KindNesta product submission — [Company] — [Date]`
