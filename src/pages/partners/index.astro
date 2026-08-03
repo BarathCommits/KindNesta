@@ -9,14 +9,14 @@ const downloads = [
     file: 'docs/partner-product-template.csv',
     type: 'Required',
     blurb:
-      'Nine mandatory columns only — SKU, title, brand, category, description, materials, image, public claims, contact email. One row per SKU.',
+      'Listing fields plus gate checks and score evidence (materials, chemicals, circularity, packaging, traceability). Use N/A when a field does not apply. One row per SKU.',
     primary: true,
   },
   {
     title: 'Supplier fill guide (PDF)',
     file: 'docs/SUPPLIER-FILL-GUIDE.pdf',
     type: 'Guideline',
-    blurb: 'Short printable guide — how to fill each column and what to email us.',
+    blurb: 'Printable guide — listing columns, gates A1–A7, and which fields feed the Kindness Score.',
     primary: true,
   },
   {
@@ -30,27 +30,34 @@ const downloads = [
     title: 'Kindness Score standard',
     file: 'docs/KINDNESS-SCORE-STANDARD.md',
     type: 'Reference',
-    blurb: 'How KindNesta scores products after listing — for reference, not part of the submission sheet.',
+    blurb: 'How gates and pillars map to the 0–100 Kindness Score.',
+    primary: false,
+  },
+  {
+    title: 'Score checklist (CSV)',
+    file: 'docs/partner-score-checklist.csv',
+    type: 'Optional',
+    blurb: 'Optional Pass/Fail pillar checklist if you prefer that format alongside the main template.',
     primary: false,
   },
 ];
 
 const requirements = [
   {
-    title: 'Nine mandatory fields',
-    body: 'SKU, title, brand, category, description, materials, image filename, public claims, and contact email — that is the full template.',
+    title: 'Listing fields',
+    body: 'SKU, title, brand, category, description, materials, image, public claims, and contact email.',
   },
   {
-    title: 'Specific claims only',
-    body: 'No generic “eco-friendly” fluff. Write the exact wording we may publish, or put none.',
+    title: 'Gate checks A1–A7',
+    body: 'Pass / Fail / N/A on claim hygiene, REACH baseline, evidence on file, and trade-off honesty. Any Fail caps the score at 49.',
   },
   {
-    title: 'Photos with the email',
-    body: 'Attach the main product photo named as in the image column. Extra certs are welcome but not required on day one.',
+    title: 'Score evidence',
+    body: 'Materials %, certificates, chemicals, circularity, shipped packaging, and traceability — use N/A only when the field does not apply to that product.',
   },
   {
-    title: 'We ask for more later',
-    body: 'KindNesta follows up only for evidence needed to list and score — suppliers do not fill a long scoring sheet upfront.',
+    title: 'Evidence files',
+    body: 'Attach photos plus the PDFs named in the certificate and evidence columns.',
   },
 ];
 
@@ -63,17 +70,17 @@ const steps = [
   {
     n: '2',
     title: 'Fill one row per SKU',
-    body: 'Complete all nine columns. Keep the header row unchanged.',
+    body: 'Complete listing, gates, and score columns. Write N/A where a field truly does not apply.',
   },
   {
     n: '3',
-    title: 'Attach photos',
-    body: 'Main photo filename must match the image column. Add any certificates you already have.',
+    title: 'Attach evidence',
+    body: 'Photos and certificate / evidence PDFs — filenames must match the sheet.',
   },
   {
     n: '4',
     title: 'Send to KindNesta',
-    body: 'Email the CSV + files to kindnesta@proton.me. We acknowledge within 2 business days.',
+    body: 'Email the CSV + files to kindnesta@proton.me. We acknowledge within 2 business days and confirm the Kindness Score.',
   },
 ];
 ---
@@ -126,7 +133,8 @@ const steps = [
       <span class="section__eyebrow">Downloads</span>
       <h2 class="section__title">Partner pack</h2>
       <p class="section__lead">
-        One short CSV — nine mandatory columns. Open in Sheets or Excel; keep the header row.
+        One CSV per supplier: listing fields, gate checks, and score evidence. Use N/A when a field
+        does not apply. Keep the header row.
       </p>
 
       <div class="download-grid">
