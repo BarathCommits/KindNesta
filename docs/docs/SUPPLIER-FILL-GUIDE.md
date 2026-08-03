@@ -1,166 +1,126 @@
-# Supplier guideline — how to fill the KindNesta product template
+# Supplier guideline — KindNesta product templates
 
-**Share this file with every supplier** together with:
+**Share with every supplier:**
 
-- `partner-product-template.csv` (the spreadsheet to fill)
-- `KINDNESS-SCORE-STANDARD.md` (scoring rules)
+| File | When to use |
+| --- | --- |
+| `partner-product-template.csv` | **Always** — one row per SKU (core listing) |
+| `partner-product-evidence.csv` | **Optional** — only if you make green claims, want a stronger Kindness Score, or KindNesta asks |
+| `KINDNESS-SCORE-STANDARD.md` | Reference for how scoring works |
+| `partner-score-checklist.csv` | Optional quick Pass/Fail self-check |
 
-Open the CSV in **Google Sheets** or **Excel**. Keep the header row unchanged. **One row = one SKU / variant.**
+Open CSVs in **Google Sheets** or **Excel**. Keep the header row. **Leave any column blank if it does not apply** — do not invent data.
 
 ---
 
 ## 1. Before you start
 
-1. Decide the exact **public claims** you want KindNesta to publish (specific only).
-2. Gather PDFs: certificates, REACH letter, BOM, pack spec, photos.
-3. Do **not** use words like *eco-friendly*, *green*, *sustainable*, or *climate neutral* unless you can prove excellent performance under EU EmpCo rules (e.g. EU Ecolabel) or you replace them with specific claims.
+1. Decide the **public claims** you want KindNesta to publish (specific only).
+2. Gather photos and any certificates you already have.
+3. Do **not** use *eco-friendly*, *green*, *sustainable*, or *climate neutral* unless you can prove them under EU EmpCo rules — prefer specific claims with % and scheme names.
 
-**Good claim:** `Made from 100% GRS-certified recycled cotton paper`  
-**Bad claim:** `Eco-friendly hangtag`
+**Good:** `Made from 100% GRS-certified recycled cotton paper`  
+**Bad:** `Eco-friendly product`
 
 ---
 
-## 2. Column groups (what to fill)
+## 2. Core template (required)
 
-### A. Identity (required)
+`partner-product-template.csv` — enough to list the product and start a conversation.
 
-| Column | How to fill |
+| Column | Notes |
 | --- | --- |
-| `id` | Unique lowercase id, e.g. `brand-hangtag-001` |
 | `sku` | Your article / SKU code |
-| `title` | Clear product name buyers will see |
-| `brand` | Brand on the label |
-| `category` | Exactly one of: `hangtags` `hangers` `packaging` `bags` `polybags` `stationery` `labels` `trims` |
-| `subcategory` | Finer aisle, e.g. `GRS Hangtags` |
-| `productFamily` | Family name for grouping |
-| `parentId` | Same value for all variants of one product; blank if no variants |
-
-### B. Listing content (required for the website)
-
-| Column | How to fill |
-| --- | --- |
-| `shortDescription` | 1–2 sentences, specific claims only |
+| `title` | Clear name buyers will see |
+| `brand` | Your company / brand |
+| `category` | Free text (e.g. packaging, home, personal-care, food, apparel-trims, other) |
+| `subcategory` | Optional finer aisle |
+| `shortDescription` | 1–2 sentences |
 | `bulletPoints` | 3–5 bullets separated by `\|` |
-| `description` | Longer story; still specific, no generic green fluff |
+| `description` | Longer listing copy |
 | `materials` | What it is made of |
-| `dimensions` / `weight` | Size and unit weight if known |
-| `image` | Main photo filename |
-| `imageGallery` | Extra photos separated by `\|` (include main first) |
-| `variantType` / `variantValue` | e.g. `Style` / `Style 1` |
-| `ecoTags` | e.g. `grs-certified\|recycled\|fsc-certified` |
-| `featured` / `inStock` | `TRUE` or `FALSE` |
+| `dimensions` / `weight` | Optional |
+| `image` / `imageGallery` | Photo filenames (`\|` for gallery) |
+| `publicClaims` | Exact wording KindNesta may publish |
+| `certNames` / `certNumbers` / `certExpiryDates` / `certFileNames` | Only if you have certs — otherwise leave blank |
+| `countryOfManufacture` | Where it is made |
+| `price` / `currency` / `unit` / `packSize` / `moq` | **Optional & private** — not shown on the public site |
+| `contactEmail` / `dateSubmitted` | Who we should reply to |
+| `notes` | Anything else — variants, lead times, exclusions |
 
-### C. Trade fields (optional — not shown publicly)
+**Variants:** one row per SKU. Mention the parent product in `notes` if helpful (e.g. “Style 2 of Hangtag family”).
 
-`price`, `currency`, `priceBasis` (`ex-works` or `suggested-retail`), `unit` (`piece` or `meter`), `packSize`, `moq`, `quality`
+---
 
-### D. Claims & certificates (required if you make green claims)
+## 3. Evidence template (optional)
 
-| Column | How to fill |
+`partner-product-evidence.csv` — match rows by `sku` to the core sheet.
+
+Use this when:
+
+- You claim recycled / organic / FSC / similar content, **or**
+- You want KindNesta to score the product beyond a basic provisional listing, **or**
+- We ask for it during review
+
+Every evidence column can be blank or `N/A`. Only fill what is true for your product.
+
+Typical modules (fill only what fits):
+
+| Topic | Columns |
 | --- | --- |
-| `publicClaims` | Exact sentence(s) allowed on the site |
-| `certNames` | e.g. `GRS\|FSC` |
-| `certNumbers` | Matching certificate numbers |
-| `certExpiryDates` | `YYYY-MM-DD` |
-| `certScope` | What the cert covers (must include this SKU) |
-| `certFileNames` | PDF filenames you attach |
+| Recycled / bio / plastic | `recycledContentPercent`, `recycledContentType`, `recycledCertScheme`, `bioBasedPercent`, `virginPlasticPercent`, `bomPercentByWeight` |
+| Chemicals (EU) | `reachCompliant`, `svhcAboveThreshold`, `svhcList`, `oekoTexOrEquivalent`, `pvcFree` |
+| Circularity | `designForRecycling`, `endOfLifeRoute`, `ppwrRecyclabilityGradeIntent`, `reuseOrRefill` |
+| Shipped packaging | `shipPackMaterials`, `shipPackWeight`, `shipPackRecycledPlasticPercent`, `overpackJustified`, `sortingLabelPlan` |
+| Traceability | `tier1SupplierName`, `mainMaterialOriginCountry`, `batchTraceability`, `careAndEndOfLifeInstructions` |
+| Gate self-check | `A1`–`A7` as `PASS` / `FAIL` / `N/A` |
+| Score proposal | `proposedKindnessScore`, `kindnessScoreNotes`, `evidencePackFileNames` |
 
-**Which cert is typical?**
+Any **FAIL** on a gate → KindNesta will cap the score at **49** and block related claims until fixed.
+
+---
+
+## 4. Certificates (only if you make those claims)
 
 | If you claim… | Usual proof |
 | --- | --- |
-| Recycled content | **GRS** or **RCS** |
-| Organic cotton | **GOTS** |
-| Responsible paper/forest fibre | **FSC** or **PEFC** |
-| Tested for harmful substances (textiles) | **OEKO-TEX Standard 100** |
-| Broad “excellent eco performance” | **EU Ecolabel** / Blue Angel |
+| Recycled content | GRS or RCS |
+| Organic cotton | GOTS |
+| Responsible paper / forest fibre | FSC or PEFC |
+| Tested for harmful substances (textiles) | OEKO-TEX Standard 100 |
+| Broad excellent eco performance | EU Ecolabel / Blue Angel |
 
-You can sell without eco-certs, but then **do not** make recycled/organic/FSC-style claims, and Kindness Score will stay low until evidence arrives.
-
-### E. Material evidence (required for Strong scores)
-
-| Column | How to fill |
-| --- | --- |
-| `bomPercentByWeight` | e.g. `recycled cotton paper 98%\|coating 2%` |
-| `recycledContentPercent` | Number only, e.g. `100` |
-| `recycledContentType` | `pre-consumer` / `post-consumer` / `mixed` |
-| `recycledCertScheme` | `GRS` / `RCS` / etc. |
-| `bioBasedPercent` | If relevant |
-| `virginPlasticPercent` | `0` if none |
-
-### F. Chemicals (required for EU)
-
-| Column | Values |
-| --- | --- |
-| `reachCompliant` | `YES` / `NO` |
-| `svhcAboveThreshold` | `YES` / `NO` |
-| `svhcList` | Names if YES |
-| `oekoTexOrEquivalent` | Cert name or `N/A` |
-| `pvcFree` | `YES` / `NO` / `N/A` |
-
-### G. Circularity & shipped packaging
-
-Fill design-for-recycling, end-of-life route, PPWR grade intent (if packaging), reuse/refill, and ship-pack material/weight/recycled plastic % / overpack / sorting label plan.
-
-### H. Traceability (DPP-ready)
-
-`countryOfManufacture`, `tier1SupplierName`, `mainMaterialOriginCountry`, `batchTraceability` (`YES`/`NO`), `careAndEndOfLifeInstructions`
-
-### I. Gate checks A1–A7
-
-Use `PASS`, `FAIL`, or `N/A`.  
-Any **FAIL** → KindNesta will cap score at **49** and block related claims until fixed.
-
-### J. Score proposal
-
-| Column | How to fill |
-| --- | --- |
-| `proposedKindnessScore` | Your estimate 0–100 (KindNesta confirms) |
-| `kindnessScoreNotes` | Why |
-| `evidencePackFileNames` | All attached files, `\|` separated |
-| `contactEmail` | Who KindNesta should email |
-| `dateSubmitted` | `YYYY-MM-DD` |
+You can list products **without** eco-certs. Then avoid recycled/organic/FSC-style claims; the Kindness Score stays lower until evidence arrives.
 
 ---
 
-## 3. Variants
+## 5. What to send back
 
-Same product, different size/style/colour:
+1. Completed `partner-product-template.csv` (required)  
+2. `partner-product-evidence.csv` (optional)  
+3. Photos + any certificate PDFs named in the sheets  
 
-- Same `parentId`
-- Different `id`, `sku`, `variantValue`, preferably different `image`
-- Shared certs OK if **scope** covers every variant
-
----
-
-## 4. What to send back
-
-1. Completed `partner-product-template.csv`  
-2. Evidence ZIP/PDFs listed in `evidencePackFileNames`  
-3. Product images (clear background preferred)
-
-Email subject suggestion: `KindNesta product submission — [Brand] — [Date]`  
+Email subject: `KindNesta product submission — [Brand] — [Date]`  
 Send to: **kindnesta@proton.me**
 
 ---
 
-## 5. How KindNesta uses your row
+## 6. How KindNesta uses your data
 
-1. Validates Gate checks (A1–A7)  
-2. Scores pillars from your evidence (see `KINDNESS-SCORE-STANDARD.md`)  
-3. Publishes product + Kindness Score (provisional until evidence verified)  
-4. Only publishes **specific** claims you listed in `publicClaims`
+1. Reviews the core listing for clarity and claim hygiene  
+2. If evidence is provided, runs gate checks and scores pillars (`KINDNESS-SCORE-STANDARD.md`)  
+3. Publishes product + Kindness Score (**provisional** until evidence is verified)  
+4. Only publishes **specific** claims from `publicClaims`
 
 ---
 
-## 6. Quick quality checklist before send
+## 7. Quick checklist before send
 
-- [ ] No generic “eco/green/sustainable” wording  
-- [ ] Recycled/organic/FSC claims have cert number + PDF  
-- [ ] BOM % adds to ~100%  
-- [ ] REACH answered  
-- [ ] Country of manufacture filled  
-- [ ] Photos named exactly as in `image` / `imageGallery`  
-- [ ] One row per SKU  
+- [ ] Core sheet: one row per SKU  
+- [ ] No generic “eco / green / sustainable” wording  
+- [ ] Blank columns left blank (not filled with guesses)  
+- [ ] Cert claims have matching numbers + PDFs (if any)  
+- [ ] Photo filenames match `image` / `imageGallery`  
+- [ ] Evidence sheet only if relevant — same `sku` values as core  
 
-Questions? Email **kindnesta@proton.me** or use the website contact form.
+Questions? **kindnesta@proton.me** or the website contact form.
