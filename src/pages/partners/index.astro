@@ -7,92 +7,73 @@ const downloads = [
   {
     title: 'Product template (CSV)',
     file: 'docs/partner-product-template.csv',
-    type: 'Core · required',
+    type: 'Required',
     blurb:
-      'Slim listing sheet — SKU, title, materials, claims, photos, optional trade fields. Leave any column blank if it does not apply. One row per SKU.',
-    primary: true,
-  },
-  {
-    title: 'Evidence add-on (CSV)',
-    file: 'docs/partner-product-evidence.csv',
-    type: 'Optional',
-    blurb:
-      'Only if you make green claims or want a stronger Kindness Score — recycled content, chemicals, packaging, gates A1–A7. Match rows by SKU; leave the rest blank.',
+      'Nine mandatory columns only — SKU, title, brand, category, description, materials, image, public claims, contact email. One row per SKU.',
     primary: true,
   },
   {
     title: 'Supplier fill guide (PDF)',
     file: 'docs/SUPPLIER-FILL-GUIDE.pdf',
     type: 'Guideline',
-    blurb: 'Printable PDF — what is required vs optional, claim wording rules, and pre-send checklist.',
+    blurb: 'Short printable guide — how to fill each column and what to email us.',
     primary: true,
   },
   {
     title: 'Supplier fill guide (Markdown)',
     file: 'docs/SUPPLIER-FILL-GUIDE.md',
     type: 'Guideline',
-    blurb: 'Same guide in Markdown if you prefer editing or sharing in Docs.',
+    blurb: 'Same guide in Markdown.',
     primary: false,
   },
   {
     title: 'Kindness Score standard',
     file: 'docs/KINDNESS-SCORE-STANDARD.md',
-    type: 'Standard',
-    blurb: 'EU-aligned scoring rules: gate checks, evidence pillars, and how scores map to Strong / Good / Fair.',
-    primary: false,
-  },
-  {
-    title: 'Score checklist (CSV)',
-    file: 'docs/partner-score-checklist.csv',
-    type: 'Optional',
-    blurb: 'Slim Pass/Fail sheet if you want a quick self-check before sending evidence.',
+    type: 'Reference',
+    blurb: 'How KindNesta scores products after listing — for reference, not part of the submission sheet.',
     primary: false,
   },
 ];
 
 const requirements = [
   {
-    title: 'Core listing data',
-    body: 'SKU, title, brand, category, description, materials, and photos. Leave columns blank when they do not apply — we do not expect every field for every product.',
+    title: 'Nine mandatory fields',
+    body: 'SKU, title, brand, category, description, materials, image filename, public claims, and contact email — that is the full template.',
   },
   {
     title: 'Specific claims only',
-    body: 'No generic “eco-friendly” fluff. If you make a recycled, organic, or certified claim, attach matching evidence when you have it.',
+    body: 'No generic “eco-friendly” fluff. Write the exact wording we may publish, or put none.',
   },
   {
-    title: 'Evidence when it fits',
-    body: 'The optional evidence sheet covers chemicals, recycled content, packaging, and gates — fill only the modules that apply to your product.',
+    title: 'Photos with the email',
+    body: 'Attach the main product photo named as in the image column. Extra certs are welcome but not required on day one.',
   },
   {
-    title: 'Trade fields stay private',
-    body: 'Price, MOQ, and pack size are optional and never shown on the public product page.',
-  },
-  {
-    title: 'Open to collaboration',
-    body: 'Not sure which columns apply? Send the core sheet and email us — we will ask only for what scoring needs.',
+    title: 'We ask for more later',
+    body: 'KindNesta follows up only for evidence needed to list and score — suppliers do not fill a long scoring sheet upfront.',
   },
 ];
 
 const steps = [
   {
     n: '1',
-    title: 'Download the core template',
-    body: 'Start with the slim product CSV and the fill guide. Open the CSV in Google Sheets or Excel.',
+    title: 'Download the template',
+    body: 'Get the CSV and fill guide. Open the CSV in Google Sheets or Excel.',
   },
   {
     n: '2',
     title: 'Fill one row per SKU',
-    body: 'Keep the header row. Leave blank anything that does not apply. Add the optional evidence sheet only if relevant.',
+    body: 'Complete all nine columns. Keep the header row unchanged.',
   },
   {
     n: '3',
-    title: 'Attach what you have',
-    body: 'Photos plus any certificates you already hold — filenames should match the sheet.',
+    title: 'Attach photos',
+    body: 'Main photo filename must match the image column. Add any certificates you already have.',
   },
   {
     n: '4',
     title: 'Send to KindNesta',
-    body: 'Email the CSV(s) + files to kindnesta@proton.me. We acknowledge within 2 business days and follow up only for evidence needed to list and score.',
+    body: 'Email the CSV + files to kindnesta@proton.me. We acknowledge within 2 business days.',
   },
 ];
 ---
@@ -145,8 +126,7 @@ const steps = [
       <span class="section__eyebrow">Downloads</span>
       <h2 class="section__title">Partner pack</h2>
       <p class="section__lead">
-        Start with the core CSV. Leave blank anything that does not apply. Add the optional evidence
-        sheet only when green claims or scoring depth are relevant.
+        One short CSV — nine mandatory columns. Open in Sheets or Excel; keep the header row.
       </p>
 
       <div class="download-grid">
@@ -257,9 +237,8 @@ const steps = [
       <span class="section__eyebrow">Marketplace</span>
       <h2 class="section__title">Categories live today</h2>
       <p style="max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
-        These aisles are open in the catalogue now. Your core template can use free-text categories —
-        if you are outside this list, tell us in <code>notes</code> and we will map or open a new
-        aisle.
+        These aisles are open in the catalogue now. Use free-text categories in the template — if you
+        are outside this list, we will map or open a new aisle.
       </p>
       <div class="blog-regions" style="margin-top: 1rem;">
         {
@@ -275,7 +254,7 @@ const steps = [
       <p style="margin-top: 1.5rem; max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
         After you email <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>, we acknowledge
         within <strong>2 business days</strong> and follow up only for evidence needed to list and
-        score. Start with the slim core sheet — the evidence add-on is optional.
+        score.
       </p>
     </div>
   </section>
