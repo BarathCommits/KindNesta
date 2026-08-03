@@ -137,5 +137,5 @@ For each SKU (or parent product family):
 ## E. Partner files
 
 - Checklist CSV: `data/partner-score-checklist.csv`  
-- Product listing template: `data/partner-product-template.csv`  
+- Product listing + score template: `data/partner-product-template.csv`  
 - How-to: `data/PARTNER-TEMPLATE.md`

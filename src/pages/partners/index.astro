@@ -7,87 +7,80 @@ const downloads = [
   {
     title: 'Product template (CSV)',
     file: 'docs/partner-product-template.csv',
-    type: 'Spreadsheet',
-    blurb: 'Master sheet — listing fields, certificates, BOM, chemicals, packaging, gates A1–A7, and proposed Kindness Score. One row per SKU.',
+    type: 'Required',
+    blurb:
+      'Row 1: company name. Row 2: date. Then listing, gate checks, and score evidence. Use N/A when a field does not apply. One data row per SKU.',
     primary: true,
   },
   {
     title: 'Supplier fill guide (PDF)',
     file: 'docs/SUPPLIER-FILL-GUIDE.pdf',
     type: 'Guideline',
-    blurb: 'Printable PDF — column-by-column instructions, claim wording rules, cert map, and pre-send quality checklist.',
+    blurb: 'Printable guide — listing columns, gates A1–A7, and which fields feed the Kindness Score.',
     primary: true,
   },
   {
     title: 'Supplier fill guide (Markdown)',
     file: 'docs/SUPPLIER-FILL-GUIDE.md',
     type: 'Guideline',
-    blurb: 'Same guide in Markdown if you prefer editing or sharing in Docs.',
+    blurb: 'Same guide in Markdown.',
     primary: false,
   },
   {
     title: 'Kindness Score standard',
     file: 'docs/KINDNESS-SCORE-STANDARD.md',
-    type: 'Standard',
-    blurb: 'EU-aligned scoring rules: gate checks, evidence pillars, and how scores map to Strong / Good / Fair.',
+    type: 'Reference',
+    blurb: 'How gates and pillars map to the 0–100 Kindness Score.',
     primary: false,
   },
   {
     title: 'Score checklist (CSV)',
     file: 'docs/partner-score-checklist.csv',
     type: 'Optional',
-    blurb: 'Slim Pass/Fail sheet if you want a quick gate review before filling the full template.',
+    blurb: 'Optional Pass/Fail pillar checklist if you prefer that format alongside the main template.',
     primary: false,
   },
 ];
 
 const requirements = [
   {
-    title: 'Honest product data',
-    body: 'Clear title, materials, dimensions, images, and specific public claims only — no generic “eco-friendly” fluff.',
+    title: 'Listing fields',
+    body: 'SKU, title, category, description, materials, image, public claims, and contact email — plus company name and date at the top of the sheet.',
   },
   {
-    title: 'Evidence for green claims',
-    body: 'If you claim recycled, organic, FSC, etc., attach matching certificates with numbers, scope, and expiry dates.',
+    title: 'Gate checks A1–A7',
+    body: 'Pass / Fail / N/A on claim hygiene, REACH baseline, evidence on file, and trade-off honesty. Any Fail caps the score at 49.',
   },
   {
-    title: 'Chemical baseline',
-    body: 'REACH compliance answers for EU-bound goods. SVHC disclosure if above threshold. OEKO-TEX or equivalent when relevant.',
+    title: 'Score evidence',
+    body: 'Materials %, certificates, chemicals, circularity, shipped packaging, and traceability — use N/A only when the field does not apply to that product.',
   },
   {
-    title: 'Traceability',
-    body: 'Country of manufacture, tier-1 identity, main material origin, and batch-level traceability where available (DPP-ready).',
-  },
-  {
-    title: 'Shipped packaging facts',
-    body: 'Pack materials, weight, recycled plastic %, overpack justification, and sorting/label plan for PPWR-minded buyers.',
-  },
-  {
-    title: 'Gate self-check',
-    body: 'Complete A1–A7 on the template. Any FAIL caps the Kindness Score at 49 until fixed.',
+    title: 'Evidence files',
+    body: 'Attach photos plus the PDFs named in the certificate and evidence columns.',
   },
 ];
 
 const steps = [
   {
     n: '1',
-    title: 'Download the pack',
-    body: 'Get the CSV template and fill guide below. Open the CSV in Google Sheets or Excel.',
+    title: 'Download the template',
+    body: 'Get the CSV and fill guide. Open the CSV in Google Sheets or Excel.',
   },
   {
     n: '2',
     title: 'Fill one row per SKU',
-    body: 'Keep the header row. Replace example rows. Use the same parentId for variants.',
+    body: 'Put company name and date on rows 1–2, then complete listing, gates, and score columns. Write N/A where a field truly does not apply.',
   },
   {
     n: '3',
     title: 'Attach evidence',
-    body: 'Certificate PDFs, REACH letter, BOM, pack spec, and photos — filenames must match the sheet.',
+    body: 'Photos and certificate / evidence PDFs — filenames must match the sheet.',
   },
   {
     n: '4',
     title: 'Send to KindNesta',
-    body: 'Email the completed CSV + evidence pack to kindnesta@proton.me. We acknowledge within 2 business days, complete an initial gate review within ~10 business days, then confirm the score and list the product.',
+    body: 'Email the CSV + files to kindnesta@proton.me. We acknowledge within 2 business days and confirm the Kindness Score.',
   },
 ];
 ---
@@ -140,8 +133,8 @@ const steps = [
       <span class="section__eyebrow">Downloads</span>
       <h2 class="section__title">Partner pack</h2>
       <p class="section__lead">
-        Share these files with every supplier. Open the CSV in Sheets or Excel; keep the header row
-        unchanged.
+        One CSV per supplier: company name and date on top, then listing, gates, and score
+        evidence. Use N/A when a field does not apply. Keep the title row unchanged.
       </p>
 
       <div class="download-grid">
@@ -252,8 +245,8 @@ const steps = [
       <span class="section__eyebrow">Marketplace</span>
       <h2 class="section__title">Categories live today</h2>
       <p style="max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
-        These are the aisles open in the KindNesta marketplace now. More categories welcome as
-        verified suppliers join.
+        These aisles are open in the catalogue now. Use free-text categories in the template — if you
+        are outside this list, we will map or open a new aisle.
       </p>
       <div class="blog-regions" style="margin-top: 1rem;">
         {
@@ -268,9 +261,8 @@ const steps = [
       </div>
       <p style="margin-top: 1.5rem; max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">
         After you email <a href="mailto:kindnesta@proton.me">kindnesta@proton.me</a>, we acknowledge
-        within <strong>2 business days</strong> and aim to complete an initial gate review within
-        about <strong>10 business days</strong>. Use exactly these category values in the template’s
-        <code>category</code> column (or ask us before adding a new aisle).
+        within <strong>2 business days</strong> and follow up only for evidence needed to list and
+        score.
       </p>
     </div>
   </section>
