@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { categoryLabel } from '../../lib/products';
+import { categoryLabel, displayBrand, publicBullets, publicCopy } from '../../lib/products';
 import { productImageSources, withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
@@ -16,12 +16,12 @@ const payload = sorted.map((p) => {
   return {
     id: p.id,
     title: p.data.title,
-    brand: p.data.brand,
-    shortDescription: p.data.shortDescription,
+    brand: displayBrand(p.data.brand),
+    shortDescription: publicCopy(p.data.shortDescription),
     category: p.data.category,
     categoryLabel: categoryLabel(p.data.category),
     subcategory: p.data.subcategory || categoryLabel(p.data.category),
-    bulletPoints: p.data.bulletPoints.slice(0, 2),
+    bulletPoints: publicBullets(p.data.bulletPoints).slice(0, 2),
     image: imgs.src,
     imageWebp: imgs.webp,
     kindnessScore: p.data.kindnessScore,
@@ -41,7 +41,7 @@ const payload = sorted.map((p) => {
       <h1>Source kinder products</h1>
       <p>
         Browse by category or Kindness Score. Each listing shows materials, claims, and score —
-        request a quote or sample when you’re ready. Trade pricing stays private.
+        request a quote or sample when you’re ready.
       </p>
     </div>
   </section>
@@ -160,7 +160,7 @@ const payload = sorted.map((p) => {
                 <span class="kindness-badge__text">${label}<span class="kindness-badge__status">${statusShort}</span></span>
               </span>
             </div>
-            <p class="product-card__brand">${escapeHtml(p.brand || 'KindNesta')}</p>
+            ${p.brand ? `<p class="product-card__brand">${escapeHtml(p.brand)}</p>` : ''}
             <h3>${title}</h3>
             <p>${desc}</p>
             ${bullets ? `<ul class="product-card__bullets">${bullets}</ul>` : ''}
