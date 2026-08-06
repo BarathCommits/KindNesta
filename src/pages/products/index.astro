@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { categoryLabel } from '../../lib/products';
-import { withBase } from '../../lib/urls';
+import { productImageSources, withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
 const products = await getCollection('products');
@@ -11,20 +11,24 @@ const categories = [...new Set(products.map((p) => p.data.category))].sort();
 
 const sorted = [...products].sort((a, b) => b.data.kindnessScore - a.data.kindnessScore);
 
-const payload = sorted.map((p) => ({
-  id: p.id,
-  title: p.data.title,
-  brand: p.data.brand,
-  shortDescription: p.data.shortDescription,
-  category: p.data.category,
-  categoryLabel: categoryLabel(p.data.category),
-  subcategory: p.data.subcategory || categoryLabel(p.data.category),
-  bulletPoints: p.data.bulletPoints.slice(0, 2),
-  image: withBase(p.data.image),
-  kindnessScore: p.data.kindnessScore,
-  scoreVerified: p.data.scoreVerified,
-  href: withBase(`products/${p.id}/`),
-}));
+const payload = sorted.map((p) => {
+  const imgs = productImageSources(p.data.image);
+  return {
+    id: p.id,
+    title: p.data.title,
+    brand: p.data.brand,
+    shortDescription: p.data.shortDescription,
+    category: p.data.category,
+    categoryLabel: categoryLabel(p.data.category),
+    subcategory: p.data.subcategory || categoryLabel(p.data.category),
+    bulletPoints: p.data.bulletPoints.slice(0, 2),
+    image: imgs.src,
+    imageWebp: imgs.webp,
+    kindnessScore: p.data.kindnessScore,
+    scoreVerified: p.data.scoreVerified,
+    href: withBase(`products/${p.id}/`),
+  };
+});
 ---
 
 <BaseLayout
@@ -143,7 +147,10 @@ const payload = sorted.map((p) => ({
       <article class="product-card">
         <a class="product-card__link" href="${p.href}">
           <div class="product-card__media">
-            <img src="${p.image}" alt="${title}" loading="lazy" width="640" height="800" />
+            <picture>
+              <source srcset="${p.imageWebp}" type="image/webp" />
+              <img src="${p.image}" alt="${title}" loading="lazy" decoding="async" width="640" height="800" />
+            </picture>
           </div>
           <div class="product-card__body">
             <div class="product-card__meta">

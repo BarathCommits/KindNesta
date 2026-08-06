@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import KindnessPanel from '../../components/KindnessPanel.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { categoryLabel, ecoTagLabel } from '../../lib/products';
-import { withBase } from '../../lib/urls';
+import { productImageSources, withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
 export async function getStaticPaths() {
@@ -45,7 +45,8 @@ const {
   unit,
 } = product.data;
 
-const gallery = (imageGallery?.length ? imageGallery : [image]).map((src) => withBase(src));
+const gallery = (imageGallery?.length ? imageGallery : [image]).map((src) => productImageSources(src));
+const mainImage = gallery[0];
 
 const variants = parentId
   ? products
@@ -103,26 +104,35 @@ const sampleHref = withBase(
       <div class="amazon-pdp__grid">
         <div class="amazon-gallery reveal" data-gallery>
           <div class="amazon-gallery__stage">
-            <img
-              id="gallery-main"
-              src={gallery[0]}
-              alt={title}
-              width="900"
-              height="900"
-            />
+            <picture>
+              <source id="gallery-main-webp" srcset={mainImage.webp} type="image/webp" />
+              <img
+                id="gallery-main"
+                src={mainImage.src}
+                alt={title}
+                width="900"
+                height="900"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
           </div>
           <p class="amazon-gallery__note">Illustrative image — representative of product type until supplier photography is available.</p>
           {
             gallery.length > 1 && (
               <div class="amazon-gallery__thumbs" role="list">
-                {gallery.map((src, i) => (
+                {gallery.map((img, i) => (
                   <button
                     type="button"
                     class:list={['amazon-gallery__thumb', i === 0 && 'is-active']}
-                    data-gallery-src={src}
+                    data-gallery-src={img.src}
+                    data-gallery-webp={img.webp}
                     aria-label={`View image ${i + 1}`}
                   >
-                    <img src={src} alt="" width="72" height="72" loading="lazy" />
+                    <picture>
+                      <source srcset={img.webp} type="image/webp" />
+                      <img src={img.src} alt="" width="72" height="72" loading="lazy" decoding="async" />
+                    </picture>
                   </button>
                 ))}
               </div>
@@ -164,13 +174,17 @@ const sampleHref = withBase(
                       href={withBase(`products/${v.id}/`)}
                       title={v.data.variantValue || v.data.title}
                     >
-                      <img
-                        src={withBase(v.data.image)}
-                        alt={v.data.variantValue || v.data.title}
-                        width="64"
-                        height="64"
-                        loading="lazy"
-                      />
+                      <picture>
+                        <source srcset={productImageSources(v.data.image).webp} type="image/webp" />
+                        <img
+                          src={withBase(v.data.image)}
+                          alt={v.data.variantValue || v.data.title}
+                          width="64"
+                          height="64"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
                       <span>{v.data.variantValue}</span>
                     </a>
                   ))}
@@ -259,12 +273,15 @@ const sampleHref = withBase(
   const gallery = document.querySelector('[data-gallery]');
   if (gallery) {
     const main = gallery.querySelector('#gallery-main');
+    const mainWebp = gallery.querySelector('#gallery-main-webp');
     const thumbs = gallery.querySelectorAll('[data-gallery-src]');
     thumbs.forEach((btn) => {
       btn.addEventListener('click', () => {
         const src = btn.getAttribute('data-gallery-src');
+        const webp = btn.getAttribute('data-gallery-webp');
         if (!src || !main) return;
         main.setAttribute('src', src);
+        if (mainWebp && webp) mainWebp.setAttribute('srcset', webp);
         thumbs.forEach((t) => t.classList.toggle('is-active', t === btn));
       });
     });
