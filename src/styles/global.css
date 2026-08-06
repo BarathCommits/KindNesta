@@ -2081,6 +2081,12 @@ p {
   display: block;
 }
 
+.amazon-gallery__note {
+  margin: 0.65rem 0 0;
+  font: var(--body-sm);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
 .amazon-gallery__thumbs {
   display: flex;
   flex-wrap: wrap;
