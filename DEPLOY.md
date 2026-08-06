@@ -74,3 +74,40 @@ Configured for `kindnesta.com`:
 2. `astro.config.mjs` uses `site: 'https://kindnesta.com'` and `base: '/'`
 3. In **Settings → Pages**, add the custom domain and enable **Enforce HTTPS** once the certificate is ready
 4. DNS should point at GitHub Pages (A/AAAA or CNAME per GitHub’s docs)
+
+### Expected DNS (GoDaddy)
+
+| Host | Type | Value |
+|------|------|--------|
+| `@` | A | `185.199.108.153` |
+| `@` | A | `185.199.109.153` |
+| `@` | A | `185.199.110.153` |
+| `@` | A | `185.199.111.153` |
+| `@` | AAAA | `2606:50c0:8000::153` |
+| `@` | AAAA | `2606:50c0:8001::153` |
+| `@` | AAAA | `2606:50c0:8002::153` |
+| `@` | AAAA | `2606:50c0:8003::153` |
+| `www` | CNAME | `barathcommits.github.io.` |
+
+Do not add extra A/AAAA/CNAME records for `@` or `www` beyond the table above — extras can block certificate issuance. If you use CAA records, allow `letsencrypt.org`.
+
+### Browser “certificate” / NET::ERR_CERT errors
+
+If HTTPS shows a certificate for `*.github.io` instead of `kindnesta.com`, GitHub never finished provisioning the custom-domain cert (or it got stuck). DNS can be correct while this still happens.
+
+GitHub Actions cannot repair this automatically — updating the custom domain requires **repo admin** access (the Actions `GITHUB_TOKEN` is not enough).
+
+**Repair (GitHub UI) — recommended:**
+
+1. Open [Settings → Pages](https://github.com/BarathCommits/KindNesta/settings/pages)
+2. Under **Custom domain**, remove `kindnesta.com` → **Save**
+3. Add `kindnesta.com` again → **Save**
+4. Wait until GitHub shows a checkmark next to the domain (TLS cert issued; often a few minutes, up to ~1 hour)
+5. Enable **Enforce HTTPS**
+
+**Repair (CLI, as repo admin):**
+
+```bash
+gh auth login   # must be BarathCommits (or another admin)
+./scripts/fix-pages-ssl.sh
+```
