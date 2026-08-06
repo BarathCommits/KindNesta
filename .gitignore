@@ -37,3 +37,8 @@ data/lineup-sources/
 
 # Local PDF render helper
 .venv-pdf/
+
+# Private buyer outreach (local only — never publish to Pages or public tree)
+data/outreach/
+public/outreach/
+docs/outreach/
