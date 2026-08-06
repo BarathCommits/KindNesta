@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import KindnessBadge from './KindnessBadge.astro';
 import { categoryLabel } from '../lib/products';
-import { withBase } from '../lib/urls';
+import { productImageSources, withBase } from '../lib/urls';
 
 interface Props {
   product: CollectionEntry<'products'>;
@@ -13,14 +13,17 @@ const { product, style } = Astro.props;
 const { title, shortDescription, category, subcategory, brand, image, kindnessScore, bulletPoints, scoreVerified } =
   product.data;
 const href = withBase(`products/${product.id}/`);
-const imageSrc = withBase(image);
+const { src: imageSrc, webp: imageWebp } = productImageSources(image);
 const previewBullets = bulletPoints.slice(0, 2);
 ---
 
 <article class="product-card" style={style}>
   <a class="product-card__link" href={href}>
     <div class="product-card__media">
-      <img src={imageSrc} alt={title} loading="lazy" width="640" height="800" />
+      <picture>
+        <source srcset={imageWebp} type="image/webp" />
+        <img src={imageSrc} alt={title} loading="lazy" decoding="async" width="640" height="800" />
+      </picture>
     </div>
     <div class="product-card__body">
       <div class="product-card__meta">

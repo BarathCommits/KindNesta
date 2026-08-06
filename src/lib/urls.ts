@@ -5,3 +5,12 @@ export function withBase(path = ''): string {
   if (!cleaned) return base;
   return `${base}${cleaned}`;
 }
+
+/** Prefer WebP packshots (much smaller) while keeping PNG fallback. */
+export function productImageSources(path = ''): { src: string; webp: string } {
+  const src = withBase(path);
+  return {
+    src,
+    webp: src.replace(/\.png(\?|#|$)/i, '.webp$1'),
+  };
+}
