@@ -1,18 +1,3 @@
-export function formatPrice(price: number, currency = 'EUR'): string {
-  const fractionDigits = price < 10 ? 3 : 2;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: fractionDigits,
-    maximumFractionDigits: fractionDigits,
-  }).format(price);
-}
-
-export function priceLabel(priceBasis?: string): string {
-  if (priceBasis === 'suggested-retail') return 'Sugg. retail';
-  return 'Ex-works';
-}
-
 export function categoryLabel(category: string): string {
   const labels: Record<string, string> = {
     hangtags: 'Hangtags',
@@ -28,6 +13,27 @@ export function categoryLabel(category: string): string {
     'personal-care': 'Personal care',
   };
   return labels[category] ?? category;
+}
+
+/** Product brand labels are hidden site-wide. */
+export function displayBrand(_brand?: string | null): string | null {
+  return null;
+}
+
+const PRICE_COPY = /\b(moq|ex-works|pricing|price list|unit price|trade price)\b/i;
+
+/** Drop bullets that mention price, MOQ, or ex-works terms. */
+export function publicBullets(bullets: string[] = []): string[] {
+  return bullets.filter((b) => b.trim() && !PRICE_COPY.test(b));
+}
+
+/** Remove sentences that mention price, MOQ, or ex-works terms. */
+export function publicCopy(text = ''): string {
+  return text
+    .split(/(?<=[.!?])\s+/)
+    .filter((s) => s.trim() && !PRICE_COPY.test(s))
+    .join(' ')
+    .trim();
 }
 
 export function ecoTagLabel(tag: string): string {

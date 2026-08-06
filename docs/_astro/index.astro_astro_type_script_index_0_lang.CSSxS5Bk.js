@@ -15,7 +15,7 @@ var e=document.getElementById(`catalog`),t=document.getElementById(`empty`),n=do
                 <span class="kindness-badge__text">${n}<span class="kindness-badge__status">${s}</span></span>
               </span>
             </div>
-            <p class="product-card__brand">${f(e.brand||`KindNesta`)}</p>
+            ${e.brand?`<p class="product-card__brand">${f(e.brand)}</p>`:``}
             <h3>${r}</h3>
             <p>${i}</p>
             ${c?`<ul class="product-card__bullets">${c}</ul>`:``}

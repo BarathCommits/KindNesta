@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import KindnessPanel from '../../components/KindnessPanel.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { categoryLabel, ecoTagLabel } from '../../lib/products';
+import { categoryLabel, displayBrand, ecoTagLabel, publicBullets, publicCopy } from '../../lib/products';
 import { productImageSources, withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
@@ -41,9 +41,12 @@ const {
   productFamily,
   sku,
   packSize,
-  moq,
-  unit,
 } = product.data;
+
+const shownBrand = displayBrand(brand);
+const shownBullets = publicBullets(bulletPoints);
+const shownDescription = publicCopy(description);
+const shownLead = publicCopy(shortDescription);
 
 const gallery = (imageGallery?.length ? imageGallery : [image]).map((src) => productImageSources(src));
 const mainImage = gallery[0];
@@ -69,7 +72,6 @@ const specs = [
   dimensions ? { label: 'Dimensions', value: dimensions } : null,
   weight ? { label: 'Weight', value: weight } : null,
   packSize ? { label: 'Case pack', value: packSize } : null,
-  moq ? { label: 'MOQ', value: `${moq} ${unit === 'meter' ? 'm' : 'pcs'}` } : null,
   subcategory ? { label: 'Browse node', value: subcategory } : null,
   variantType && variantValue ? { label: variantType, value: variantValue } : null,
 ].filter(Boolean) as { label: string; value: string }[];
@@ -141,9 +143,9 @@ const sampleHref = withBase(
         </div>
 
         <div class="amazon-pdp__info reveal">
-          <p class="amazon-pdp__brand">{brand}</p>
+          {shownBrand && <p class="amazon-pdp__brand">{shownBrand}</p>}
           <h1 class="amazon-pdp__title">{title}</h1>
-          <p class="amazon-pdp__lead">{shortDescription}</p>
+          <p class="amazon-pdp__lead">{shownLead}</p>
 
           <div class="amazon-pdp__score-row">
             <KindnessPanel
@@ -194,11 +196,11 @@ const sampleHref = withBase(
           }
 
           {
-            bulletPoints.length > 0 && (
+            shownBullets.length > 0 && (
               <div class="amazon-bullets">
                 <h2>About this item</h2>
                 <ul>
-                  {bulletPoints.map((b) => (
+                  {shownBullets.map((b) => (
                     <li>{b}</li>
                   ))}
                 </ul>
@@ -244,7 +246,7 @@ const sampleHref = withBase(
 
       <section class="amazon-description prose reveal">
         <h2>Product description</h2>
-        <p>{description}</p>
+        <p>{shownDescription}</p>
         {productFamily && <p class="amazon-description__family">Family: {productFamily}</p>}
       </section>
     </div>
