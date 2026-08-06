@@ -27,4 +27,8 @@ They fill the template and return it; you merge into `psp-catalog.csv`.
 
 ## Categories
 
-`hangtags` · `hangers` · `packaging` · `bags` · `polybags` · `stationery` · `labels` · `trims`
+`hangtags` · `hangers` · `packaging` · `bags` · `polybags` · `stationery` · `labels` · `trims` · `apparel` · `home` · `personal-care`
+
+## Listing rules
+
+See [`PRODUCT-LISTING-RULEBOOK.md`](./PRODUCT-LISTING-RULEBOOK.md) for the full editorial standard (IDs, images, copy, Kindness Score, and publish checklist).

@@ -1,0 +1,41 @@
+---
+description: Product listing rulebook for psp-catalog.csv, images, and partner submissions
+globs: data/psp-catalog.csv,data/partner-*.csv,data/PRODUCT-LISTING-RULEBOOK.md,data/CATALOG.md,scripts/import-lineups.mjs,scripts/generate-lineup-images.mjs,src/content.config.ts,src/pages/products/**
+alwaysApply: false
+---
+
+# Product listing rules
+
+Full rulebook: `data/PRODUCT-LISTING-RULEBOOK.md`
+
+## Source of truth
+
+- Catalogue: `data/psp-catalog.csv`
+- After CSV edits: `npm run sync-catalog` then `npm run build` if shipping `docs/`
+
+## IDs & categories
+
+- `kn-*` KindNesta packaging · `gg-*` Globgrid apparel · `bh-*` partner home/personal-care
+- Categories: `hangtags|hangers|packaging|bags|polybags|stationery|labels|trims|apparel|home|personal-care`
+- Never duplicate `id`
+
+## Copy
+
+- Specific claims only — no generic eco/green/sustainable without proof
+- Placeholder images: “Illustrative AI-generated packshot until supplier photography is available.”
+
+## Images
+
+| Prefix | Path |
+| --- | --- |
+| `kn-` | `/images/products/kn/{id}.png` |
+| `gg-` | `/images/products/apparel/{id}.png` |
+| `bh-` | `/images/products/home/{id}.png` |
+
+- AI-generated packshot PNGs for `gg-*` / `bh-*` via `npm run generate-lineup-images`
+- **Never** publish original range sheets, PDF crops, or `crops/` folders. Use AI packshots matching kn-* style instead of SVG templates.
+
+## Kindness Score
+
+- Bands: 80–100 Strong · 50–79 Good · 0–49 Fair
+- Gate Fail → max 49; `scoreVerified=FALSE` until certs reviewed
