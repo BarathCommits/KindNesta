@@ -31,3 +31,9 @@ former-fusion/
 
 # Supplier price list (keep private — not for public Pages)
 data/PSP-Products-Price-List.pdf
+
+# Full range sheets used only for cropping (never publish these)
+data/lineup-sources/
+
+# Local PDF render helper
+.venv-pdf/

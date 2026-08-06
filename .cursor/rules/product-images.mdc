@@ -1,0 +1,28 @@
+---
+description: Product images — AI packshots for lineup; match kn-* style; no originals
+globs: public/images/products/**,data/psp-catalog.csv,data/PRODUCT-IMAGE-STANDARD.md
+alwaysApply: false
+---
+
+# Product image creation
+
+Full standard: `data/PRODUCT-IMAGE-STANDARD.md`
+
+## Catalogue paths
+
+| Prefix | Path |
+| --- | --- |
+| `kn-*` | `/images/products/kn/{id}.png` |
+| `gg-*` | `/images/products/apparel/{id}.png` |
+| `bh-*` | `/images/products/home/{id}.png` |
+
+## Style (match Labels / Tapes / Elastics / Hangers)
+
+- Seamless white background, soft studio light, subtle contact shadow
+- Photorealistic single-product packshot
+- No text, watermarks, logos, or range-sheet collages
+
+## Forbidden
+
+- Original range sheets / `crops/`
+- SVG template icons as catalogue images for `gg-*` / `bh-*`

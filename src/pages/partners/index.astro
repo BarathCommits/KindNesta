@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { categoryLabel } from '../../lib/products';
 import { withBase } from '../../lib/urls';
 import '../../styles/global.css';
 
@@ -25,6 +26,20 @@ const downloads = [
     type: 'Guideline',
     blurb: 'Same guide in Markdown.',
     primary: false,
+  },
+  {
+    title: 'Product image standard',
+    file: 'docs/PRODUCT-IMAGE-STANDARD.md',
+    type: 'Reference',
+    blurb: 'How to create catalogue images — PNG packshots, generated SVG icons, specs, and forbidden assets.',
+    primary: true,
+  },
+  {
+    title: 'Product listing rulebook',
+    file: 'docs/PRODUCT-LISTING-RULEBOOK.md',
+    type: 'Reference',
+    blurb: 'Editorial standard for catalogue rows — IDs, images, copy, Kindness Score, and publish checklist.',
+    primary: true,
   },
   {
     title: 'Kindness Score standard',
@@ -250,13 +265,23 @@ const steps = [
       </p>
       <div class="blog-regions" style="margin-top: 1rem;">
         {
-          ['hangtags', 'hangers', 'packaging', 'bags', 'polybags', 'stationery', 'labels', 'trims'].map(
-            (c) => (
-              <a class="tag" href={withBase(`products/?category=${c}`)}>
-                {c}
-              </a>
-            )
-          )
+          [
+            'apparel',
+            'home',
+            'personal-care',
+            'hangtags',
+            'hangers',
+            'packaging',
+            'bags',
+            'polybags',
+            'stationery',
+            'labels',
+            'trims',
+          ].map((c) => (
+            <a class="tag" href={withBase(`products/?category=${c}`)}>
+              {categoryLabel(c)}
+            </a>
+          ))
         }
       </div>
       <p style="margin-top: 1.5rem; max-width: 40rem; color: var(--md-sys-color-on-surface-variant);">

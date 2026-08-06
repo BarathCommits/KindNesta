@@ -10,7 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sync-catalog": "node scripts/sync-catalog.mjs"
+    "sync-catalog": "node scripts/sync-catalog.mjs",
+    "dedupe-catalog": "node scripts/dedupe-catalog.mjs",
+    "import-lineups": "node scripts/import-lineups.mjs",
+    "generate-lineup-images": "node scripts/generate-lineup-images.mjs"
   },
   "dependencies": {
     "astro": "^7.1.3"

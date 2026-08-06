@@ -23,6 +23,9 @@ export function categoryLabel(category: string): string {
     stationery: 'Stationery',
     labels: 'Labels',
     trims: 'Trims & tapes',
+    apparel: 'Apparel',
+    home: 'Home & hospitality',
+    'personal-care': 'Personal care',
   };
   return labels[category] ?? category;
 }
